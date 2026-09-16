@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -660,7 +660,7 @@ p {
   <header class="header">
     <div class="container nav-container">
       <a href="#" class="brand">
-        <img src="assets/img/logo.svg" alt="Logo EconData" class="brand-logo-img">
+        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img" style="width: auto; height: 38px; border-radius: 4px;">
         <div class="brand-text-block">
           <span class="brand-title">ECONDATA</span>
           <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
@@ -671,15 +671,15 @@ p {
         <ul class="nav-menu">
           <li><a href="#sobre" class="nav-link">Sobre</a></li>
           <li><a href="#projetos" class="nav-link">Projetos</a></li>
-          <li><a href="#areas" class="nav-link">Áreas</a></li>`n          <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
+          <li><a href="#areas" class="nav-link">Áreas</a></li>
+          <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
           <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
       </nav>
 
       <div style="display: flex; gap: 0.75rem;">
-        <a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Instagram</a>
-        <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">LinkedIn</a>
+        <a href="#contato" class="btn btn-primary">Redes & Contato</a>
       </div>
     </div>
   </header>
@@ -702,24 +702,28 @@ p {
 
       <div class="hero-wire-card">
         <div class="hwc-header">
-          <span class="hwc-badge">CORE TECNOLÓGICO</span>
-          <span class="mono-tag">OPEN SOURCE & PESQUISA</span>
+          <span class="hwc-badge">NÚCLEO DISCENTE PUC-RIO</span>
+          <span class="mono-tag">EST. 2022</span>
         </div>
         <div class="hwc-stat-row">
           <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Linguagens Centrais</div>
-            <div class="hwc-stat-val">R & Python</div>
+            <div class="hwc-stat-lbl">Departamento</div>
+            <div class="hwc-stat-val" style="font-size: 1.05rem;">Economia PUC-Rio</div>
           </div>
           <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Foco Metodológico</div>
-            <div class="hwc-stat-val highlight">Econometria & ML</div>
+            <div class="hwc-stat-lbl">Atuação</div>
+            <div class="hwc-stat-val highlight" style="font-size: 1.05rem;">Dados & Mercado</div>
           </div>
         </div>
-        <div class="code-box">
-<span class="code-comment"># Ambiente Quantitativo EconData PUC-Rio</span>
-library(tidyverse)
-dados &lt;- carregar_series_temporais(bcb, ibge)
-<span class="code-func">modelo_preditivo &lt;- treinar_modelo(dados, metodo = "econometria_ml")</span>
+        <div style="background: rgba(7, 16, 28, 0.7); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 1.25rem;">
+          <p style="font-size: 0.875rem; color: #E2E8F0; margin-bottom: 0.75rem;">
+            <strong>Missão Institucional:</strong> Capacitar discentes em ciência de dados e econometria empírica, articulando turmas de treinamento, aulas abertas e pontes diretas com o mercado de capitais.
+          </p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <span class="mono-tag" style="font-size: 0.65rem;">Processo Seletivo Semestral</span>
+            <span class="mono-tag" style="font-size: 0.65rem;">Turma de Capacitação</span>
+            <span class="mono-tag" style="font-size: 0.65rem;">EconData Week</span>
+          </div>
         </div>
       </div>
     </div>
@@ -759,88 +763,88 @@ dados &lt;- carregar_series_temporais(bcb, ibge)
             <span class="mono-tag">PACOTE EM R • OPEN SOURCE</span>
             <h3 class="project-title">brfinance</h3>
             <p class="project-body">
-              Pacote em R criado por um ex-membro do EconData para extrair, padronizar e plotar séries temporais macroeconômicas brasileiras (taxa Selic, IPCA, desemprego) a partir das bases do Banco Central e IBGE.
+              Pacote em R criado por um ex-membro do EconData que democratiza o acesso a dados macroeconômicos brasileiros. Permite baixar, higienizar e plotar indicadores como Selic, IPCA e desemprego com poucas linhas de comando.
             </p>
             <table class="project-meta-table">
               <tr>
                 <td class="pmt-label">Linguagem</td>
-                <td class="pmt-val">R / CRAN / GitHub</td>
+                <td class="pmt-val">Linguagem R</td>
               </tr>
               <tr>
-                <td class="pmt-label">Fontes de Dados</td>
-                <td class="pmt-val">BCB, SIDRA/IBGE, IPEA</td>
+                <td class="pmt-label">Fontes Integradas</td>
+                <td class="pmt-val">Banco Central, SIDRA/IBGE</td>
               </tr>
               <tr>
-                <td class="pmt-label">Origem</td>
-                <td class="pmt-val">Ex-membro EconData Analytics</td>
+                <td class="pmt-label">Desenvolvedor</td>
+                <td class="pmt-val">Ex-membro EconData</td>
               </tr>
               <tr>
-                <td class="pmt-label">Licença</td>
-                <td class="pmt-val">Open Source</td>
+                <td class="pmt-label">Código Aberto</td>
+                <td class="pmt-val">github.com/efram2/brfinance</td>
               </tr>
             </table>
           </div>
           <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="project-link">
-            Acessar no GitHub ↗
+            Acessar Repositório ↗
           </a>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">COMPETIÇÕES & DESAFIOS</span>
-            <h3 class="project-title">Modelagem para Desafios Quantitativos</h3>
+            <span class="mono-tag">AULA ABERTA & PROJETO DISCENTE</span>
+            <h3 class="project-title">Introdução a Redes Neurais para Economia</h3>
             <p class="project-body">
-              Projetos competitivos desenvolvidos pelos membros da Turma de Aplicação para desafios de mercado de capitais, unindo econometria de séries temporais e algoritmos de Machine Learning.
+              Material instrucional e código prático aplicado para estudantes de graduação, demonstrando a arquitetura e calibração de redes neurais profundas aplicadas à predição de séries financeiras.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Foco</td>
-                <td class="pmt-val">Finanças Quantitativas</td>
+                <td class="pmt-label">Formato</td>
+                <td class="pmt-val">Aula Aberta à Comunidade PUC</td>
               </tr>
               <tr>
-                <td class="pmt-label">Turma</td>
-                <td class="pmt-val">Aplicação do EconData</td>
+                <td class="pmt-label">Tópicos</td>
+                <td class="pmt-val">Perceptron, MLP, Backpropagation</td>
               </tr>
               <tr>
-                <td class="pmt-label">Métodos</td>
-                <td class="pmt-val">Backtesting, Otimização de Carteiras</td>
+                <td class="pmt-label">Público</td>
+                <td class="pmt-val">Alunos de Graduação em Economia</td>
               </tr>
               <tr>
-                <td class="pmt-label">Stack</td>
-                <td class="pmt-val">RStudio, Python, Git</td>
+                <td class="pmt-label">Apoio</td>
+                <td class="pmt-val">Departamento de Economia PUC-Rio</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Desenvolvimento Contínuo</span>
+          <span class="project-link" style="color: var(--text-muted);">Módulo Curricular</span>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">MACROECONOMETRIA</span>
-            <h3 class="project-title">Nowcasting & Indicadores Macroeconômicos</h3>
+            <span class="mono-tag">PROJETO DE EXTENSÃO</span>
+            <h3 class="project-title">Fundamentos de Excel & Analytics Financeiro</h3>
             <p class="project-body">
-              Desenvolvimento de modelos para acompanhamento em tempo real da conjuntura econômica brasileira, integrando dados públicos de alta frequência à análise macroeconômica.
+              Treinamento semestral de nivelamento focado em modelagem de planilhas, automação de rotinas contábeis/financeiras e manipulação de bases reais para novos membros do núcleo.
             </p>
             <table class="project-meta-table">
               <tr>
                 <td class="pmt-label">Objetivo</td>
-                <td class="pmt-val">Previsão de Atividade e Inflação</td>
+                <td class="pmt-val">Nivelamento para o Mercado</td>
               </tr>
               <tr>
-                <td class="pmt-label">Bases de Dados</td>
-                <td class="pmt-val">SGS/Banco Central, SIDRA</td>
+                <td class="pmt-label">Ferramentas</td>
+                <td class="pmt-val">Excel Avançado, Power Query, VBA</td>
               </tr>
               <tr>
-                <td class="pmt-label">Metodologia</td>
-                <td class="pmt-val">Séries Temporais & Fatores Dinâmicos</td>
+                <td class="pmt-label">Ciclo</td>
+                <td class="pmt-val">Entrada de Novos Trainees</td>
               </tr>
               <tr>
-                <td class="pmt-label">Ambiente</td>
-                <td class="pmt-val">R / Python</td>
+                <td class="pmt-label">Coordenação</td>
+                <td class="pmt-val">Diretoria de Capacitação</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Projetos dos Membros</span>
+          <span class="project-link" style="color: var(--text-muted);">Capacitação Interna</span>
         </div>
       </div>
     </div>
@@ -912,31 +916,43 @@ dados &lt;- carregar_series_temporais(bcb, ibge)
         <div class="visit-card">
           <span class="visit-role">Visita Técnica</span>
           <h3 class="visit-title">Itaú Asset Management</h3>
-          <p class="visit-desc">Apresentação com gestores e analistas sobre alocação de ativos, gestão quantitativa e oportunidades profissionais.</p>
+          <p class="visit-desc">Apresentação com gestores e analistas sobre alocação de ativos, gestão quantitativa e oportunidades de estágio.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Visita Técnica</span>
           <h3 class="visit-title">Banco BOCOM BBM</h3>
-          <p class="visit-desc">Tour institucional e palestras sobre cenário macroeconômico, crédito e mesas de tesouraria.</p>
+          <p class="visit-desc">Tour institucional com recepção por Thais Haro, abertura de Alexandre Lowenkron e palestra macro de Luiz Évora e Gabriel Vasconcelos.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Visita Técnica</span>
           <h3 class="visit-title">Visagio Consultoria</h3>
-          <p class="visit-desc">Troca de experiências sobre resolução prática de problemas de negócios e aplicação de analytics na consultoria.</p>
+          <p class="visit-desc">Imersão com Gabriel Martins e Joaquim Neto sobre a rotina de consultoria de gestão e aplicação prática de analytics.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Visita Técnica</span>
+          <h3 class="visit-title">Civitas Rio</h3>
+          <p class="visit-desc">Encontro em parceria com o NEA para conhecer o ecossistema e projetos analíticos aplicados ao desenvolvimento carioca.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Semana Integrada de Economia</span>
+          <h3 class="visit-title">Armínio Fraga & Lideranças</h3>
+          <p class="visit-desc">Ciclo de debates de alto nível com Armínio Fraga, David Cohen, José Márcio Camargo e Vitor Pereira.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Palestra Convidada</span>
-          <h3 class="visit-title">Armínio Fraga</h3>
-          <p class="visit-desc">Encontro exclusivo com o ex-presidente do Banco Central abordando desafios fiscais e macroeconomia brasileira.</p>
+          <h3 class="visit-title">Bruno Bondarovsky</h3>
+          <p class="visit-desc">Palestra exclusiva compartilhando experiências práticas sobre gestão, finanças e tomada de decisão fundamentada em dados.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Palestra Inaugural</span>
           <h3 class="visit-title">Erick Coser (Datarisk)</h3>
-          <p class="visit-desc">Visão prática sobre fundação de empresas de dados, inteligência analítica e o mercado de ciência de dados no Brasil.</p>
+          <p class="visit-desc">Visão prática sobre fundação de empresas de inteligência analítica e desafios de ciência de dados no ecossistema brasileiro.</p>
         </div>
       </div>
 
@@ -1003,7 +1019,7 @@ dados &lt;- carregar_series_temporais(bcb, ibge)
       <div class="footer-grid">
         <div>
           <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-            <img src="assets/img/logo.svg" alt="Logo EconData" style="width: 28px; height: 28px;">
+            <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" style="width: auto; height: 28px; border-radius: 3px;">
             <span style="font-weight: 800; font-size: 1rem; letter-spacing: 0.04em;">ECONDATA ANALYTICS</span>
           </div>
           <p style="font-size: 0.85rem; max-width: 38ch;">
@@ -1018,18 +1034,19 @@ dados &lt;- carregar_series_temporais(bcb, ibge)
           <h5>Navegação</h5>
           <ul class="footer-links">
             <li><a href="#sobre">Sobre o Núcleo</a></li>
-            <li><a href="#projetos">Projetos & Pesquisa</a></li>
-            <li><a href="#areas">Áreas Analíticas</a></li>`n            <li><a href="#capacitacao">Capacitação</a></li>
+            <li><a href="#projetos">Projetos & Atividades</a></li>
+            <li><a href="#areas">Áreas de Atuação</a></li>
             <li><a href="#visitas">Visitas & Mercado</a></li>
+            <li><a href="#capacitacao">Capacitação</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h5>Canais Oficiais</h5>
+          <h5>Redes Sociais & Contato</h5>
           <ul class="footer-links">
-            <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn Institucional</a></li>
-            <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram (@econdata_analytics)</a></li>
-            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Núcleos PUC-Rio</a></li>
+            <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram • @econdata_analytics</a></li>
+            <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn • EconData Analytics</a></li>
+            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Página do Depto. de Economia PUC-Rio</a></li>
           </ul>
         </div>
       </div>
