@@ -669,16 +669,16 @@ p {
 
       <nav>
         <ul class="nav-menu">
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
           <li><a href="#projetos" class="nav-link">Projetos</a></li>
-          <li><a href="#brfinance" class="nav-link">brfinance</a></li>
-          <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
+          <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
       </nav>
 
       <div style="display: flex; gap: 0.75rem;">
-        <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">brfinance</a>
+        <a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Instagram</a>
         <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">LinkedIn</a>
       </div>
     </div>
@@ -695,8 +695,8 @@ p {
           Capacitamos alunos de Economia da PUC-Rio no uso avançado de ciência de dados e finanças quantitativas. Desenvolvemos projetos reais, ferramentas open source para o mercado brasileiro e preparamos nossos membros para grandes gestoras, bancos e consultorias.
         </p>
         <div class="hero-actions">
-          <a href="#projetos" class="btn btn-primary">Conhecer Projetos</a>
-          <a href="#brfinance" class="btn btn-ghost">Pacote brfinance</a>
+          <a href="#projetos" class="btn btn-primary">Explorar Projetos</a>
+          <a href="#capacitacao" class="btn btn-ghost">Conhecer a Capacitação</a>
         </div>
       </div>
 
@@ -716,10 +716,10 @@ p {
           </div>
         </div>
         <div class="code-box">
-<span class="code-comment"># Análise Macroeconômica no EconData</span>
-library(brfinance)
-dados &lt;- get_indicators(c("selic", "ipca", "desemprego"))
-<span class="code-func">analise_economica(dados, modelo = "series_temporais")</span>
+<span class="code-comment"># Ambiente Quantitativo EconData PUC-Rio</span>
+library(tidyverse)
+dados &lt;- carregar_series_temporais(bcb, ibge)
+<span class="code-func">modelo_preditivo &lt;- treinar_modelo(dados, metodo = "econometria_ml")</span>
         </div>
       </div>
     </div>
@@ -744,43 +744,7 @@ dados &lt;- get_indicators(c("selic", "ipca", "desemprego"))
     </div>
   </section>
 
-  <section class="section" id="brfinance">
-    <div class="container">
-      <div class="spotlight-card">
-        <div>
-          <span class="mono-tag">PROJETO DE DESTAQUE • OPEN SOURCE EM R</span>
-          <h2 class="spotlight-title">Conheça o brfinance</h2>
-          <p class="spotlight-desc">
-            Um pacote em <strong>R</strong> desenvolvido por um ex-membro do <strong>EconData</strong> que facilita o acesso a dados macroeconômicos brasileiros. Com poucas linhas de código, é possível baixar e visualizar indicadores como <strong>taxa Selic, inflação e desemprego</strong>, utilizando dados oficiais do Banco Central e IBGE.
-          </p>
-          <p class="spotlight-desc">
-            O pacote também permite gerar gráficos e comparar séries econômicas, tornando a análise de dados mais rápida e acessível.
-          </p>
-          <div style="display: flex; gap: 1rem;">
-            <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              Repositório no GitHub ↗
-            </a>
-          </div>
-        </div>
 
-        <div>
-          <div class="code-box">
-<span class="code-comment"># Instalação e uso do pacote brfinance</span>
-devtools::install_github("efram2/brfinance")
-library(brfinance)
-
-<span class="code-comment"># Baixar dados da taxa Selic e IPCA</span>
-dados &lt;- get_indicators(
-  series = c("selic", "ipca"),
-  start_date = "2020-01-01"
-)
-
-<span class="code-func">plot_economic_series(dados)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="section" id="projetos">
     <div class="container">
@@ -1005,10 +969,10 @@ dados &lt;- get_indicators(
         <div class="footer-col">
           <h5>Navegação</h5>
           <ul class="footer-links">
-            <li><a href="#projetos">Projetos & Modelos</a></li>
-            <li><a href="#brfinance">Pacote brfinance</a></li>
-            <li><a href="#visitas">Visitas & Palestras</a></li>
+            <li><a href="#sobre">Sobre o Núcleo</a></li>
+            <li><a href="#projetos">Projetos & Pesquisa</a></li>
             <li><a href="#capacitacao">Capacitação</a></li>
+            <li><a href="#visitas">Visitas & Mercado</a></li>
           </ul>
         </div>
 
