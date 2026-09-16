@@ -702,27 +702,24 @@ p {
 
       <div class="hero-wire-card">
         <div class="hwc-header">
-          <span class="hwc-badge">MODELAGEM QUANTITATIVA</span>
-          <span class="mono-tag">XGBOOST</span>
+          <span class="hwc-badge">CORE TECNOLÓGICO</span>
+          <span class="mono-tag">OPEN SOURCE & PESQUISA</span>
         </div>
         <div class="hwc-stat-row">
           <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Capital Alvo Simulado</div>
-            <div class="hwc-stat-val tabular-num">R$ 1.000.000</div>
+            <div class="hwc-stat-lbl">Linguagens Centrais</div>
+            <div class="hwc-stat-val">R & Python</div>
           </div>
           <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Retorno Crise 2015–2016</div>
-            <div class="hwc-stat-val highlight tabular-num">+156.4%</div>
+            <div class="hwc-stat-lbl">Foco Metodológico</div>
+            <div class="hwc-stat-val highlight">Econometria & ML</div>
           </div>
         </div>
         <div class="code-box">
-<span class="code-comment"># Backtest Walk-Forward EconData</span>
-portfolio &lt;- run_xgboost_strategy(
-  universe = c("BBAS3", "ITUB4", "BBDC4", "SANB11"),
-  rebalance = "monthly",
-  risk_model = "max_sharpe"
-)
-<span class="code-func">&gt; Benchmark BOVA11 superado em +113.2% p.p.</span>
+<span class="code-comment"># Análise Macroeconômica no EconData</span>
+library(brfinance)
+dados &lt;- get_indicators(c("selic", "ipca", "desemprego"))
+<span class="code-func">analise_economica(dados, modelo = "series_temporais")</span>
         </div>
       </div>
     </div>
@@ -795,91 +792,91 @@ dados &lt;- get_indicators(
       <div class="projects-grid">
         <div class="project-card">
           <div>
-            <span class="mono-tag">MODELO PREMIADO</span>
-            <h3 class="project-title">Resiliência Bancária na Crise (2015–2016)</h3>
+            <span class="mono-tag">PACOTE EM R • OPEN SOURCE</span>
+            <h3 class="project-title">brfinance</h3>
             <p class="project-body">
-              Análise comparativa e backtest walk-forward com Machine Learning (XGBoost) avaliando a resiliência das ações do setor bancário durante o estresse recessivo de 2015 a 2016.
+              Pacote em R criado por um ex-membro do EconData para extrair, padronizar e plotar séries temporais macroeconômicas brasileiras (taxa Selic, IPCA, desemprego) a partir das bases do Banco Central e IBGE.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Capital Inicial</td>
-                <td class="pmt-val">R$ 1.000.000,00</td>
+                <td class="pmt-label">Linguagem</td>
+                <td class="pmt-val">R / CRAN / GitHub</td>
               </tr>
               <tr>
-                <td class="pmt-label">Benchmark</td>
-                <td class="pmt-val">BOVA11</td>
+                <td class="pmt-label">Fontes de Dados</td>
+                <td class="pmt-val">BCB, SIDRA/IBGE, IPEA</td>
               </tr>
               <tr>
-                <td class="pmt-label">Ativos Cobertos</td>
-                <td class="pmt-val">BBAS3, ITUB4, BBDC4, SANB11</td>
+                <td class="pmt-label">Origem</td>
+                <td class="pmt-val">Ex-membro EconData Analytics</td>
               </tr>
               <tr>
-                <td class="pmt-label">Tecnologias</td>
-                <td class="pmt-val">R, Python, XGBoost</td>
+                <td class="pmt-label">Licença</td>
+                <td class="pmt-val">Open Source</td>
               </tr>
             </table>
           </div>
-          <a href="relatorio_resiliencia_bancaria.html" target="_blank" class="project-link">
-            Visualizar Relatório Técnico ↗
+          <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="project-link">
+            Acessar no GitHub ↗
           </a>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">EQUITY & ALOCAÇÃO</span>
-            <h3 class="project-title">Carteira de Alocação Sistemática Bancária</h3>
+            <span class="mono-tag">COMPETIÇÕES & DESAFIOS</span>
+            <h3 class="project-title">Modelagem para Desafios Quantitativos</h3>
             <p class="project-body">
-              Construção de portfólios balanceados com pesos calculados dinamicamente via retornos esperados e controle rigoroso de volatilidade individual dos bancos listados.
+              Projetos competitivos desenvolvidos pelos membros da Turma de Aplicação para desafios de mercado de capitais, unindo econometria de séries temporais e algoritmos de Machine Learning.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Ativo Destaque</td>
-                <td class="pmt-val">SANB11 (31.98%)</td>
+                <td class="pmt-label">Foco</td>
+                <td class="pmt-val">Finanças Quantitativas</td>
               </tr>
               <tr>
-                <td class="pmt-label">Diversificação</td>
-                <td class="pmt-val">ITUB4, BBDC4, ABCB4</td>
+                <td class="pmt-label">Turma</td>
+                <td class="pmt-val">Aplicação do EconData</td>
               </tr>
               <tr>
-                <td class="pmt-label">Método de Otimização</td>
-                <td class="pmt-val">Retorno Ajustado à Volatilidade</td>
+                <td class="pmt-label">Métodos</td>
+                <td class="pmt-val">Backtesting, Otimização de Carteiras</td>
               </tr>
               <tr>
-                <td class="pmt-label">Execução</td>
-                <td class="pmt-val">Python / JSON Pipeline</td>
+                <td class="pmt-label">Stack</td>
+                <td class="pmt-val">RStudio, Python, Git</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Modelo Integrado</span>
+          <span class="project-link" style="color: var(--text-muted);">Desenvolvimento Contínuo</span>
         </div>
 
         <div class="project-card">
           <div>
             <span class="mono-tag">MACROECONOMETRIA</span>
-            <h3 class="project-title">Nowcasting de Atividade Econômica & IBC-Br</h3>
+            <h3 class="project-title">Nowcasting & Indicadores Macroeconômicos</h3>
             <p class="project-body">
-              Modelagem preditiva para antecipação de indicadores de atividade econômica em tempo real com base em séries de alta frequência de energia, tráfego rodoviário e arrecadação.
+              Desenvolvimento de modelos para acompanhamento em tempo real da conjuntura econômica brasileira, integrando dados públicos de alta frequência à análise macroeconômica.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Horizonte</td>
-                <td class="pmt-val">T+1 Mês</td>
+                <td class="pmt-label">Objetivo</td>
+                <td class="pmt-val">Previsão de Atividade e Inflação</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Bases de Dados</td>
+                <td class="pmt-val">SGS/Banco Central, SIDRA</td>
               </tr>
               <tr>
                 <td class="pmt-label">Metodologia</td>
-                <td class="pmt-val">Dynamic Factor Models (DFM)</td>
-              </tr>
-              <tr>
-                <td class="pmt-label">Fontes</td>
-                <td class="pmt-val">BCB, IBGE, ONS</td>
+                <td class="pmt-val">Séries Temporais & Fatores Dinâmicos</td>
               </tr>
               <tr>
                 <td class="pmt-label">Ambiente</td>
-                <td class="pmt-val">Python / Pandas / Statsmodels</td>
+                <td class="pmt-val">R / Python</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Turma de Aplicação</span>
+          <span class="project-link" style="color: var(--text-muted);">Projetos dos Membros</span>
         </div>
       </div>
     </div>

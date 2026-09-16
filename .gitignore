@@ -3,3 +3,7 @@
 skills-lock.json
 *.py
 *.Rmd
+*.csv
+*.json
+relatorio_resiliencia_bancaria.html
+dashboard_interativo.html
