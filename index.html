@@ -3,53 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EconData Analytics — Núcleo de Ciência de Dados PUC-Rio</title>
-  <meta name="description" content="Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Pesquisa empírica, finanças quantitativas e capacitação analítica em R e Python.">
-  
-  <!-- Open Graph -->
+  <title>ECONDATA Analytics — Núcleo de Ciência de Dados PUC-Rio</title>
+  <meta name="description" content="ECONDATA Analytics — Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Modelagem preditiva, finanças quantitativas, capacitação e projetos de dados reais.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="EconData Analytics — PUC-Rio">
+  <meta property="og:title" content="ECONDATA Analytics — PUC-Rio">
   <meta property="og:description" content="Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio.">
   <meta property="og:url" content="https://daniei-adler.github.io/econdata_site/">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
-
-  <!-- Typography: Newsreader (Editorial Serif) + Inter Tight & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-
-    <style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
 :root {
-  /* High-end Swiss/Editorial Financial Palette (Zero neon, zero AI blue/purple degraded mesh) */
-  --bg-canvas: #0A0D12;
-  --bg-surface: #10141D;
-  --bg-card: #141A24;
-  --bg-card-hover: #18202D;
-  --bg-inset: #0E1219;
+  --bg-deep: #07101C;
+  --bg-navy: #0B192C;
+  --bg-surface: #10233D;
+  --bg-card: rgba(16, 35, 61, 0.75);
+  --bg-card-hover: rgba(22, 47, 82, 0.9);
 
-  --border-hairline: #1F2735;
-  --border-focus: #3B82F6;
-  --border-hover: #2D3748;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-blue: rgba(56, 189, 248, 0.35);
+  --border-focus: rgba(56, 189, 248, 0.6);
 
-  --text-main: #F1F5F9;
-  --text-muted: #8492A6;
-  --text-dim: #4B5563;
+  --text-main: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #8EA0B5;
+  --accent-cyan: #38BDF8;
+  --accent-emerald: #10B981;
 
-  --accent-blue: #1D4ED8;
-  --accent-signal: #10B981;
-
-  --font-serif: 'Newsreader', Georgia, serif;
-  --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Strict Emil Kowalski physical easing */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --duration-fast: 120ms;
-  --duration-normal: 200ms;
-  --duration-smooth: 320ms;
+  --duration-fast: 140ms;
 }
 
 *, *::before, *::after {
@@ -61,79 +47,73 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background-color: var(--bg-canvas);
+  background-color: var(--bg-deep);
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-canvas);
+  font-family: var(--font-brand);
+  background-color: var(--bg-deep);
   color: var(--text-main);
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(16, 35, 61, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(11, 25, 44, 0.9) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
 .container {
   width: 100%;
-  max-width: 1160px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Typography Hierarchy */
-.display-title {
-  font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  font-weight: 400;
-  line-height: 1.08;
+h1, h2, h3, h4 {
+  font-weight: 700;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
-}
-
-.display-title em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: #93C5FD;
-}
-
-h2, h3, h4 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
   color: #FFFFFF;
 }
 
 p {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 0.95rem;
-  line-height: 1.6;
 }
 
-.tabular-data {
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid var(--border-blue);
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.tabular-num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
-.label-tech {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #94A3B8;
-  font-weight: 600;
-}
-
-/* Header */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  height: 64px;
-  background: rgba(10, 13, 18, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-hairline);
+  background: rgba(7, 16, 28, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  height: 70px;
 }
 
 .nav-container {
@@ -150,411 +130,333 @@ p {
   text-decoration: none;
 }
 
-.brand-mark {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border-hairline);
-  background: var(--bg-surface);
-  border-radius: 4px;
+.brand-logo-img {
+  width: 36px;
+  height: 36px;
+}
+
+.brand-text-block {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #60A5FA;
+  flex-direction: column;
 }
 
-.brand-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: #F8FAFC;
+.brand-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
 }
 
-.brand-sub {
-  font-family: var(--font-mono);
+.brand-subtitle {
   font-size: 0.65rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-left: 0.5rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid var(--border-hairline);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
 }
 
-.nav-links {
+.nav-menu {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 2rem;
   list-style: none;
 }
 
 .nav-link {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
 .nav-link:hover {
-  color: #FFFFFF;
+  color: var(--accent-cyan);
 }
 
-.header-cta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #FFFFFF;
-  background: #1E293B;
-  border: 1px solid var(--border-hairline);
-  padding: 0.45rem 0.85rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: transform var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
-}
-
-.header-cta:hover {
-  background: #334155;
-}
-
-.header-cta:active {
-  transform: scale(0.97);
-}
-
-/* Hero Section: Editorial & Clean */
-.hero {
-  padding: 5rem 0 4rem;
-  border-bottom: 1px solid var(--border-hairline);
-}
-
-.hero-layout {
-  display: grid;
-  grid-template-columns: 1.25fr 0.95fr;
-  gap: 3.5rem;
-  align-items: start;
-}
-
-.hero-meta-row {
-  display: flex;
+.btn {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.meta-pill {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #94A3B8;
-  border: 1px solid var(--border-hairline);
-  background: var(--bg-surface);
-  padding: 0.2rem 0.6rem;
-  border-radius: 3px;
-}
-
-.hero-lead {
-  margin-top: 1.5rem;
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: #CBD5E1;
-  max-width: 54ch;
-}
-
-.hero-action-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.btn-solid {
-  background: #F1F5F9;
-  color: #0A0D12;
-  font-size: 0.875rem;
-  font-weight: 600;
   padding: 0.65rem 1.25rem;
   border-radius: 4px;
   text-decoration: none;
-  border: 1px solid transparent;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: transform var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
-}
-
-.btn-solid:hover {
-  background: #FFFFFF;
-}
-
-.btn-solid:active {
-  transform: scale(0.97);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text-main);
-  border: 1px solid var(--border-hairline);
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.65rem 1.25rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
-}
-
-.btn-ghost:hover {
-  border-color: #475569;
-}
-
-.btn-ghost:active {
-  transform: scale(0.97);
-}
-
-/* Technical Terminal Widget (No glow, clean border) */
-.terminal-block {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.terminal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: var(--bg-inset);
-  border-bottom: 1px solid var(--border-hairline);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-muted);
-}
-
-.status-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--accent-signal);
-}
-
-.status-indicator::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: var(--accent-signal);
-  border-radius: 50%;
-}
-
-.terminal-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.terminal-table th {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-dim);
-  text-align: left;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-hairline);
-  background: var(--bg-surface);
-}
-
-.terminal-table td {
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid var(--border-hairline);
-  font-size: 0.8125rem;
-}
-
-.terminal-table tr:last-child td {
-  border-bottom: none;
-}
-
-.row-accent {
-  background: rgba(29, 78, 216, 0.08);
-}
-
-/* Institutional Numbers / Metrics */
-.metrics-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-bottom: 1px solid var(--border-hairline);
-  background: var(--bg-surface);
-}
-
-.metric-col {
-  padding: 2rem 1.5rem;
-  border-right: 1px solid var(--border-hairline);
-}
-
-.metric-col:last-child {
-  border-right: none;
-}
-
-.metric-number {
-  font-family: var(--font-sans);
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-
-.metric-caption {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  line-height: 1.45;
-}
-
-/* Projects Section */
-.section {
-  padding: 5rem 0;
-  border-bottom: 1px solid var(--border-hairline);
-}
-
-.section-title-wrap {
-  margin-bottom: 3rem;
-}
-
-.section-title {
-  font-size: 1.85rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  margin-top: 0.5rem;
-}
-
-/* Tabs: Discrete technical filter */
-.filter-tabs {
-  display: flex;
-  gap: 0.35rem;
-  border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 0.75rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 4px;
   cursor: pointer;
+  border: 1px solid transparent;
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.tab-btn:hover {
-  color: #FFFFFF;
-}
-
-.tab-btn.active {
-  background: var(--bg-surface);
-  border-color: var(--border-hairline);
-  color: #FFFFFF;
-}
-
-.tab-btn:active {
+.btn:active {
   transform: scale(0.97);
 }
 
-/* Project Cards: Clean, Sharp, Structured (No thick rounded borders) */
-.projects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1.5rem;
+.btn-primary {
+  background: #0284C7;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-.project-item {
+.btn-primary:hover {
+  background: #0369A1;
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
+  border-color: var(--border-subtle);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-cyan);
+}
+
+.hero {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: clamp(2.3rem, 4.5vw, 3.4rem);
+  line-height: 1.12;
+  margin: 1rem 0 1.25rem;
+  font-weight: 800;
+}
+
+.hero-title span {
+  color: var(--accent-cyan);
+}
+
+.hero-lead {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 58ch;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-wire-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.hwc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.hwc-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+}
+
+.hwc-stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hwc-stat-box {
   background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
+  border: 1px solid var(--border-subtle);
+  padding: 1rem;
   border-radius: 4px;
-  padding: 1.75rem;
+}
+
+.hwc-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hwc-stat-val {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 0.25rem;
+}
+
+.hwc-stat-val.highlight {
+  color: var(--accent-emerald);
+}
+
+.code-box {
+  background: #040912;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #93C5FD;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.code-comment { color: #64748B; }
+.code-func { color: #38BDF8; font-weight: 600; }
+
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-navy);
+}
+
+.stat-cell {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.stat-cell:last-child {
+  border-right: none;
+}
+
+.stat-big {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.section {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-head {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-top: 0.65rem;
+}
+
+.spotlight-card {
+  background: linear-gradient(135deg, var(--bg-navy) 0%, var(--bg-surface) 100%);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.spotlight-title {
+  font-size: 1.6rem;
+  margin: 0.75rem 0 1rem;
+  color: #FFFFFF;
+}
+
+.spotlight-desc {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.75rem;
+}
+
+.project-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color var(--duration-normal) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
-.project-item:hover {
-  border-color: #334155;
+.project-card:hover {
+  border-color: var(--border-blue);
+  background: var(--bg-surface);
   transform: translateY(-2px);
 }
 
-.project-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  color: #60A5FA;
-  margin-bottom: 0.75rem;
-  display: block;
+.project-title {
+  font-size: 1.25rem;
+  margin: 0.75rem 0;
 }
 
-.project-name {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.65rem;
-}
-
-.project-desc {
+.project-body {
   font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.55;
+  color: var(--text-secondary);
+  line-height: 1.6;
   margin-bottom: 1.5rem;
 }
 
-.project-data-table {
+.project-meta-table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--bg-inset);
-  border: 1px solid var(--border-hairline);
-  border-radius: 3px;
+  background: rgba(7, 16, 28, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
   margin-bottom: 1.5rem;
 }
 
-.project-data-table td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--border-hairline);
+.project-meta-table td {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 0.75rem;
+  font-family: var(--font-mono);
 }
 
-.project-data-table tr:last-child td {
+.project-meta-table tr:last-child td {
   border-bottom: none;
 }
 
-.project-data-table .label {
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-}
-
-.project-data-table .value {
-  text-align: right;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: #F8FAFC;
-}
-
-.project-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--border-hairline);
-  padding-top: 1rem;
-  margin-top: auto;
-}
+.pmt-label { color: var(--text-muted); }
+.pmt-val { text-align: right; color: #FFFFFF; font-weight: 600; }
 
 .project-link {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 600;
-  color: #93C5FD;
+  font-weight: 700;
+  color: var(--accent-cyan);
   text-decoration: none;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -564,143 +466,160 @@ p {
   text-decoration: underline;
 }
 
-/* Capacitação: Minimal 2-column layout */
-.curriculum-grid {
+.visits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.visit-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.5rem;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.visit-card:hover {
+  border-color: var(--border-blue);
+}
+
+.visit-role {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.visit-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+  color: #FFFFFF;
+}
+
+.visit-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.tracks-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-.curriculum-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
-  border-radius: 4px;
-  padding: 2rem;
+.track-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2.25rem;
 }
 
-.curriculum-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.curriculum-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.curriculum-badge {
+.track-badge {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
+  font-size: 0.6875rem;
+  color: var(--accent-cyan);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.curriculum-bullets {
+.track-title {
+  font-size: 1.35rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.track-bullets {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
   margin-top: 1.25rem;
 }
 
-.curriculum-bullets li {
+.track-bullets li {
   font-size: 0.875rem;
-  color: #CBD5E1;
+  color: var(--text-secondary);
   position: relative;
   padding-left: 1.25rem;
 }
 
-.curriculum-bullets li::before {
-  content: "—";
+.track-bullets li::before {
+  content: "▸";
   position: absolute;
   left: 0;
-  color: var(--text-dim);
+  color: var(--accent-cyan);
 }
 
-/* EconData Week & Partners */
-.partners-block {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
-  border-radius: 4px;
-  padding: 2.5rem;
-}
-
-.partners-table {
+.partners-wall {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1px;
-  background: var(--border-hairline);
-  border: 1px solid var(--border-hairline);
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
   margin-top: 1.5rem;
 }
 
-.partner-cell {
-  background: var(--bg-surface);
-  padding: 1rem 1.25rem;
+.partner-item {
+  background: var(--bg-navy);
+  padding: 1.25rem 1.5rem;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #E2E8F0;
   display: flex;
   align-items: center;
   transition: background var(--duration-fast) var(--ease-out);
 }
 
-.partner-cell:hover {
-  background: var(--bg-card);
+.partner-item:hover {
+  background: var(--bg-surface);
+  color: var(--accent-cyan);
 }
 
-/* Institutional Department Connection */
-.dept-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-/* Footer: Clean & Serious (Zero comments, formal academic footer) */
 .footer {
   padding: 4rem 0 3rem;
-  background: var(--bg-canvas);
+  background: #040912;
+  border-top: 1px solid var(--border-subtle);
 }
 
-.footer-top {
+.footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 2.5rem;
-  border-bottom: 1px solid var(--border-hairline);
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 3rem;
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 2.5rem;
   margin-bottom: 2rem;
 }
 
 .footer-col h5 {
+  font-size: 0.75rem;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  text-transform: uppercase;
+  color: var(--text-muted);
   letter-spacing: 0.08em;
-  color: var(--text-dim);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.footer-list {
+.footer-links {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.65rem;
 }
 
-.footer-list a {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
+.footer-links a {
+  color: var(--text-secondary);
   text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-.footer-list a:hover {
-  color: #FFFFFF;
+.footer-links a:hover {
+  color: var(--accent-cyan);
 }
 
 .footer-bottom {
@@ -709,425 +628,409 @@ p {
   align-items: center;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--text-dim);
+  color: var(--text-muted);
 }
 
-/* Responsive */
 @media (max-width: 860px) {
-  .hero-layout, .dept-grid, .curriculum-grid, .footer-top {
+  .hero-grid, .spotlight-card, .tracks-grid, .footer-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-  .metrics-strip {
+  .stats-strip {
     grid-template-columns: repeat(2, 1fr);
   }
-  .metric-col:nth-child(2) {
+  .stat-cell:nth-child(2) {
     border-right: none;
   }
-  .metric-col:nth-child(3) {
-    border-top: 1px solid var(--border-hairline);
+  .stat-cell:nth-child(3), .stat-cell:nth-child(4) {
+    border-top: 1px solid var(--border-subtle);
   }
-  .metric-col:nth-child(4) {
-    border-top: 1px solid var(--border-hairline);
+  .stat-cell:nth-child(4) {
     border-right: none;
   }
-  .nav-links {
+  .nav-menu {
     display: none;
   }
 }
 
-  </style>
+</style>
 </head>
 <body>
 
-  <!-- Navigation -->
   <header class="header">
     <div class="container nav-container">
       <a href="#" class="brand">
-        <div class="brand-mark">ED</div>
-        <span class="brand-name">EconData Analytics</span>
-        <span class="brand-sub">PUC-Rio</span>
+        <img src="assets/img/logo.svg" alt="Logo EconData" class="brand-logo-img">
+        <div class="brand-text-block">
+          <span class="brand-title">ECONDATA</span>
+          <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
+        </div>
       </a>
 
       <nav>
-        <ul class="nav-links">
-          <li><a href="#sobre" class="nav-link">Sobre</a></li>
-          <li><a href="#projetos" class="nav-link">Pesquisa & Modelos</a></li>
+        <ul class="nav-menu">
+          <li><a href="#projetos" class="nav-link">Projetos</a></li>
+          <li><a href="#brfinance" class="nav-link">brfinance</a></li>
+          <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
-          <li><a href="#econdata-week" class="nav-link">EconData Week</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="header-cta">LinkedIn</a>
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">brfinance</a>
+        <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">LinkedIn</a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section: Editorial & Clean Structure -->
   <section class="hero">
-    <div class="container hero-layout">
+    <div class="container hero-grid">
       <div>
-        <div class="hero-meta-row">
-          <span class="meta-pill">Fundado em 2022</span>
-          <span class="meta-pill">Gávea, Rio de Janeiro</span>
-        </div>
-        <h1 class="display-title">
-          Ciência de dados aplicada à <em>teoria econômica</em> e aos mercados.
+        <div class="mono-tag">DEPARTAMENTO DE ECONOMIA • PUC-RIO</div>
+        <h1 class="hero-title">
+          CIÊNCIA DE DADOS APLICADA À <span>ECONOMIA</span>.
         </h1>
         <p class="hero-lead">
-          Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Aliamos o rigor metodológico e econométrico tradicional à modelagem preditiva, engenharia de dados e finanças quantitativas.
+          Capacitamos alunos de Economia da PUC-Rio no uso avançado de ciência de dados e finanças quantitativas. Desenvolvemos projetos reais, ferramentas open source para o mercado brasileiro e preparamos nossos membros para grandes gestoras, bancos e consultorias.
         </p>
-        <div class="hero-action-row">
-          <a href="#projetos" class="btn-solid">Ver Modelos & Projetos</a>
-          <a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer" class="btn-ghost">Núcleos do Departamento</a>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn btn-primary">Conhecer Projetos</a>
+          <a href="#brfinance" class="btn btn-ghost">Pacote brfinance</a>
         </div>
       </div>
 
-      <!-- Live Terminal / Audit Block -->
-      <div class="terminal-block">
-        <div class="terminal-header">
-          <span>BACKTEST • SETOR BANCÁRIO BR (2015–2016)</span>
-          <span class="status-indicator">CONCLUÍDO</span>
+      <div class="hero-wire-card">
+        <div class="hwc-header">
+          <span class="hwc-badge">MODELAGEM QUANTITATIVA</span>
+          <span class="mono-tag">XGBOOST</span>
         </div>
-        <table class="terminal-table">
-          <thead>
-            <tr>
-              <th>Estratégia / Carteira</th>
-              <th>Retorno</th>
-              <th>Sharpe</th>
-              <th>Max DD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="row-accent">
-              <td><strong>XGBoost Walk-Forward</strong></td>
-              <td class="tabular-data" style="color: var(--accent-signal);">+156.4%</td>
-              <td class="tabular-data">1.38</td>
-              <td class="tabular-data">-18.2%</td>
-            </tr>
-            <tr>
-              <td>Equiponderada (4 Grandes)</td>
-              <td class="tabular-data">+88.1%</td>
-              <td class="tabular-data">0.89</td>
-              <td class="tabular-data">-27.4%</td>
-            </tr>
-            <tr>
-              <td>Benchmark (BOVA11)</td>
-              <td class="tabular-data">+43.2%</td>
-              <td class="tabular-data">0.42</td>
-              <td class="tabular-data">-39.1%</td>
-            </tr>
-            <tr>
-              <td>100% Itaú (ITUB4)</td>
-              <td class="tabular-data">+61.0%</td>
-              <td class="tabular-data">0.64</td>
-              <td class="tabular-data">-31.5%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Metrics Ribbon: Institutional Data Strip -->
-  <section class="metrics-strip">
-    <div class="metric-col">
-      <div class="metric-number tabular-data">26</div>
-      <div class="metric-caption">Alunos pesquisadores e analistas no corpo discente da graduação.</div>
-    </div>
-    <div class="metric-col">
-      <div class="metric-number tabular-data">03</div>
-      <div class="metric-caption">Edições anuais da conferência técnica EconData Week realizadas.</div>
-    </div>
-    <div class="metric-col">
-      <div class="metric-number tabular-data">11</div>
-      <div class="metric-caption">Instituições parceiras participantes (Assets, Consultorias e Bancos).</div>
-    </div>
-    <div class="metric-col">
-      <div class="metric-number tabular-data">100%</div>
-      <div class="metric-caption">Projetos com código aberto, reprodutibilidade em R e Python.</div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section class="section" id="projetos">
-    <div class="container">
-      <div class="section-title-wrap">
-        <span class="label-tech">Produção Analítica</span>
-        <h2 class="section-title">Projetos de Modelagem & Pesquisas Desenvolvidas</h2>
-      </div>
-
-      <!-- Discrete Filter Tabs -->
-      <div class="filter-tabs">
-        <button class="tab-btn active" data-filter="all">Todos</button>
-        <button class="tab-btn" data-filter="quant">Finanças Quantitativas</button>
-        <button class="tab-btn" data-filter="macro">Macroeconomia Aplicada</button>
-        <button class="tab-btn" data-filter="ml">Machine Learning</button>
-      </div>
-
-      <div class="projects-container">
-        
-        <!-- Card 1 -->
-        <div class="project-item" data-category="quant ml">
-          <div>
-            <span class="project-tag">Estudo de Estresse • Finanças Quant</span>
-            <h3 class="project-name">Resiliência Bancária na Crise de 2015–2016</h3>
-            <p class="project-desc">
-              Backtest comparativo de alocação de risco e modelos preditivos em árvores de decisão (XGBoost) sobre ações de bancos brasileiros durante a recessão com Selic a 14,25%.
-            </p>
-            <table class="project-data-table">
-              <tr>
-                <td class="label">Capital Inicial</td>
-                <td class="value">R$ 1.000.000,00</td>
-              </tr>
-              <tr>
-                <td class="label">Benchmark</td>
-                <td class="value">BOVA11</td>
-              </tr>
-              <tr>
-                <td class="label">Ativos Cobertos</td>
-                <td class="value">BBAS3, ITUB4, BBDC4, SANB11</td>
-              </tr>
-              <tr>
-                <td class="label">Ferramentas</td>
-                <td class="value">R, Python, PerformanceAnalytics</td>
-              </tr>
-            </table>
+        <div class="hwc-stat-row">
+          <div class="hwc-stat-box">
+            <div class="hwc-stat-lbl">Capital Alvo Simulado</div>
+            <div class="hwc-stat-val tabular-num">R$ 1.000.000</div>
           </div>
-          <div class="project-foot">
-            <span class="label-tech">Documento Completo</span>
-            <a href="relatorio_resiliencia_bancaria.html" target="_blank" class="project-link">
-              Abrir Relatório ↗
+          <div class="hwc-stat-box">
+            <div class="hwc-stat-lbl">Retorno Crise 2015–2016</div>
+            <div class="hwc-stat-val highlight tabular-num">+156.4%</div>
+          </div>
+        </div>
+        <div class="code-box">
+<span class="code-comment"># Backtest Walk-Forward EconData</span>
+portfolio &lt;- run_xgboost_strategy(
+  universe = c("BBAS3", "ITUB4", "BBDC4", "SANB11"),
+  rebalance = "monthly",
+  risk_model = "max_sharpe"
+)
+<span class="code-func">&gt; Benchmark BOVA11 superado em +113.2% p.p.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-strip">
+    <div class="stat-cell">
+      <div class="stat-big tabular-num">+26</div>
+      <div class="stat-desc">Membros ativos entre pesquisadores e analistas discentes da PUC-Rio.</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big tabular-num">3ª</div>
+      <div class="stat-desc">Edições da EconData Week organizadas com líderes do mercado de capitais.</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big tabular-num">+10</div>
+      <div class="stat-desc">Instituições parceiras em visitas técnicas, palestras e workshops.</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big tabular-num">100%</div>
+      <div class="stat-desc">Foco em dados econômicos reais, código reprodutível em R e Python.</div>
+    </div>
+  </section>
+
+  <section class="section" id="brfinance">
+    <div class="container">
+      <div class="spotlight-card">
+        <div>
+          <span class="mono-tag">PROJETO DE DESTAQUE • OPEN SOURCE EM R</span>
+          <h2 class="spotlight-title">Conheça o brfinance</h2>
+          <p class="spotlight-desc">
+            Um pacote em <strong>R</strong> desenvolvido por um ex-membro do <strong>EconData</strong> que facilita o acesso a dados macroeconômicos brasileiros. Com poucas linhas de código, é possível baixar e visualizar indicadores como <strong>taxa Selic, inflação e desemprego</strong>, utilizando dados oficiais do Banco Central e IBGE.
+          </p>
+          <p class="spotlight-desc">
+            O pacote também permite gerar gráficos e comparar séries econômicas, tornando a análise de dados mais rápida e acessível.
+          </p>
+          <div style="display: flex; gap: 1rem;">
+            <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              Repositório no GitHub ↗
             </a>
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="project-item" data-category="macro ml">
-          <div>
-            <span class="project-tag">Modelagem Preditiva • Séries Temporais</span>
-            <h3 class="project-name">Nowcasting de Indicadores de Atividade (IBC-Br)</h3>
-            <p class="project-desc">
-              Estimação em tempo real da atividade econômica brasileira a partir de dados de alta frequência (consumo elétrico ONS, fluxo em rodovias pedagiadas e arrecadação federal).
-            </p>
-            <table class="project-data-table">
-              <tr>
-                <td class="label">Horizonte</td>
-                <td class="value">T+1 Mês</td>
-              </tr>
-              <tr>
-                <td class="label">Método</td>
-                <td class="value">Modelos de Fatores Dinâmicos (DFM)</td>
-              </tr>
-              <tr>
-                <td class="label">Fonte dos Dados</td>
-                <td class="value">Banco Central, IBGE, ONS</td>
-              </tr>
-              <tr>
-                <td class="label">Ambiente</td>
-                <td class="value">Python (Statsmodels, Pandas)</td>
-              </tr>
-            </table>
-          </div>
-          <div class="project-foot">
-            <span class="label-tech">Status</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">Pipeline Ativo</span>
+        <div>
+          <div class="code-box">
+<span class="code-comment"># Instalação e uso do pacote brfinance</span>
+devtools::install_github("efram2/brfinance")
+library(brfinance)
+
+<span class="code-comment"># Baixar dados da taxa Selic e IPCA</span>
+dados &lt;- get_indicators(
+  series = c("selic", "ipca"),
+  start_date = "2020-01-01"
+)
+
+<span class="code-func">plot_economic_series(dados)</span>
           </div>
         </div>
-
-        <!-- Card 3 -->
-        <div class="project-item" data-category="quant">
-          <div>
-            <span class="project-tag">Gestão de Risco • Otimização Convexa</span>
-            <h3 class="project-name">Construção de Portfólios com Volatilidade Condicional</h3>
-            <p class="project-desc">
-              Otimização de pesos da carteira através do estimador Shrinkage de Ledoit-Wolf para a matriz de covariância, mitigando instabilidades amostrais no Ibovespa.
-            </p>
-            <table class="project-data-table">
-              <tr>
-                <td class="label">Objetivo</td>
-                <td class="value">Maximização de Sharpe & CVaR</td>
-              </tr>
-              <tr>
-                <td class="label">Amostra</td>
-                <td class="value">Ações com liquidez diária > R$ 10M</td>
-              </tr>
-              <tr>
-                <td class="label">Regularização</td>
-                <td class="value">Ledoit-Wolf Shrinkage</td>
-              </tr>
-              <tr>
-                <td class="label">Stack</td>
-                <td class="value">RStudio, Tidyverse</td>
-              </tr>
-            </table>
-          </div>
-          <div class="project-foot">
-            <span class="label-tech">Status</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">Turma de Aplicação</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- Capacitação Section -->
+  <section class="section" id="projetos">
+    <div class="container">
+      <div class="section-head">
+        <span class="mono-tag">PESQUISA & PRODUÇÃO</span>
+        <h2 class="section-title">Projetos & Modelos Quantitativos</h2>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div>
+            <span class="mono-tag">MODELO PREMIADO</span>
+            <h3 class="project-title">Resiliência Bancária na Crise (2015–2016)</h3>
+            <p class="project-body">
+              Análise comparativa e backtest walk-forward com Machine Learning (XGBoost) avaliando a resiliência das ações do setor bancário durante o estresse recessivo de 2015 a 2016.
+            </p>
+            <table class="project-meta-table">
+              <tr>
+                <td class="pmt-label">Capital Inicial</td>
+                <td class="pmt-val">R$ 1.000.000,00</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Benchmark</td>
+                <td class="pmt-val">BOVA11</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Ativos Cobertos</td>
+                <td class="pmt-val">BBAS3, ITUB4, BBDC4, SANB11</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Tecnologias</td>
+                <td class="pmt-val">R, Python, XGBoost</td>
+              </tr>
+            </table>
+          </div>
+          <a href="relatorio_resiliencia_bancaria.html" target="_blank" class="project-link">
+            Visualizar Relatório Técnico ↗
+          </a>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <span class="mono-tag">EQUITY & ALOCAÇÃO</span>
+            <h3 class="project-title">Carteira de Alocação Sistemática Bancária</h3>
+            <p class="project-body">
+              Construção de portfólios balanceados com pesos calculados dinamicamente via retornos esperados e controle rigoroso de volatilidade individual dos bancos listados.
+            </p>
+            <table class="project-meta-table">
+              <tr>
+                <td class="pmt-label">Ativo Destaque</td>
+                <td class="pmt-val">SANB11 (31.98%)</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Diversificação</td>
+                <td class="pmt-val">ITUB4, BBDC4, ABCB4</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Método de Otimização</td>
+                <td class="pmt-val">Retorno Ajustado à Volatilidade</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Execução</td>
+                <td class="pmt-val">Python / JSON Pipeline</td>
+              </tr>
+            </table>
+          </div>
+          <span class="project-link" style="color: var(--text-muted);">Modelo Integrado</span>
+        </div>
+
+        <div class="project-card">
+          <div>
+            <span class="mono-tag">MACROECONOMETRIA</span>
+            <h3 class="project-title">Nowcasting de Atividade Econômica & IBC-Br</h3>
+            <p class="project-body">
+              Modelagem preditiva para antecipação de indicadores de atividade econômica em tempo real com base em séries de alta frequência de energia, tráfego rodoviário e arrecadação.
+            </p>
+            <table class="project-meta-table">
+              <tr>
+                <td class="pmt-label">Horizonte</td>
+                <td class="pmt-val">T+1 Mês</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Metodologia</td>
+                <td class="pmt-val">Dynamic Factor Models (DFM)</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Fontes</td>
+                <td class="pmt-val">BCB, IBGE, ONS</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Ambiente</td>
+                <td class="pmt-val">Python / Pandas / Statsmodels</td>
+              </tr>
+            </table>
+          </div>
+          <span class="project-link" style="color: var(--text-muted);">Turma de Aplicação</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visitas">
+    <div class="container">
+      <div class="section-head">
+        <span class="mono-tag">CONEXÃO COM O MERCADO</span>
+        <h2 class="section-title">Visitas Institucionais & Palestras</h2>
+        <p style="margin-top: 0.5rem;">Aproximando os alunos de economia das principais instituições financeiras, gestoras e consultorias do país.</p>
+      </div>
+
+      <div class="visits-grid">
+        <div class="visit-card">
+          <span class="visit-role">Visita Técnica</span>
+          <h3 class="visit-title">BTG Pactual</h3>
+          <p class="visit-desc">Visita ao maior banco de investimentos da América Latina para imersão em mesas de operações, research e sales.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Visita Técnica</span>
+          <h3 class="visit-title">Itaú Asset Management</h3>
+          <p class="visit-desc">Apresentação com gestores e analistas sobre alocação de ativos, gestão quantitativa e oportunidades profissionais.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Visita Técnica</span>
+          <h3 class="visit-title">Banco BOCOM BBM</h3>
+          <p class="visit-desc">Tour institucional e palestras sobre cenário macroeconômico, crédito e mesas de tesouraria.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Visita Técnica</span>
+          <h3 class="visit-title">Visagio Consultoria</h3>
+          <p class="visit-desc">Troca de experiências sobre resolução prática de problemas de negócios e aplicação de analytics na consultoria.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Palestra Convidada</span>
+          <h3 class="visit-title">Armínio Fraga</h3>
+          <p class="visit-desc">Encontro exclusivo com o ex-presidente do Banco Central abordando desafios fiscais e macroeconomia brasileira.</p>
+        </div>
+
+        <div class="visit-card">
+          <span class="visit-role">Palestra Inaugural</span>
+          <h3 class="visit-title">Erick Coser (Datarisk)</h3>
+          <p class="visit-desc">Visão prática sobre fundação de empresas de dados, inteligência analítica e o mercado de ciência de dados no Brasil.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem;">
+        <span class="mono-tag">PARCEIROS NA ECONDATA WEEK</span>
+        <div class="partners-wall">
+          <div class="partner-item">BCG X</div>
+          <div class="partner-item">Itaú Asset Management</div>
+          <div class="partner-item">Banco BOCOM BBM</div>
+          <div class="partner-item">Vinci Compass</div>
+          <div class="partner-item">G5 Partners</div>
+          <div class="partner-item">Bahia Asset Management</div>
+          <div class="partner-item">Turim MFO</div>
+          <div class="partner-item">Hashdex</div>
+          <div class="partner-item">ARX Investimentos</div>
+          <div class="partner-item">Visagio</div>
+          <div class="partner-item">Karoon Energy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="capacitacao">
     <div class="container">
-      <div class="section-title-wrap">
-        <span class="label-tech">Formação Técnica</span>
-        <h2 class="section-title">Estrutura Curricular e Nivelamento</h2>
+      <div class="section-head">
+        <span class="mono-tag">FORMAÇÃO TÉCNICA</span>
+        <h2 class="section-title">Turmas de Capacitação & Aplicação</h2>
       </div>
 
-      <div class="curriculum-grid">
-        <div class="curriculum-card">
-          <div class="curriculum-head">
-            <h3 class="curriculum-title">Turma de Capacitação</h3>
-            <span class="curriculum-badge">Semestre 1</span>
-          </div>
+      <div class="tracks-grid">
+        <div class="track-card">
+          <span class="track-badge">NIVELAMENTO TEÓRICO E PRÁTICO</span>
+          <h3 class="track-title">Turma de Capacitação</h3>
           <p>
-            Imersão nos fundamentos computacionais necessários para conduzir pesquisas econômicas reprodutíveis e lidar com grandes bases de dados.
+            Ensino estruturado dos instrumentos e linguagens analíticas mais demandadas no mercado, partindo de bancos de dados reais.
           </p>
-          <ul class="curriculum-bullets">
-            <li>Linguagem R & RStudio: Programação funcional, manipulação vetorial com Dplyr e Tidyverse.</li>
-            <li>Python Científico: Vetorização com NumPy, DataFrames com Pandas e automação de coleta de dados via APIs (BCB/SGS, SIDRA).</li>
-            <li>Versionamento e Ambientes: Fluxo de trabalho profissional com Git, GitHub e ambientes virtuais.</li>
-            <li>Econometria Aplicada: Diagnósticos de séries temporais, quebras estruturais e testes de raiz unitária.</li>
+          <ul class="track-bullets">
+            <li>Linguagem R & RStudio: Programação funcional, Tidyverse, Dplyr e séries temporais.</li>
+            <li>Python Científico: Pandas, NumPy, APIs públicas (BCB, IBGE) e automação de coleta.</li>
+            <li>Introdução a Redes Neurais e Machine Learning para séries temporais.</li>
+            <li>Boas práticas em versionamento com Git e GitHub.</li>
           </ul>
         </div>
 
-        <div class="curriculum-card">
-          <div class="curriculum-head">
-            <h3 class="curriculum-title">Turma de Aplicação</h3>
-            <span class="curriculum-badge">Semestre 2+</span>
-          </div>
+        <div class="track-card">
+          <span class="track-badge">PESQUISA & PROJETOS</span>
+          <h3 class="track-title">Turma de Aplicação</h3>
           <p>
-            Desenvolvimento direto de papers, backtests financeiros e submissões a desafios competitivos do mercado de capitais.
+            Membros que dominam o instrumental desenvolvem projetos competitivos, relatórios proprietários e papers empíricos.
           </p>
-          <ul class="curriculum-bullets">
-            <li>Modelagem Supervisionada: Gradient Boosting, Random Forests e regularização Lasso/Ridge em dados econômicos.</li>
-            <li>Simulação de Carteiras: Backtesting walk-forward, custos de fricção, slippage e métricas de drawdown.</li>
-            <li>Painéis Analíticos: Construção de relatórios reprodutíveis em R Markdown e visualizações estáticas de alto impacto.</li>
-            <li>Apresentações com Especialistas: Defesa de teses para economistas-chefe e gestores parceiros do núcleo.</li>
+          <ul class="track-bullets">
+            <li>Modelagem supervisionada com Gradient Boosting, Random Forests e XGBoost.</li>
+            <li>Simulação de estratégias sistemáticas, walk-forward backtesting e métricas de risco.</li>
+            <li>Apresentação de pesquisas para gestores e economistas convidados.</li>
+            <li>Construção e manutenção de pacotes open source (como o brfinance).</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EconData Week -->
-  <section class="section" id="econdata-week">
-    <div class="container">
-      <div class="section-title-wrap">
-        <span class="label-tech">Conexão Institucional</span>
-        <h2 class="section-title">EconData Week & Mercado Profissional</h2>
-      </div>
-
-      <div class="partners-block">
-        <p style="font-size: 1.05rem; color: #E2E8F0; max-width: 65ch; margin-bottom: 2rem;">
-          Semana acadêmica organizada em parceria com o Departamento de Economia da PUC-Rio. Encontros, palestras técnicas e painéis com executivos sobre macroeconomia, finanças quantitativas e ciência de dados.
-        </p>
-
-        <span class="label-tech">Instituições Participantes nas Edições Recentes</span>
-        <div class="partners-table">
-          <div class="partner-cell">BCG X</div>
-          <div class="partner-cell">Itaú Asset Management</div>
-          <div class="partner-cell">Banco BOCOM BBM</div>
-          <div class="partner-cell">Vinci Compass</div>
-          <div class="partner-cell">G5 Partners</div>
-          <div class="partner-cell">Bahia Asset Management</div>
-          <div class="partner-cell">Turim MFO</div>
-          <div class="partner-cell">Hashdex</div>
-          <div class="partner-cell">ARX Investimentos</div>
-          <div class="partner-cell">Visagio</div>
-          <div class="partner-cell">Karoon Energy</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sobre PUC-Rio -->
-  <section class="section" id="sobre">
-    <div class="container dept-grid">
-      <div>
-        <span class="label-tech">Departamento de Economia</span>
-        <h2 class="section-title" style="margin-top: 0.5rem; margin-bottom: 1.25rem;">
-          Tradição Acadêmica na Gávea
-        </h2>
-        <p style="margin-bottom: 1.25rem;">
-          O EconData Analytics opera como um dos núcleos acadêmicos oficiais do Departamento de Economia da Pontifícia Universidade Católica do Rio de Janeiro.
-        </p>
-        <p style="margin-bottom: 1.5rem;">
-          Nosso propósito é conectar o rigor acadêmico consolidado da universidade às exigências analíticas contemporâneas do mercado de capitais, centros de pesquisa e formulação de políticas públicas.
-        </p>
-        <a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer" class="project-link">
-          Página oficial dos Núcleos da PUC-Rio ↗
-        </a>
-      </div>
-
-      <div style="border: 1px solid var(--border-hairline); background: var(--bg-surface); padding: 2rem; border-radius: 4px;">
-        <h4 style="margin-bottom: 0.75rem;">Princípios Operacionais</h4>
-        <p style="font-size: 0.875rem; margin-bottom: 1rem; color: #CBD5E1;">
-          <strong>Rigor Empírico:</strong> Hipóteses testadas em dados de mercado reais, evitando abstrações vazias.
-        </p>
-        <p style="font-size: 0.875rem; margin-bottom: 1rem; color: #CBD5E1;">
-          <strong>Reprodutibilidade:</strong> Todos os modelos possuem controle estrito de versão e documentação de código.
-        </p>
-        <p style="font-size: 0.875rem; color: #CBD5E1;">
-          <strong>Formação Contínua:</strong> Alunos mais experientes capacitam novos membros, garantindo continuidade institucional.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer (Zero comentários, austero e oficial) -->
   <footer class="footer" id="contato">
     <div class="container">
-      <div class="footer-top">
+      <div class="footer-grid">
         <div>
-          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-            <div class="brand-mark">ED</div>
-            <span style="font-weight: 600; font-size: 0.95rem;">EconData Analytics</span>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+            <img src="assets/img/logo.svg" alt="Logo EconData" style="width: 28px; height: 28px;">
+            <span style="font-weight: 800; font-size: 1rem; letter-spacing: 0.04em;">ECONDATA ANALYTICS</span>
           </div>
           <p style="font-size: 0.85rem; max-width: 38ch;">
             Núcleo de Ciência de Dados dos Alunos de Economia da Pontifícia Universidade Católica do Rio de Janeiro.
           </p>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-top: 0.75rem;">
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
             Rua Marquês de São Vicente, 225 — Gávea, Rio de Janeiro - RJ, 22451-900
           </p>
         </div>
 
         <div class="footer-col">
           <h5>Navegação</h5>
-          <ul class="footer-list">
-            <li><a href="#sobre">Sobre o Núcleo</a></li>
-            <li><a href="#projetos">Pesquisa & Modelos</a></li>
-            <li><a href="#capacitacao">Estrutura Curricular</a></li>
-            <li><a href="#econdata-week">EconData Week</a></li>
+          <ul class="footer-links">
+            <li><a href="#projetos">Projetos & Modelos</a></li>
+            <li><a href="#brfinance">Pacote brfinance</a></li>
+            <li><a href="#visitas">Visitas & Palestras</a></li>
+            <li><a href="#capacitacao">Capacitação</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h5>Canais Oficiais</h5>
-          <ul class="footer-list">
+          <ul class="footer-links">
             <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn Institucional</a></li>
             <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram (@econdata_analytics)</a></li>
-            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">PUC-Rio Economia</a></li>
+            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Núcleos PUC-Rio</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 EconData Analytics • PUC-Rio</span>
+        <span>© 2026 ECONDATA Analytics • PUC-Rio</span>
         <span>Hospedado no GitHub Pages</span>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
-

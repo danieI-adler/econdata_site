@@ -1,9 +1,22 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <rect width="48" height="48" rx="10" fill="#0A111E"/>
-  <path d="M10 36L18 24L26 30L38 12" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M28 12H38V22" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="18" cy="24" r="3" fill="#38BDF8"/>
-  <circle cx="26" cy="30" r="3" fill="#38BDF8"/>
-  <circle cx="38" cy="12" r="3.5" fill="#38BDF8"/>
-  <line x1="10" y1="40" x2="38" y2="40" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Outer Pentagon/Hexagon Facets -->
+  <polygon points="50,10 88,28 73,78 27,78 12,28" stroke="#38BDF8" stroke-width="2" fill="none" opacity="0.9"/>
+  <!-- Inner Facet Triangles -->
+  <polygon points="50,10 50,45 88,28" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.75"/>
+  <polygon points="50,10 50,45 12,28" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.75"/>
+  <polygon points="12,28 50,45 27,78" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <polygon points="88,28 50,45 73,78" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <polygon points="27,78 50,45 73,78" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.75"/>
+  <!-- Cross Connectors -->
+  <line x1="50" y1="45" x2="50" y2="90" stroke="#38BDF8" stroke-width="1.5" opacity="0.7"/>
+  <line x1="27" y1="78" x2="50" y2="90" stroke="#38BDF8" stroke-width="1.5" opacity="0.7"/>
+  <line x1="73" y1="78" x2="50" y2="90" stroke="#38BDF8" stroke-width="1.5" opacity="0.7"/>
+  <!-- Vertices -->
+  <circle cx="50" cy="10" r="2.5" fill="#FFFFFF"/>
+  <circle cx="88" cy="28" r="2.5" fill="#FFFFFF"/>
+  <circle cx="73" cy="78" r="2.5" fill="#FFFFFF"/>
+  <circle cx="27" cy="78" r="2.5" fill="#FFFFFF"/>
+  <circle cx="12" cy="28" r="2.5" fill="#FFFFFF"/>
+  <circle cx="50" cy="45" r="2.5" fill="#FFFFFF"/>
+  <circle cx="50" cy="90" r="2" fill="#FFFFFF"/>
 </svg>
