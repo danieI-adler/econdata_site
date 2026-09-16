@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ECONDATA Analytics — Núcleo de Ciência de Dados PUC-Rio</title>
-  <meta name="description" content="ECONDATA Analytics — Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Modelagem preditiva, finanças quantitativas, capacitação e projetos de dados reais.">
+  <meta name="description" content="ECONDATA Analytics — Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Modelagem empírica, capacitação técnica, inteligência artificial, bancos de dados e conexão direta com o mercado financeiro.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="ECONDATA Analytics — PUC-Rio">
-  <meta property="og:description" content="Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio.">
+  <meta property="og:description" content="Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Formação técnica rigorosa, diretoria 26.2 e projetos reais.">
   <meta property="og:url" content="https://daniei-adler.github.io/econdata_site/">
-  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+  <link rel="icon" type="image/png" href="assets/img/econdata_logo_full.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@ body {
   padding: 0 1.5rem;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   font-weight: 700;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -131,8 +131,9 @@ p {
 }
 
 .brand-logo-img {
-  width: 36px;
-  height: 36px;
+  width: auto;
+  height: 38px;
+  border-radius: 4px;
 }
 
 .brand-text-block {
@@ -157,14 +158,14 @@ p {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.75rem;
   list-style: none;
 }
 
 .nav-link {
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -254,74 +255,78 @@ p {
   flex-wrap: wrap;
 }
 
-.hero-wire-card {
-  background: var(--bg-navy);
+.hero-executive-card {
+  background: linear-gradient(180deg, #0d2038 0%, #081324 100%);
   border: 1px solid var(--border-blue);
   border-radius: 8px;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.hwc-header {
+.hec-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 0.85rem;
-  margin-bottom: 1.25rem;
 }
 
-.hwc-badge {
+.hec-badge {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--accent-cyan);
+  font-weight: 600;
 }
 
-.hwc-stat-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+.hec-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.hwc-stat-box {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 1rem;
-  border-radius: 4px;
-}
-
-.hwc-stat-lbl {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.hwc-stat-val {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  margin-top: 0.25rem;
-}
-
-.hwc-stat-val.highlight {
-  color: var(--accent-emerald);
-}
-
-.code-box {
-  background: #040912;
+.hec-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(16, 35, 61, 0.5);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
-  padding: 1.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  color: #93C5FD;
-  line-height: 1.6;
-  overflow-x: auto;
+  padding: 0.85rem 1rem;
 }
 
-.code-comment { color: #64748B; }
-.code-func { color: #38BDF8; font-weight: 600; }
+.hec-pillar-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.hec-pillar-content h4 {
+  font-size: 0.85rem;
+  color: #FFFFFF;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.01em;
+}
+
+.hec-pillar-content p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.hec-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
 
 .stats-strip {
   display: grid;
@@ -367,29 +372,235 @@ p {
   margin-top: 0.65rem;
 }
 
-.spotlight-card {
-  background: linear-gradient(135deg, var(--bg-navy) 0%, var(--bg-surface) 100%);
-  border: 1px solid var(--border-blue);
-  border-radius: 8px;
-  padding: 2.5rem;
-  margin-bottom: 3rem;
+.leadership-grid {
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr;
-  gap: 2.5rem;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
-.spotlight-title {
-  font-size: 1.6rem;
-  margin: 0.75rem 0 1rem;
+.leadership-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.leadership-card:hover {
+  border-color: var(--border-blue);
+  background: var(--bg-surface);
+  transform: translateY(-2px);
+}
+
+.leadership-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid var(--border-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+.leadership-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.leadership-role {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.leadership-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 0.15rem;
+}
+
+.leadership-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.training-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 3rem;
+}
+
+.module-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.module-card:hover {
+  border-color: var(--border-blue);
+  background: var(--bg-surface);
+}
+
+.module-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.module-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.85rem;
   color: #FFFFFF;
 }
 
-.spotlight-desc {
-  font-size: 1rem;
-  line-height: 1.65;
+.module-desc {
+  font-size: 0.875rem;
   color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.module-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.module-list li {
+  font-size: 0.8125rem;
+  color: #E2E8F0;
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.module-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-cyan);
+  font-weight: bold;
+}
+
+.db-flow-container {
+  background: linear-gradient(135deg, rgba(16, 35, 61, 0.7) 0%, rgba(11, 25, 44, 0.9) 100%);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 2.25rem;
+  margin-top: 1rem;
+}
+
+.db-flow-title {
+  font-size: 1.15rem;
+  color: #FFFFFF;
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+}
+
+.flow-step-card {
+  background: rgba(7, 16, 28, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.35rem;
+}
+
+.flow-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.flow-step-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: #FFFFFF;
+}
+
+.flow-step-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.ps-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.ps-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.75rem;
+  position: relative;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.ps-card:hover {
+  border-color: var(--border-blue);
+}
+
+.ps-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid var(--border-blue);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.ps-title {
+  font-size: 1.15rem;
+  margin-bottom: 0.65rem;
+  color: #FFFFFF;
+}
+
+.ps-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
 }
 
 .projects-grid {
@@ -517,54 +728,6 @@ p {
   line-height: 1.5;
 }
 
-.tracks-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.track-card {
-  background: var(--bg-navy);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  padding: 2.25rem;
-}
-
-.track-badge {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--accent-cyan);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.track-title {
-  font-size: 1.35rem;
-  margin: 0.5rem 0 1rem;
-}
-
-.track-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  margin-top: 1.25rem;
-}
-
-.track-bullets li {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  position: relative;
-  padding-left: 1.25rem;
-}
-
-.track-bullets li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--accent-cyan);
-}
-
 .partners-wall {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -644,9 +807,9 @@ p {
 }
 
 @media (max-width: 860px) {
-  .hero-grid, .spotlight-card, .tracks-grid, .footer-grid {
+  .hero-grid, .footer-grid, .flow-steps, .ps-timeline {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   .stats-strip {
     grid-template-columns: repeat(2, 1fr);
@@ -665,14 +828,22 @@ p {
   }
 }
 
-</style>
+@media (max-width: 480px) {
+  .leadership-grid {
+    grid-template-columns: 1fr;
+  }
+  .leadership-card {
+    padding: 1.25rem;
+  }
+}
+  </style>
 </head>
 <body>
 
   <header class="header">
     <div class="container nav-container">
       <a href="#" class="brand">
-        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img" style="width: auto; height: 38px; border-radius: 4px;">
+        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
         <div class="brand-text-block">
           <span class="brand-title">ECONDATA</span>
           <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
@@ -681,15 +852,14 @@ p {
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#sobre" class="nav-link">Sobre</a></li>
-          <li><a href="#projetos" class="nav-link">Projetos</a></li>
-          <li><a href="#areas" class="nav-link">Áreas</a></li>
+          <li><a href="#diretoria" class="nav-link">Diretoria</a></li>
           <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
+          <li><a href="#processo-seletivo" class="nav-link">Processo Seletivo</a></li>
+          <li><a href="#projetos" class="nav-link">Projetos</a></li>
           <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
       </nav>
-
     </div>
   </header>
 
@@ -701,38 +871,45 @@ p {
           CIÊNCIA DE DADOS APLICADA À <span>ECONOMIA</span>.
         </h1>
         <p class="hero-lead">
-          Capacitamos alunos de Economia da PUC-Rio no uso avançado de ciência de dados e finanças quantitativas. Desenvolvemos projetos reais, ferramentas open source para o mercado brasileiro e preparamos nossos membros para grandes gestoras, bancos e consultorias.
+          Núcleo discente de inteligência analítica da PUC-Rio. Desenvolvemos capacitação prática em IA, bancos de dados e programação estatística, conectando alunos de graduação às principais instituições do mercado de capitais e consultorias.
         </p>
         <div class="hero-actions">
-          <a href="#projetos" class="btn btn-primary">Explorar Projetos</a>
-          <a href="#capacitacao" class="btn btn-ghost">Conhecer a Capacitação</a>
+          <a href="#capacitacao" class="btn btn-primary">Ver Capacitação</a>
+          <a href="#diretoria" class="btn btn-ghost">Gestão 26.2</a>
         </div>
       </div>
 
-      <div class="hero-wire-card">
-        <div class="hwc-header">
-          <span class="hwc-badge">NÚCLEO DISCENTE PUC-RIO</span>
-          <span class="mono-tag">EST. 2022</span>
+      <div class="hero-executive-card">
+        <div class="hec-header">
+          <span class="hec-badge">GESTÃO VIGENTE • 2026.2</span>
+          <span class="mono-tag">PUC-RIO</span>
         </div>
-        <div class="hwc-stat-row">
-          <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Departamento</div>
-            <div class="hwc-stat-val" style="font-size: 1.05rem;">Economia PUC-Rio</div>
+        <div class="hec-pillars">
+          <div class="hec-pillar-item">
+            <span class="hec-pillar-num">01</span>
+            <div class="hec-pillar-content">
+              <h4>Formação Técnica Rigorosa</h4>
+              <p>Módulos de IA prática (LLMs e agentes), SQL direto na fonte, Power BI, Excel analítico e R com dplyr.</p>
+            </div>
           </div>
-          <div class="hwc-stat-box">
-            <div class="hwc-stat-lbl">Atuação</div>
-            <div class="hwc-stat-val highlight" style="font-size: 1.05rem;">Dados & Mercado</div>
+          <div class="hec-pillar-item">
+            <span class="hec-pillar-num">02</span>
+            <div class="hec-pillar-content">
+              <h4>Conexão com o Mercado</h4>
+              <p>Workshops, visitas institucionais e conferências com as maiores gestoras, bancos e consultorias do país.</p>
+            </div>
+          </div>
+          <div class="hec-pillar-item">
+            <span class="hec-pillar-num">03</span>
+            <div class="hec-pillar-content">
+              <h4>Pesquisa & Código Aberto</h4>
+              <p>Projetos empíricos reais e ferramentas públicas como o pacote brfinance para séries macroeconômicas.</p>
+            </div>
           </div>
         </div>
-        <div style="background: rgba(7, 16, 28, 0.7); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 1.25rem;">
-          <p style="font-size: 0.875rem; color: #E2E8F0; margin-bottom: 0.75rem;">
-            <strong>Missão Institucional:</strong> Capacitar discentes em ciência de dados e econometria empírica, articulando turmas de treinamento, aulas abertas e pontes diretas com o mercado de capitais.
-          </p>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <span class="mono-tag" style="font-size: 0.65rem;">Processo Seletivo Semestral</span>
-            <span class="mono-tag" style="font-size: 0.65rem;">Turma de Capacitação</span>
-            <span class="mono-tag" style="font-size: 0.65rem;">EconData Week</span>
-          </div>
+        <div class="hec-footer">
+          <span>DEPARTAMENTO DE ECONOMIA</span>
+          <span>EST. 2022</span>
         </div>
       </div>
     </div>
@@ -753,17 +930,187 @@ p {
     </div>
     <div class="stat-cell">
       <div class="stat-big tabular-num">100%</div>
-      <div class="stat-desc">Foco em dados econômicos reais, código reprodutível em R e Python.</div>
+      <div class="stat-desc">Foco em dados econômicos reais, código reprodutível e rigor metodológico.</div>
     </div>
   </section>
 
+  <section class="section" id="diretoria">
+    <div class="container">
+      <div class="section-head">
+        <span class="mono-tag">LIDERANÇA DISCENTE</span>
+        <h2 class="section-title">Diretoria Atual — Gestão 2026.2</h2>
+        <p style="margin-top: 0.5rem;">Responsáveis pela coordenação executiva, capacitação técnica, projetos e relacionamento institucional do núcleo.</p>
+      </div>
 
+      <div class="leadership-grid">
+        <div class="leadership-card">
+          <div class="leadership-avatar">GP</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Presidência</span>
+            <h3 class="leadership-name">Gerônimo Pulitini</h3>
+            <span class="leadership-meta">EconData Analytics • PUC-Rio</span>
+          </div>
+        </div>
+
+        <div class="leadership-card">
+          <div class="leadership-avatar">VP</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Vice-Presidência</span>
+            <h3 class="leadership-name">Vitor Pompeu</h3>
+            <span class="leadership-meta">EconData Analytics • PUC-Rio</span>
+          </div>
+        </div>
+
+        <div class="leadership-card">
+          <div class="leadership-avatar">GB</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Diretoria de Eventos</span>
+            <h3 class="leadership-name">Guilherme Bastos</h3>
+            <span class="leadership-meta">EconData Week & Visitas Técnicas</span>
+          </div>
+        </div>
+
+        <div class="leadership-card">
+          <div class="leadership-avatar">MF</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Diretoria de Pessoas</span>
+            <h3 class="leadership-name">Mateus França</h3>
+            <span class="leadership-meta">Processo Seletivo & Integração</span>
+          </div>
+        </div>
+
+        <div class="leadership-card">
+          <div class="leadership-avatar">MO</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Diretoria de Projetos</span>
+            <h3 class="leadership-name">Maria Luiza Oliveira</h3>
+            <span class="leadership-meta">Coordenação de Pesquisa Aplicada</span>
+          </div>
+        </div>
+
+        <div class="leadership-card">
+          <div class="leadership-avatar">DR</div>
+          <div class="leadership-info">
+            <span class="leadership-role">Diretoria de Conteúdo</span>
+            <h3 class="leadership-name">Danilo Rogozinski</h3>
+            <span class="leadership-meta">Publicações & Comunicação Analítica</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="capacitacao">
+    <div class="container">
+      <div class="section-head">
+        <span class="mono-tag">FORMAÇÃO TÉCNICA CONTINUADA</span>
+        <h2 class="section-title">Capacitação EconData</h2>
+        <p style="margin-top: 0.5rem;">Estrutura curricular prática concebida para capacitar membros em ferramentas modernas de análise e engenharia de dados.</p>
+      </div>
+
+      <div class="training-modules-grid">
+        <div class="module-card">
+          <div>
+            <span class="module-tag">MODERN AI WORKFLOWS</span>
+            <h3 class="module-title">IA na Prática</h3>
+            <p class="module-desc">Capacitação focada em aplicações contemporâneas de inteligência artificial na rotina analítica econômica e financeira:</p>
+            <ul class="module-list">
+              <li>Entender a arquitetura e funcionamento de Large Language Models (LLMs).</li>
+              <li>Construir e orquestrar agentes de IA no dia a dia analítico.</li>
+              <li>Aplicar Codex para acelerar resolução de problemas analíticos reais.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div>
+            <span class="module-tag">DATA WRANGLING & STATS</span>
+            <h3 class="module-title">Fundamentos de R</h3>
+            <p class="module-desc">A espinha dorsal estatística do núcleo continua presente com o ferramental mais exigido em macroeconomia empírica:</p>
+            <ul class="module-list">
+              <li>Tipos de dados, estruturas vetoriais e lógicas condicionais.</li>
+              <li>Criação e modularização de funções analíticas.</li>
+              <li>Manipulação robusta de dados tabulares com dplyr e tidyverse.</li>
+              <li>Visualização estatística e confecção de gráficos em R.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <div>
+            <span class="module-tag">FINANCIAL MODELING</span>
+            <h3 class="module-title">Excel & Analytics</h3>
+            <p class="module-desc">Domínio das ferramentas analíticas de planilha exigidas pelas principais mesas e gestoras:</p>
+            <ul class="module-list">
+              <li>Modelagem avançada de planilhas financeiras.</li>
+              <li>Funções lógicas, matriciais e tratamento de dados com Power Query.</li>
+              <li>Conexão com fontes externas de dados para atualização contínua.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="db-flow-container">
+        <div class="db-flow-title">
+          <span class="mono-tag">PIPELINE INTEGRADO</span>
+          <span>Banco de Dados na Prática — Fluxo de Trabalho</span>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step-card">
+            <span class="flow-step-num">01 · SQL</span>
+            <h4>Consulta Direto na Fonte</h4>
+            <p>Consultar, filtrar, agregar e cruzar dados estruturados diretamente nos repositórios e bases relacionais.</p>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">02 · BANCO DE DADOS</span>
+            <h4>Modelagem & Conexão</h4>
+            <p>Organizar relacionamentos, normalização e conectar as tabelas estruturais de cada projeto analítico.</p>
+          </div>
+          <div class="flow-step-card">
+            <span class="flow-step-num">03 · POWER BI</span>
+            <h4>Dashboards Interativos</h4>
+            <p>Transformar tabelas modeladas em painéis dinâmicos e intuitivos para tomada de decisão executiva.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="processo-seletivo">
+    <div class="container">
+      <div class="section-head">
+        <span class="mono-tag">INGRESSO DISCENTE</span>
+        <h2 class="section-title">Processo Seletivo</h2>
+        <p style="margin-top: 0.5rem;">Como ingressar no EconData Analytics da PUC-Rio. Avaliamos motivação, curiosidade analítica e potencial de aprendizado.</p>
+      </div>
+
+      <div class="ps-timeline">
+        <div class="ps-card">
+          <span class="ps-badge">ETAPA 01</span>
+          <h3 class="ps-title">Informações Iniciais</h3>
+          <p class="ps-desc">Preenchimento da ficha cadastral do candidato com dados acadêmicos, disponibilidade de horários e trajetória no curso de graduação.</p>
+        </div>
+
+        <div class="ps-card">
+          <span class="ps-badge">ETAPA 02</span>
+          <h3 class="ps-title">Questionário & Vídeo</h3>
+          <p class="ps-desc">Envio de questionário aprofundado de interesse e breve apresentação em vídeo demonstrando motivação, fit cultural e expectativas com o núcleo.</p>
+        </div>
+
+        <div class="ps-card">
+          <span class="ps-badge">ETAPA 03</span>
+          <h3 class="ps-title">Teste de Competências</h3>
+          <p class="ps-desc">Avaliação prática voltada ao raciocínio lógico, capacidade de resolução de problemas e aptidão para o aprendizado quantitativo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="section" id="projetos">
     <div class="container">
       <div class="section-head">
         <span class="mono-tag">PESQUISA & PRODUÇÃO</span>
-        <h2 class="section-title">Projetos & Modelos Quantitativos</h2>
+        <h2 class="section-title">Projetos & Ferramentas Open Source</h2>
       </div>
 
       <div class="projects-grid">
@@ -772,7 +1119,7 @@ p {
             <span class="mono-tag">PACOTE EM R • OPEN SOURCE</span>
             <h3 class="project-title">brfinance</h3>
             <p class="project-body">
-              Pacote em R criado por um ex-membro do EconData que democratiza o acesso a dados macroeconômicos brasileiros. Permite baixar, higienizar e plotar indicadores como Selic, IPCA e desemprego com poucas linhas de comando.
+              Pacote em R desenvolvido por um ex-membro do EconData que facilita o acesso a dados macroeconômicos brasileiros. Com poucas linhas de código, é possível baixar e visualizar indicadores como taxa Selic, inflação e desemprego, utilizando dados oficiais do Banco Central e IBGE, além de gerar gráficos comparativos entre séries.
             </p>
             <table class="project-meta-table">
               <tr>
@@ -780,47 +1127,47 @@ p {
                 <td class="pmt-val">R</td>
               </tr>
               <tr>
-                <td class="pmt-label">Fontes de Dados</td>
-                <td class="pmt-val">BCB e IBGE</td>
+                <td class="pmt-label">Fontes Oficiais</td>
+                <td class="pmt-val">BACEN & IBGE</td>
               </tr>
               <tr>
-                <td class="pmt-label">Autoria</td>
+                <td class="pmt-label">Séries</td>
+                <td class="pmt-val">Selic, IPCA, Desemprego</td>
+              </tr>
+              <tr>
+                <td class="pmt-label">Origem</td>
                 <td class="pmt-val">Ex-membro EconData</td>
-              </tr>
-              <tr>
-                <td class="pmt-label">Licença</td>
-                <td class="pmt-val">Open Source</td>
               </tr>
             </table>
           </div>
           <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="project-link">
-            Acessar Repositório ↗
+            Acessar no GitHub ↗
           </a>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">AULA ABERTA & PROJETO DISCENTE</span>
-            <h3 class="project-title">Introdução a Redes Neurais para Economia</h3>
+            <span class="mono-tag">AULA ABERTA & MODELAGEM</span>
+            <h3 class="project-title">Redes Neurais para Economia</h3>
             <p class="project-body">
-              Material instrucional e código prático aplicado para estudantes de graduação, demonstrando a arquitetura e calibração de redes neurais profundas aplicadas à predição de séries financeiras.
+              Material instrucional e código prático aplicado para estudantes de graduação, demonstrando a arquitetura e calibração de redes neurais profundas aplicadas à modelagem de séries econômicas.
             </p>
             <table class="project-meta-table">
               <tr>
                 <td class="pmt-label">Formato</td>
-                <td class="pmt-val">Aula Aberta à Comunidade PUC</td>
+                <td class="pmt-val">Aula Aberta à PUC-Rio</td>
               </tr>
               <tr>
                 <td class="pmt-label">Tópicos</td>
-                <td class="pmt-val">Perceptron, MLP, Backpropagation</td>
+                <td class="pmt-val">Perceptron, MLP, Backprop</td>
               </tr>
               <tr>
                 <td class="pmt-label">Público</td>
-                <td class="pmt-val">Alunos de Graduação em Economia</td>
+                <td class="pmt-val">Graduação em Economia</td>
               </tr>
               <tr>
                 <td class="pmt-label">Apoio</td>
-                <td class="pmt-val">Departamento de Economia PUC-Rio</td>
+                <td class="pmt-val">Depto. de Economia</td>
               </tr>
             </table>
           </div>
@@ -829,27 +1176,27 @@ p {
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">PROJETO DE EXTENSÃO</span>
-            <h3 class="project-title">Fundamentos de Excel & Analytics Financeiro</h3>
+            <span class="mono-tag">CAPACITAÇÃO PRÁTICA</span>
+            <h3 class="project-title">Ambiente Analítico Integrado</h3>
             <p class="project-body">
-              Treinamento semestral de nivelamento focado em modelagem de planilhas, automação de rotinas contábeis/financeiras e manipulação de bases reais para novos membros do núcleo.
+              Estruturação dos pipelines de dados unindo extração automatizada via SQL, engenharia de dados em bancos locais e geração de relatórios dinâmicos para tomada de decisão.
             </p>
             <table class="project-meta-table">
               <tr>
                 <td class="pmt-label">Objetivo</td>
-                <td class="pmt-val">Nivelamento para o Mercado</td>
+                <td class="pmt-val">Padrão Mercado</td>
               </tr>
               <tr>
-                <td class="pmt-label">Ferramentas</td>
-                <td class="pmt-val">Excel Avançado, Power Query, VBA</td>
+                <td class="pmt-label">Ferramental</td>
+                <td class="pmt-val">SQL, Power BI, Excel</td>
               </tr>
               <tr>
                 <td class="pmt-label">Ciclo</td>
-                <td class="pmt-val">Entrada de Novos Trainees</td>
+                <td class="pmt-val">Formação Contínua</td>
               </tr>
               <tr>
                 <td class="pmt-label">Coordenação</td>
-                <td class="pmt-val">Diretoria de Capacitação</td>
+                <td class="pmt-val">Diretoria de Projetos</td>
               </tr>
             </table>
           </div>
@@ -859,7 +1206,6 @@ p {
     </div>
   </section>
 
-    <!-- Vertentes Analíticas & Metodologia (Data Mining, Big Data, Text Analysis, Spatial) -->
   <section class="section" id="areas">
     <div class="container">
       <div class="section-head">
@@ -872,42 +1218,43 @@ p {
         <div class="visit-card">
           <span class="visit-role">Econometria & ML</span>
           <h3 class="visit-title">Data Mining & Descoberta</h3>
-          <p class="visit-desc">Extração de padrões ocultos em bases massivas, segmentação e agrupamento (clustering K-means) aplicados a microdados e comércio internacional.</p>
+          <p class="visit-desc">Extração de padrões ocultos em bases massivas, segmentação e agrupamento aplicados a microdados e comércio internacional.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Visualização Avançada</span>
           <h3 class="visit-title">Data Visualization & Dashboards</h3>
-          <p class="visit-desc">Comunicação analítica eficaz com gráficos estatísticos, matrizes de dispersão e dashboards interativos para tornar tendências macroeconômicas intuitivas.</p>
+          <p class="visit-desc">Comunicação analítica eficaz com gráficos estatísticos e dashboards interativos para tornar tendências macroeconômicas intuitivas.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Engenharia de Dados</span>
           <h3 class="visit-title">Big Data & Fontes Alternativas</h3>
-          <p class="visit-desc">Tratamento e combinação de bases estruturadas e não estruturadas de alta frequência (APIs do Banco Central, SIDRA/IBGE, dados setoriais e públicos).</p>
+          <p class="visit-desc">Tratamento e combinação de bases estruturadas de alta frequência (APIs do Banco Central, SIDRA/IBGE e dados públicos).</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">NLP & Sentimento</span>
           <h3 class="visit-title">Text Analysis & Atas do COPOM</h3>
-          <p class="visit-desc">Mineração de texto e processamento de linguagem natural (NLP) para mensurar sentimento e tom em comunicados e relatórios de política monetária.</p>
+          <p class="visit-desc">Mineração de texto e processamento de linguagem natural (NLP) para mensurar sentimento e tom em comunicados de política monetária.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Aprendizado Supervisionado</span>
           <h3 class="visit-title">Machine Learning Preditivo</h3>
-          <p class="visit-desc">Modelos de árvores, regressões regularizadas e redes neurais para identificar relações não lineares e prever indicadores de atividade econômica.</p>
+          <p class="visit-desc">Modelos de árvores e regressões regularizadas para identificar relações não lineares e projetar indicadores de atividade econômica.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Economia Regional</span>
           <h3 class="visit-title">Spatial Analysis & Geoprocessamento</h3>
-          <p class="visit-desc">Análise econométrica espacial com dados georreferenciados para avaliar desenvolvimento regional, distribuição de crédito e mercado de trabalho.</p>
+          <p class="visit-desc">Análise econométrica espacial com dados georreferenciados para avaliar desenvolvimento regional e mercado de trabalho.</p>
         </div>
       </div>
     </div>
   </section>
-<section class="section" id="visitas">
+
+  <section class="section" id="visitas">
     <div class="container">
       <div class="section-head">
         <span class="mono-tag">CONEXÃO COM O MERCADO</span>
@@ -931,13 +1278,13 @@ p {
         <div class="visit-card">
           <span class="visit-role">Visita Técnica</span>
           <h3 class="visit-title">Banco BOCOM BBM</h3>
-          <p class="visit-desc">Tour institucional com recepção por Thais Haro, abertura de Alexandre Lowenkron e palestra macro de Luiz Évora e Gabriel Vasconcelos.</p>
+          <p class="visit-desc">Tour institucional com recepção executiva e imersão macro com equipes de economia e mercado de capitais.</p>
         </div>
 
         <div class="visit-card">
           <span class="visit-role">Visita Técnica</span>
           <h3 class="visit-title">Visagio Consultoria</h3>
-          <p class="visit-desc">Imersão com Gabriel Martins e Joaquim Neto sobre a rotina de consultoria de gestão e aplicação prática de analytics.</p>
+          <p class="visit-desc">Imersão com consultores sobre a rotina de consultoria de gestão e aplicação prática de analytics em negócios.</p>
         </div>
 
         <div class="visit-card">
@@ -955,7 +1302,7 @@ p {
         <div class="visit-card">
           <span class="visit-role">Palestra Convidada</span>
           <h3 class="visit-title">Bruno Bondarovsky</h3>
-          <p class="visit-desc">Palestra exclusiva compartilhando experiências práticas sobre gestão, finanças e tomada de decisão fundamentada em dados.</p>
+          <p class="visit-desc">Palestra compartilhando experiências práticas sobre gestão, finanças e tomada de decisão fundamentada em dados.</p>
         </div>
 
         <div class="visit-card">
@@ -984,45 +1331,6 @@ p {
     </div>
   </section>
 
-  <section class="section" id="capacitacao">
-    <div class="container">
-      <div class="section-head">
-        <span class="mono-tag">FORMAÇÃO TÉCNICA</span>
-        <h2 class="section-title">Turmas de Capacitação & Aplicação</h2>
-      </div>
-
-      <div class="tracks-grid">
-        <div class="track-card">
-          <span class="track-badge">NIVELAMENTO TEÓRICO E PRÁTICO</span>
-          <h3 class="track-title">Turma de Capacitação</h3>
-          <p>
-            Ensino estruturado dos instrumentos e linguagens analíticas mais demandadas no mercado, partindo de bancos de dados reais.
-          </p>
-          <ul class="track-bullets">
-            <li>Linguagem R & RStudio: Programação funcional, Tidyverse, Dplyr e séries temporais.</li>
-            <li>Python Científico: Pandas, NumPy, APIs públicas (BCB, IBGE) e automação de coleta.</li>
-            <li>Introdução a Redes Neurais e Machine Learning para séries temporais.</li>
-            <li>Boas práticas em versionamento com Git e GitHub.</li>
-          </ul>
-        </div>
-
-        <div class="track-card">
-          <span class="track-badge">PESQUISA & PROJETOS</span>
-          <h3 class="track-title">Turma de Aplicação</h3>
-          <p>
-            Membros que dominam o instrumental desenvolvem projetos competitivos, relatórios proprietários e papers empíricos.
-          </p>
-          <ul class="track-bullets">
-            <li>Modelagem supervisionada com Gradient Boosting, Random Forests e XGBoost.</li>
-            <li>Simulação de estratégias sistemáticas, walk-forward backtesting e métricas de risco.</li>
-            <li>Apresentação de pesquisas para gestores e economistas convidados.</li>
-            <li>Construção e manutenção de pacotes open source (como o brfinance).</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <footer class="footer" id="contato">
     <div class="container">
       <div class="footer-grid">
@@ -1042,20 +1350,21 @@ p {
         <div class="footer-col">
           <h5>Navegação</h5>
           <ul class="footer-links">
-            <li><a href="#sobre">Sobre o Núcleo</a></li>
-            <li><a href="#projetos">Projetos & Atividades</a></li>
+            <li><a href="#diretoria">Diretoria (2026.2)</a></li>
+            <li><a href="#capacitacao">Capacitação & IA</a></li>
+            <li><a href="#processo-seletivo">Processo Seletivo</a></li>
+            <li><a href="#projetos">Projetos & brfinance</a></li>
             <li><a href="#areas">Áreas de Atuação</a></li>
-            <li><a href="#visitas">Visitas & Mercado</a></li>
-            <li><a href="#capacitacao">Capacitação</a></li>
+            <li><a href="#visitas">Mercado & Parceiros</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h5>Contato</h5>
+          <h5>Contato & Redes Sociais</h5>
           <ul class="footer-links">
             <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram • @econdata_analytics</a></li>
             <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn • EconData Analytics</a></li>
-            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Página do Depto. de Economia PUC-Rio</a></li>
+            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Depto. de Economia PUC-Rio</a></li>
           </ul>
         </div>
       </div>
