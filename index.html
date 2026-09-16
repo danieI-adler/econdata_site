@@ -434,21 +434,33 @@ p {
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   margin-bottom: 1.5rem;
+  table-layout: fixed;
 }
 
 .project-meta-table td {
-  padding: 0.55rem 0.85rem;
+  padding: 0.55rem 0.75rem;
   border-bottom: 1px solid var(--border-subtle);
   font-size: 0.75rem;
   font-family: var(--font-mono);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .project-meta-table tr:last-child td {
   border-bottom: none;
 }
 
-.pmt-label { color: var(--text-muted); }
-.pmt-val { text-align: right; color: #FFFFFF; font-weight: 600; }
+.pmt-label { 
+  color: var(--text-muted);
+  width: 45%;
+}
+
+.pmt-val { 
+  text-align: right; 
+  color: #FFFFFF; 
+  font-weight: 600;
+  width: 55%;
+}
 
 .project-link {
   font-family: var(--font-mono);
@@ -765,19 +777,19 @@ p {
             <table class="project-meta-table">
               <tr>
                 <td class="pmt-label">Linguagem</td>
-                <td class="pmt-val">Linguagem R</td>
+                <td class="pmt-val">R</td>
               </tr>
               <tr>
-                <td class="pmt-label">Fontes Integradas</td>
-                <td class="pmt-val">Banco Central, SIDRA/IBGE</td>
+                <td class="pmt-label">Fontes de Dados</td>
+                <td class="pmt-val">BCB e IBGE</td>
               </tr>
               <tr>
-                <td class="pmt-label">Desenvolvedor</td>
+                <td class="pmt-label">Autoria</td>
                 <td class="pmt-val">Ex-membro EconData</td>
               </tr>
               <tr>
-                <td class="pmt-label">Código Aberto</td>
-                <td class="pmt-val">github.com/efram2/brfinance</td>
+                <td class="pmt-label">Licença</td>
+                <td class="pmt-val">Open Source</td>
               </tr>
             </table>
           </div>
