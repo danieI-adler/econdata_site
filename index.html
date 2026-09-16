@@ -1,0 +1,469 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EconData Analytics | Núcleo de Ciência de Dados PUC-Rio</title>
+  <meta name="description" content="EconData Analytics - Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Projetos quantitativos, capacitação analítica e modelagem de dados reais.">
+  <meta name="keywords" content="EconData, PUC-Rio, Ciência de Dados, Econometria, Finanças Quantitativas, Machine Learning, R, Python">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EconData Analytics | Ciência de Dados & Economia PUC-Rio">
+  <meta property="og:description" content="Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Modelagem quantitativa, inteligência de mercado e capacitação de alto impacto.">
+  <meta property="og:image" content="assets/img/og-preview.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+
+  <!-- Google Fonts: Inter, JetBrains Mono & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#" class="brand">
+        <img src="assets/img/logo.svg" alt="EconData Analytics" class="brand-icon">
+        <div class="brand-text">
+          <span class="brand-title">EconData <span>Analytics</span></span>
+          <span class="brand-badge">DEPARTAMENTO DE ECONOMIA • PUC-RIO</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="#projetos" class="nav-link">Projetos & Modelos</a></li>
+          <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
+          <li><a href="#econdata-week" class="nav-link">EconData Week</a></li>
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#projetos" class="btn btn-outline">Explorar Projetos</a>
+        <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">LinkedIn</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge-container">
+          <span class="mono-tag">EST. 2022 • PUC-RIO</span>
+        </div>
+        <h1 class="hero-title">
+          Onde a Economia Rigorosa Encontra a <span class="highlight-puc">Ciência de Dados</span>.
+        </h1>
+        <p class="hero-desc">
+          Núcleo de Ciência de Dados dos Alunos de Economia da PUC-Rio. Capacitamos talentos, desenvolvemos modelos quantitativos para o mercado de capitais e geramos pesquisas empíricas aplicadas a bases de dados reais.
+        </p>
+        <div class="hero-cta">
+          <a href="#projetos" class="btn btn-primary">
+            Ver Portfólio de Projetos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            Núcleos PUC-Rio
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Metric Simulation / Tech Card -->
+      <div class="hero-preview">
+        <div class="preview-header">
+          <div class="preview-title">
+            <span class="status-dot"></span>
+            <span>Backtest Engine • Setor Bancário BR</span>
+          </div>
+          <span class="preview-meta">ESTRESSE 2015–2016</span>
+        </div>
+        <div class="metric-strip">
+          <div class="metric-card">
+            <div class="metric-lbl">Capital Alvo Simulado</div>
+            <div class="metric-val tabular-num">R$ 1.00M</div>
+            <div class="metric-sub">Base inicial padronizada</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-lbl">Retorno XGBoost Dinâmico</div>
+            <div class="metric-val positive tabular-num">+156.4%</div>
+            <div class="metric-sub">vs. +43.2% BOVA11</div>
+          </div>
+        </div>
+        <div class="code-snippet">
+# Pipeline Walk-Forward EconData<br>
+model = XGBRegressor(n_estimators=100, learning_rate=0.05)<br>
+weights = optimize_portfolio(returns, risk_target="max_sharpe")<br>
+<span style="color:#6ee7b7;">&gt; Rebalanceamento sistemático validado.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Ribbon -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-number tabular-num">+26</span>
+          <span class="stat-desc">Pesquisadores & analistas ativos do Departamento de Economia.</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number tabular-num">3ª</span>
+          <span class="stat-desc">Edição da EconData Week realizada com grandes instituições do país.</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number tabular-num">+10</span>
+          <span class="stat-desc">Instituições parceiras de finanças, assets e consultoria de ponta.</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number tabular-num">100%</span>
+          <span class="stat-desc">Formação prática fundamentada em R, Python, Git e Econometria.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects-section" id="projetos">
+    <div class="container">
+      <div class="section-header">
+        <span class="mono-tag">PORTFÓLIO ANALÍTICO</span>
+        <h2 style="margin-top: 0.75rem; font-size: 2.25rem;">Projetos Desenvolvidos & Modelos Premiados</h2>
+        <p class="section-subtitle">
+          Soluções quantitativas concebidas pelo EconData Analytics, abordando desde resiliência bancária e alocação de risco até modelos macroeconômicos de alta frequência.
+        </p>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="projects-filter">
+        <button class="filter-btn active" data-filter="all">Todos os Projetos</button>
+        <button class="filter-btn" data-filter="quant">Finanças Quantitativas</button>
+        <button class="filter-btn" data-filter="macro">Macroeconomia & Dados</button>
+        <button class="filter-btn" data-filter="ml">Machine Learning</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-grid">
+        
+        <!-- Project 1 -->
+        <div class="project-card featured" data-category="quant ml">
+          <div>
+            <div class="project-top">
+              <span class="project-badge winner">PROJETO DESTAQUE & ESTUDO DE CASO</span>
+              <span class="mono-tag">2015-2016</span>
+            </div>
+            <h3 class="project-title">Resiliência Bancária Brasileira sob Estresse</h3>
+            <p class="project-summary">
+              Avaliação de resiliência e simulação de estratégias quantitativas (estáticas, dinâmicas e walk-forward com XGBoost) aplicadas às ações do setor bancário durante o biênio recessivo brasileiro de 2015–2016.
+            </p>
+            <div class="project-metrics">
+              <div class="pm-item">
+                <span class="pm-label">Benchmark</span>
+                <span class="pm-val">BOVA11</span>
+              </div>
+              <div class="pm-item">
+                <span class="pm-label">Algoritmo</span>
+                <span class="pm-val highlight">XGBoost & Walk-Forward</span>
+              </div>
+              <div class="pm-item">
+                <span class="pm-label">Ativos Cobertos</span>
+                <span class="pm-val">BBAS3, ITUB4, BBDC4, SANB11</span>
+              </div>
+              <div class="pm-item">
+                <span class="pm-label">Simulação</span>
+                <span class="pm-val highlight">R$ 1.000.000,00</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-footer">
+            <div class="tech-stack">
+              <span class="tech-pill">R / RStudio</span>
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">PerformanceAnalytics</span>
+            </div>
+            <a href="relatorio_resiliencia_bancaria.html" target="_blank" class="card-link">
+              Abrir Relatório
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card" data-category="macro ml">
+          <div>
+            <div class="project-top">
+              <span class="project-badge">MACROECONOMETRIA</span>
+              <span class="mono-tag">DADOS EM TEMPO REAL</span>
+            </div>
+            <h3 class="project-title">Nowcasting de Atividade Econômica & IBC-Br</h3>
+            <p class="project-summary">
+              Construção de modelos preditivos para antecipar indicadores de PIB e IBC-Br com base em dados de alta frequência (consumo de energia, arrecadação, fluxo de veículos pesados e crédito).
+            </p>
+            <div class="project-metrics">
+              <div class="pm-item">
+                <span class="pm-label">Horizonte</span>
+                <span class="pm-val">T+1 Mês</span>
+              </div>
+              <div class="pm-item">
+                <span class="pm-label">Redução de Erro (RMSE)</span>
+                <span class="pm-val highlight">-28% vs. Modelo Base</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-footer">
+            <div class="tech-stack">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Dynamic Factor Models</span>
+              <span class="tech-pill">Pandas</span>
+            </div>
+            <span class="card-link" style="color: var(--text-muted); cursor: default;">
+              Em Produção
+            </span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card" data-category="quant">
+          <div>
+            <div class="project-top">
+              <span class="project-badge">GESTÃO DE RISCO</span>
+              <span class="mono-tag">ALOCAÇÃO SISTEMÁTICA</span>
+            </div>
+            <h3 class="project-title">Otimização de Portfólios com Volatilidade Condicional</h3>
+            <p class="project-summary">
+              Estruturação de carteiras de ativos líquidos da B3 empregando estimação de matrizes de covariância via Shrinkage de Ledoit-Wolf e restrições de Drawdown Máximo tolerável.
+            </p>
+            <div class="project-metrics">
+              <div class="pm-item">
+                <span class="pm-label">Índice Sharpe</span>
+                <span class="pm-val highlight">1.42 Anualizado</span>
+              </div>
+              <div class="pm-item">
+                <span class="pm-label">Max Drawdown</span>
+                <span class="pm-val">-11.8% Controlado</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-footer">
+            <div class="tech-stack">
+              <span class="tech-pill">R / Tidyverse</span>
+              <span class="tech-pill">Ledoit-Wolf</span>
+              <span class="tech-pill">GARCH</span>
+            </div>
+            <span class="card-link" style="color: var(--text-muted); cursor: default;">
+              Núcleo de Aplicação
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Capacitação Section -->
+  <section class="capacitacao-section" id="capacitacao">
+    <div class="container">
+      <div class="section-header">
+        <span class="mono-tag">METODOLOGIA & ENSINO</span>
+        <h2 style="margin-top: 0.75rem; font-size: 2.25rem;">Capacitação Técnica de Alto Padrão</h2>
+        <p class="section-subtitle">
+          Nossa estrutura de formação prepara os alunos de Economia da PUC-Rio para atuar com autonomia no mercado financeiro, consultorias e centros de pesquisa econômica.
+        </p>
+      </div>
+
+      <div class="track-grid">
+        <div class="track-card">
+          <div class="track-header">
+            <div class="track-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+            <div>
+              <h3 class="track-title">Turma de Capacitação</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Nivelamento teórico e ferramental</p>
+            </div>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            Apresentação intensiva às principais linguagens analíticas, manipulação de bases macroeconômicas complexas e introdução ao raciocínio quantitativo.
+          </p>
+          <ul class="track-list">
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Linguagem R & RStudio: Tidyverse, Dplyr e manipulação de séries temporais.</span>
+            </li>
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Python para Economia: Pandas, NumPy, Visualização e APIs de dados públicos (BCB, IBGE, IPEA).</span>
+            </li>
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Versionamento com Git & GitHub e boas práticas de código reprodutível.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="track-card">
+          <div class="track-header">
+            <div class="track-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <div>
+              <h3 class="track-title">Turma de Aplicação</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Desenvolvimento de projetos de ponta</p>
+            </div>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            Membros que dominam o núcleo instrumental realizam pesquisas aplicadas, participam de desafios institucionais de mercado e desenvolvem papers e dashboards proprietários.
+          </p>
+          <ul class="track-list">
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Modelagem preditiva supervisionada (Random Forest, Gradient Boosting, XGBoost).</span>
+            </li>
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Backtesting rigoroso, walk-forward analysis e métricas de desempenho ajustadas ao risco.</span>
+            </li>
+            <li class="track-item">
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Apresentações técnicas para gestoras parceiras e economistas-chefe convidados.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EconData Week & Market Connection -->
+  <section class="event-section" id="econdata-week">
+    <div class="container">
+      <div class="event-box">
+        <div class="event-grid">
+          <div>
+            <span class="mono-tag">CONFERÊNCIA ANUAL</span>
+            <h2 style="margin-top: 1rem; font-size: 2.35rem; margin-bottom: 1.25rem;">EconData Week</h2>
+            <p style="color: #CBD5E1; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.75rem;">
+              Organizada anualmente em estreita parceria com o Departamento de Economia da PUC-Rio, a EconData Week reúne os principais gestores, analistas quantitativos e economistas do país em debates profundos sobre macroeconomia, equity, finanças sistemáticas e mercado de trabalho analítico.
+            </p>
+            <div style="display: flex; gap: 1rem;">
+              <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                Acompanhar Edições no LinkedIn
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="partners-title">Empresas & Instituições Participantes</div>
+            <div class="partners-cloud">
+              <div class="partner-tag">BCG X</div>
+              <div class="partner-tag">Itaú Asset Management</div>
+              <div class="partner-tag">Banco BOCOM BBM</div>
+              <div class="partner-tag">Vinci Compass</div>
+              <div class="partner-tag">G5 Partners</div>
+              <div class="partner-tag">Bahia Asset Management</div>
+              <div class="partner-tag">Turim MFO</div>
+              <div class="partner-tag">Hashdex</div>
+              <div class="partner-tag">ARX Investimentos</div>
+              <div class="partner-tag">Visagio</div>
+              <div class="partner-tag">Karoon Energy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About PUC-Rio & Department Connection -->
+  <section class="about-section" id="sobre">
+    <div class="container about-grid">
+      <div>
+        <span class="mono-tag">VÍNCULO INSTITUCIONAL</span>
+        <h2 style="margin-top: 0.75rem; font-size: 2.25rem; margin-bottom: 1.25rem;">
+          Tradição Acadêmica com Foco no Futuro da Economia
+        </h2>
+        <p style="margin-bottom: 1.5rem; font-size: 1.05rem; color: #CBD5E1;">
+          O EconData Analytics faz parte da rede oficial de núcleos acadêmicos do Departamento de Economia da PUC-Rio, centro pioneiro no pensamento econômico nacional.
+        </p>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+          Nosso objetivo é transformar o currículo tradicional de teoria econômica em uma ferramenta viva, capacitando os alunos a traduzir hipóteses rigorosas em código limpo, pipelines de dados escaláveis e insights fundamentados.
+        </p>
+        <a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer" class="card-link">
+          Página oficial dos Núcleos do Departamento de Economia PUC-Rio
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+      </div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h4>Excelência Metodológica</h4>
+          <p>Combinação do rigor econométrico consagrado da PUC-Rio com métodos contemporâneos de aprendizado de máquina e ciência de dados.</p>
+        </div>
+        <div class="info-card">
+          <h4>Ponte com o Mercado</h4>
+          <p>Visitas técnicas a gestoras, consultorias estratégicas e bancos de investimento, facilitando a colocação profissional de nossos membros.</p>
+        </div>
+        <div class="info-card">
+          <h4>Cultura Open Science</h4>
+          <p>Compromisso com reprodutibilidade científica, documentação clara de códigos e compartilhamento de conhecimento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Institutional Footer -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand">
+            <img src="assets/img/logo.svg" alt="EconData Analytics" class="brand-icon">
+            <span class="brand-title">EconData <span>Analytics</span></span>
+          </div>
+          <p>
+            Núcleo de Ciência de Dados dos Alunos de Economia da Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio).
+          </p>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Rua Marquês de São Vicente, 225 - Gávea, Rio de Janeiro - RJ, 22451-900
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Navegação</h5>
+          <ul class="footer-links">
+            <li><a href="#sobre">Sobre o Núcleo</a></li>
+            <li><a href="#projetos">Projetos & Modelos</a></li>
+            <li><a href="#capacitacao">Trilhas de Capacitação</a></li>
+            <li><a href="#econdata-week">EconData Week</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Canais Oficiais</h5>
+          <ul class="footer-links">
+            <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn Institucional</a></li>
+            <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram (@econdata_analytics)</a></li>
+            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">PUC-Rio Economia</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 EconData Analytics. Todos os direitos reservados.</span>
+        <span>Hospedado no GitHub Pages</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
