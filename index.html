@@ -2206,18 +2206,16 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\\n")
         return;
       }
 
-      // Se o usuário digitou uma expressão ggplot() solta no final sem print(), envolvemos para garantir exibição
-      // Exemplo: se termina com ggplot(...) ou p <- ggplot; p
-      const trimmedLines = code.split('\\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
-      const lastLine = trimmedLines[trimmedLines.length - 1] || '';
-      if (lastLine.startsWith('ggplot(') && !lastLine.startsWith('print(')) {
-        code = code + '\\nprint(.Last.value)';
+      // No R em batch / WebAssembly, objetos ggplot só disparam o canvas gráfico se forem explicitamente impressos com print().
+      // Se o script contém ggplot() mas não chama print(), garantimos a impressão do último objeto avaliado (.Last.value)
+      if (code.includes('ggplot(') && !code.includes('print(')) {
+        code = code + '\nif (exists(".Last.value") && inherits(.Last.value, "ggplot")) { print(.Last.value) }';
       }
 
       isExecuting = true;
       btnRun.disabled = true;
       btnRun.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Executando...`;
-      terminalOutput.textContent = 'Executando script R...\\n';
+      terminalOutput.textContent = 'Executando script R...\n';
 
       try {
         const shelter = await new webRInstance.Shelter();
