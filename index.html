@@ -123,6 +123,184 @@ p {
   height: 100%;
 }
 
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+/* Menu Hamburger (3 Barrinhas clássicas idênticas ao site do Gama) */
+.drawer-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawer-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+.drawer-toggle-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+/* Side Drawer & Overlay (Estilo Gama) */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 16, 28, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: var(--bg-deep);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-subtle);
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.65);
+}
+
+.side-drawer.is-open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(11, 25, 44, 0.85);
+}
+
+.drawer-close-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #FFFFFF;
+}
+
+.drawer-nav {
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-item-btn {
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--text-secondary);
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.75rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+}
+
+.drawer-item-btn:hover {
+  color: #FFFFFF;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.drawer-item-btn.active {
+  color: #FFFFFF;
+  background: #0284C7;
+  font-weight: 700;
+}
+
+.drawer-item-btn.highlight-console {
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.08);
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.drawer-item-btn.highlight-console:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent-cyan);
+}
+
+.drawer-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(7, 16, 28, 0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.drawer-footer a {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.drawer-footer a:hover {
+  color: var(--accent-cyan);
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -874,28 +1052,6 @@ p {
   transition: all 0.3s ease;
 }
 
-/* Modo Página Pura (Full Screen View) */
-body.console-standalone-mode .hero,
-body.console-standalone-mode .stats-strip,
-body.console-standalone-mode #diretoria,
-body.console-standalone-mode #capacitacao,
-body.console-standalone-mode #processo-seletivo,
-body.console-standalone-mode #projetos,
-body.console-standalone-mode #areas,
-body.console-standalone-mode #visitas,
-body.console-standalone-mode .footer {
-  display: none !important;
-}
-
-body.console-standalone-mode .console-section {
-  padding: 2rem 0 3rem !important;
-  min-height: calc(100vh - 70px);
-}
-
-body.console-standalone-mode .console-container {
-  min-height: 82vh;
-}
-
 .console-container {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
@@ -1065,27 +1221,6 @@ body.console-standalone-mode .console-container {
   line-height: 1.6;
 }
 
-.view-mode-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid var(--border-blue);
-  padding: 0.3rem 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.view-mode-toggle:hover {
-  background: rgba(56, 189, 248, 0.2);
-  color: #FFFFFF;
-}
-
 @media (max-width: 960px) {
   .console-container {
     grid-template-columns: 1fr;
@@ -1097,13 +1232,21 @@ body.console-standalone-mode .console-container {
 
   <header class="header">
     <div class="container nav-container">
-      <a href="#" class="brand">
-        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
-        <div class="brand-text-block">
-          <span class="brand-title">ECONDATA</span>
-          <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
-        </div>
-      </a>
+      <div class="header-left-group">
+        <button class="drawer-toggle-btn" id="drawerToggleBtn" aria-label="Abrir Menu Principal" onclick="openDrawer()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <a href="#" class="brand">
+          <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
+          <div class="brand-text-block">
+            <span class="brand-title">ECONDATA</span>
+            <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
+          </div>
+        </a>
+      </div>
 
       <nav>
         <ul class="nav-menu">
@@ -1118,6 +1261,59 @@ body.console-standalone-mode .console-container {
       </nav>
     </div>
   </header>
+
+  <!-- Drawer Menu Lateral (Estilo Gama) -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <aside class="side-drawer" id="sideDrawer" aria-label="Menu Lateral">
+    <div class="drawer-header">
+      <div class="brand" style="gap: 0.65rem;">
+        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData" style="height: 30px; width: auto; border-radius: 3px;">
+        <div class="brand-text-block">
+          <span style="font-size: 1rem; font-weight: 800; color: #FFFFFF;">ECONDATA</span>
+          <span style="font-size: 0.6rem; color: var(--text-muted); font-family: var(--font-mono);">PUC-RIO</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Fechar Menu" onclick="closeDrawer()">✕</button>
+    </div>
+
+    <nav class="drawer-nav">
+      <a href="#diretoria" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Diretoria (26.2)</span> <span>→</span>
+      </a>
+      <a href="#capacitacao" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Capacitação & Módulos</span> <span>→</span>
+      </a>
+      <a href="#processo-seletivo" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Processo Seletivo</span> <span>→</span>
+      </a>
+      <a href="#projetos" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Projetos & brfinance</span> <span>→</span>
+      </a>
+      <a href="#console" class="drawer-item-btn highlight-console" onclick="closeDrawer()">
+        <span>📊 Console R (WebAssembly)</span> <span>→</span>
+      </a>
+      <a href="#areas" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Vertentes Analíticas</span> <span>→</span>
+      </a>
+      <a href="#visitas" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Visitas & Parceiros</span> <span>→</span>
+      </a>
+      <a href="#contato" class="drawer-item-btn" onclick="closeDrawer()">
+        <span>Contato & Redes</span> <span>→</span>
+      </a>
+    </nav>
+
+    <div class="drawer-footer">
+      <a href="https://github.com/danieI-adler/econdata_site" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>Repositório GitHub</span>
+      </a>
+      <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        <span>LinkedIn Institucional</span>
+      </a>
+    </div>
+  </aside>
 
   <section class="hero">
     <div class="container hero-grid">
@@ -1510,16 +1706,10 @@ body.console-standalone-mode .console-container {
       <div class="section-head">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
           <span class="mono-tag">AMBIENTE DE EXECUÇÃO • WEBR (WEBASSEMBLY)</span>
-          <div style="display: flex; gap: 0.6rem; align-items: center;">
-            <button class="view-mode-toggle" id="btn-toggle-standalone" onclick="toggleStandaloneMode()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-              <span id="standalone-btn-text">Modo Página Pura</span>
-            </button>
-            <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
-              <span class="console-status-indicator" id="status-dot"></span>
-              <span id="status-text">Inicializando WebR...</span>
-            </span>
-          </div>
+          <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
+            <span class="console-status-indicator" id="status-dot"></span>
+            <span id="status-text">Inicializando WebR...</span>
+          </span>
         </div>
         <h2 class="section-title">Console R Interativo</h2>
         <p style="margin-top: 0.5rem;">
@@ -1779,27 +1969,27 @@ body.console-standalone-mode .console-container {
     const plotPlaceholder = document.getElementById('plot-placeholder');
     const codeEditor = document.getElementById('r-code-editor');
 
-    const PRESETS = {
-      selic: `# Gráfico Macroeconômico: Simulação de Trajetória da Selic
-# Inspirado nas rotinas do brfinance (Banco Central / Copom)
-    // Modo Página Pura (Standalone / Fullscreen View)
-    window.toggleStandaloneMode = function() {
-      const isStandalone = document.body.classList.toggle('console-standalone-mode');
-      const btnText = document.getElementById('standalone-btn-text');
-      if (isStandalone) {
-        btnText.textContent = 'Voltar ao Site Completo';
-        window.location.hash = '#console';
-      } else {
-        btnText.textContent = 'Modo Página Pura';
-      }
+    // Controle do Menu Drawer (Idêntico ao site do Gama)
+    window.openDrawer = function() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (drawer) drawer.classList.add('is-open');
+      if (overlay) overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
     };
 
-    // Abre modo standalone automaticamente se URL tiver #console-pura ou parâmetro
-    if (window.location.hash === '#console-pura') {
-      document.body.classList.add('console-standalone-mode');
-      const btnText = document.getElementById('standalone-btn-text');
-      if (btnText) btnText.textContent = 'Voltar ao Site Completo';
-    }
+    window.closeDrawer = function() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (drawer) drawer.classList.remove('is-open');
+      if (overlay) overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    // Fechar menu com tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
 
     const PRESETS = {
       ggplot: `# 1. Análise Gráfica com ggplot2 (Pré-carregado no WebR)
