@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -2362,15 +2362,28 @@ body.tab-console-active .console-section {
             body: JSON.stringify({
               contents: [{
                 parts: [{
-                  text: `Você é um estatístico e programador sênior em R especialista em ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
-O ambiente tem instalado: R 4.x, ggplot2, dplyr, e funções nativas de matemática financeira (calc_present_value, calc_loan_pmt, calc_npv, plot_series_comparison).
-Gere um script R executável, limpo e direto para atender ao seguinte pedido do usuário:
+                  text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
+Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
 "${userPrompt}"
-Regras CRÍTICAS:
-1. Retorne APENAS código R válido puro. Não use markdown, não use \`\`\`r ou \`\`\`.
-2. Não use install.packages() pois os pacotes já estão no ambiente.
-3. Se gerar um gráfico ggplot, certifique-se de chamar print() no objeto ou deixá-lo renderizado.
-4. Crie dados sintéticos ou realistas da economia brasileira se o usuário não especificou uma tabela.`
+
+DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
+1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, PIB, etc.), NUNCA invente ou simule dados com seq() ou rnorm(). Em vez disso, consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv() na URL pública oficial:
+   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv"
+   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv"
+   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv"
+   - Câmbio Dólar Comercial (venda): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv"
+   Exemplo de leitura robusta:
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv", sep = ";", dec = ",")
+   df$data <- as.Date(df$data, format = "%d/%m/%Y")
+   df$valor <- as.numeric(df$valor)
+2. Para períodos recentes (ex: a partir de 2024), filtre os dados com filter(data >= as.Date("2024-01-01")).
+3. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
+4. REGRAS TÉCNICAS R:
+   - Retorne APENAS código R válido e puro. NUNCA use blocos ou tags markdown (\`\`\`r ou \`\`\`).
+   - NUNCA use install.packages().
+   - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
+   - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
                 }]
               }]
             })
@@ -2401,7 +2414,7 @@ Regras CRÍTICAS:
               messages: [
                 {
                   role: 'system',
-                  content: 'Você é um programador sênior em R especialista em ggplot2 e brfinance para o núcleo EconData Analytics. Retorne APENAS código R puro e funcional sem blocos markdown.'
+                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
                 },
                 {
                   role: 'user',
