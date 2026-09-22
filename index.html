@@ -2368,14 +2368,17 @@ Gere um script R executável, limpo e elegante para atender ao seguinte pedido d
 "${userPrompt}"
 
 DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
-1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm(). O pacote 'rbcb' já está instalado no ambiente!
-   - Preferência 1: Use o pacote `rbcb` diretamente:
-     library(rbcb)
-     df <- get_series(c(selic = 432), start_date = "2024-01-01")
-     # Ou para IPCA: get_series(c(ipca = 433), start_date = "2024-01-01")
-     # Ou para Dólar: get_series(c(dolar = 1), start_date = "2024-01-01")
-   - Preferência 2 (via CSV se preferir): O SGS do Banco Central EXIGE intervalo de datas para séries diárias (regra dos 10 anos do BCB), sempre inclua dataInicial e dataFinal:
-     "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
+   Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
+   ATENÇÃO: O SGS do Banco Central EXIGE intervalo de datas para séries diárias (regra dos 10 anos do BCB), SEMPRE inclua os parâmetros dataInicial e dataFinal na URL (formato DD/MM/AAAA):
+   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   Exemplo de leitura robusta:
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026", sep = ";", dec = ",")
+   df$data <- as.Date(df$data, format = "%d/%m/%Y")
+   df$valor <- as.numeric(df$valor)
 2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
 3. REGRAS TÉCNICAS R:
    - Retorne APENAS código R válido e puro. NUNCA use blocos ou tags markdown (\`\`\`r ou \`\`\`).
@@ -2461,16 +2464,16 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
         webRInstance = new WebR();
         await webRInstance.init();
 
-        statusText.textContent = 'Pré-instalando ggplot2, dplyr e rbcb...';
-        terminalOutput.textContent = 'Inicializando motor WebR WebAssembly...\nInstalando pacotes essenciais (ggplot2, dplyr, rbcb) no ambiente virtual...\n';
+        statusText.textContent = 'Pré-instalando ggplot2 e dplyr...';
+        terminalOutput.textContent = 'Inicializando motor WebR WebAssembly...\nInstalando pacotes essenciais (ggplot2, dplyr) no ambiente virtual...\n';
 
         // Habilita shim_install
         await webRInstance.evalRVoid('webr::shim_install()');
 
-        // Pré-instalar ggplot2, dplyr e rbcb
+        // Pré-instalar ggplot2 e dplyr (rápidos e leves)
         try {
-          await webRInstance.installPackages(['ggplot2', 'dplyr', 'rbcb']);
-          await webRInstance.evalRVoid('library(ggplot2); library(dplyr); library(rbcb)');
+          await webRInstance.installPackages(['ggplot2', 'dplyr']);
+          await webRInstance.evalRVoid('library(ggplot2); library(dplyr)');
         } catch (pkgErr) {
           console.warn('Aviso no carregamento de pacotes:', pkgErr);
         }
@@ -2516,7 +2519,7 @@ plot_series_comparison <- function(series1, series2, name1 = "Série 1", name2 =
     theme(legend.position = "bottom")
   return(p)
 }
-cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\\n")
+cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
 `;
         await webRInstance.evalRVoid(brfinanceCoreR);
 
