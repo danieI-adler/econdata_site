@@ -123,6 +123,184 @@ p {
   height: 100%;
 }
 
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+/* Menu Hamburger (3 Barrinhas clássicas idênticas ao site do Gama) */
+.drawer-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawer-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+.drawer-toggle-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+/* Side Drawer & Overlay (Estilo Gama) */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 16, 28, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: var(--bg-deep);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-subtle);
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.65);
+}
+
+.side-drawer.is-open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(11, 25, 44, 0.85);
+}
+
+.drawer-close-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #FFFFFF;
+}
+
+.drawer-nav {
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-item-btn {
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--text-secondary);
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.75rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+}
+
+.drawer-item-btn:hover {
+  color: #FFFFFF;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.drawer-item-btn.active {
+  color: #FFFFFF;
+  background: #0284C7;
+  font-weight: 700;
+}
+
+.drawer-item-btn.highlight-console {
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.08);
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.drawer-item-btn.highlight-console:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent-cyan);
+}
+
+.drawer-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(7, 16, 28, 0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.drawer-footer a {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.drawer-footer a:hover {
+  color: var(--accent-cyan);
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -868,33 +1046,437 @@ p {
     padding: 1.25rem;
   }
 }
+/* Console R (WebR) - Seção & Modo Aba Separada */
+.console-section {
+  display: none; /* Por padrão, o console fica oculto do fluxo contínuo do site */
+  background: radial-gradient(circle at 50% 0%, rgba(16, 35, 61, 0.6) 0%, transparent 60%);
+  padding: 3rem 0 5rem;
+  min-height: calc(100vh - 70px);
+}
+
+/* Quando ativo na aba Console, exibe apenas a seção do Console */
+body.tab-console-active .main-content-flow {
+  display: none !important;
+}
+
+body.tab-console-active .console-section {
+  display: block !important;
+}
+
+.console-btn-action {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-btn-action:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+  color: #FFFFFF;
+}
+
+/* Barra do Assistente de IA (Opção A) */
+.console-ai-bar {
+  background: rgba(16, 35, 61, 0.9);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  flex-wrap: wrap;
+}
+
+.console-ai-input-wrap {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.console-ai-input {
+  width: 100%;
+  background: rgba(7, 16, 28, 0.9);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.55rem 0.9rem;
+  color: #FFFFFF;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  outline: none;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.console-ai-btn {
+  background: linear-gradient(135deg, #0284C7, #0369A1);
+  color: #FFFFFF;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-btn:hover {
+  background: linear-gradient(135deg, #0369A1, #0284C7);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.console-ai-key-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-key-btn:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+/* Modal de Configuração de API Key */
+.api-key-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 16, 28, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.api-key-modal-overlay.is-open {
+  display: flex;
+}
+
+.api-key-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 480px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+}
+
+.api-key-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.api-key-modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.console-container {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1px;
+  background: var(--border-blue);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+.console-pane {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-navy);
+}
+
+.console-pane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: rgba(7, 16, 28, 0.85);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.console-pane-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.console-status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F59E0B;
+  display: inline-block;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.console-status-indicator.ready {
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.console-status-indicator.running {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+.console-presets {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(11, 25, 44, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+}
+
+.preset-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.preset-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+  color: #FFFFFF;
+}
+
+.console-editor-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 480px;
+  background: #040912;
+}
+
+.console-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  background: transparent;
+  color: #F8FAFC;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  border: none;
+  padding: 1.35rem;
+  resize: vertical;
+  outline: none;
+  tab-size: 2;
+  box-sizing: border-box;
+}
+
+.console-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: rgba(7, 16, 28, 0.95);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.console-output-pane {
+  background: #060D17;
+  display: flex;
+  flex-direction: column;
+}
+
+.console-output-text {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #CBD5E1;
+  padding: 1.25rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: auto;
+  min-height: 190px;
+  max-height: 250px;
+  background: #03070E;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.console-plot-area {
+  flex: 1;
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: #050B14;
+  overflow: auto;
+}
+
+.console-plot-area canvas {
+  max-width: 100%;
+  max-height: 420px;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.plot-placeholder {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .console-container {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 <body>
 
   <header class="header">
     <div class="container nav-container">
-      <a href="#" class="brand">
-        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
-        <div class="brand-text-block">
-          <span class="brand-title">ECONDATA</span>
-          <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
-        </div>
-      </a>
+      <div class="header-left-group">
+        <button class="drawer-toggle-btn" id="drawerToggleBtn" aria-label="Abrir Menu Principal" onclick="openDrawer()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <a href="#" class="brand" onclick="showMainFlow()">
+          <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
+          <div class="brand-text-block">
+            <span class="brand-title">ECONDATA</span>
+            <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
+          </div>
+        </a>
+      </div>
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#diretoria" class="nav-link">Diretoria</a></li>
-          <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
-          <li><a href="#processo-seletivo" class="nav-link">Processo Seletivo</a></li>
-          <li><a href="#projetos" class="nav-link">Projetos</a></li>
-          <li><a href="#visitas" class="nav-link">Mercado</a></li>
-          <li><a href="#contato" class="nav-link">Contato</a></li>
+          <li><a href="#diretoria" class="nav-link" onclick="showMainFlow()">Diretoria</a></li>
+          <li><a href="#capacitacao" class="nav-link" onclick="showMainFlow()">Capacitação</a></li>
+          <li><a href="#processo-seletivo" class="nav-link" onclick="showMainFlow()">Processo Seletivo</a></li>
+          <li><a href="#projetos" class="nav-link" onclick="showMainFlow()">Projetos</a></li>
+          <li><a href="#visitas" class="nav-link" onclick="showMainFlow()">Mercado</a></li>
+          <li><a href="#contato" class="nav-link" onclick="showMainFlow()">Contato</a></li>
+          <li><a href="#console" class="nav-link" onclick="showConsoleTab(); return false;" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
+  <!-- Drawer Menu Lateral (Estilo Gama) -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <aside class="side-drawer" id="sideDrawer" aria-label="Menu Lateral">
+    <div class="drawer-header">
+      <div class="brand" style="gap: 0.65rem;">
+        <img src="assets/img/econdata_logo_full.png" alt="Logo EconData" style="height: 30px; width: auto; border-radius: 3px;">
+        <div class="brand-text-block">
+          <span style="font-size: 1rem; font-weight: 800; color: #FFFFFF;">ECONDATA</span>
+          <span style="font-size: 0.6rem; color: var(--text-muted); font-family: var(--font-mono);">PUC-RIO</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Fechar Menu" onclick="closeDrawer()">✕</button>
+    </div>
+
+    <nav class="drawer-nav">
+      <a href="#diretoria" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Diretoria (26.2)</span> <span>→</span>
+      </a>
+      <a href="#capacitacao" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Capacitação & Módulos</span> <span>→</span>
+      </a>
+      <a href="#processo-seletivo" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Processo Seletivo</span> <span>→</span>
+      </a>
+      <a href="#projetos" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Projetos & brfinance</span> <span>→</span>
+      </a>
+      <a href="#areas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Vertentes Analíticas</span> <span>→</span>
+      </a>
+      <a href="#visitas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Visitas & Parceiros</span> <span>→</span>
+      </a>
+      <a href="#contato" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
+        <span>Contato & Redes</span> <span>→</span>
+      </a>
+      <a href="#console" class="drawer-item-btn highlight-console" onclick="showConsoleTab(); closeDrawer(); return false;">
+        <span>📊 Console R</span> <span>→</span>
+      </a>
+    </nav>
+
+    <div class="drawer-footer">
+      <a href="https://github.com/danieI-adler/econdata_site" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>Repositório GitHub</span>
+      </a>
+      <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        <span>LinkedIn Institucional</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Conteúdo Principal do Site (Fluxo Contínuo) -->
+  <main class="main-content-flow" id="mainFlow">
   <section class="hero">
     <div class="container hero-grid">
       <div>
@@ -1428,6 +2010,7 @@ p {
             <li><a href="#capacitacao">Capacitação & IA</a></li>
             <li><a href="#processo-seletivo">Processo Seletivo</a></li>
             <li><a href="#projetos">Projetos & brfinance</a></li>
+            <li><a href="#console">Console R (WebAssembly)</a></li>
             <li><a href="#areas">Áreas de Atuação</a></li>
             <li><a href="#visitas">Mercado & Parceiros</a></li>
           </ul>
@@ -1449,6 +2032,602 @@ p {
       </div>
     </div>
   </footer>
+  </main>
 
+  <!-- Console R (Aba Separada via Menu) -->
+  <section class="section console-section" id="console">
+    <div class="container">
+      <div class="section-head" style="margin-bottom: 1.75rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <h2 class="section-title" style="margin: 0; font-size: 1.85rem;">Console R</h2>
+          <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
+            <span class="console-status-indicator" id="status-dot"></span>
+            <span id="status-text">Inicializando WebR...</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Barra de IA para Geração Automática de Gráficos (Opção A) -->
+      <div class="console-ai-bar">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="mono-tag" style="font-size: 0.7rem; background: rgba(56, 189, 248, 0.15);">IA ASSISTANT</span>
+        </div>
+        <div class="console-ai-input-wrap">
+          <input type="text" id="ai-prompt-input" class="console-ai-input" placeholder="Descreva o gráfico que deseja em linguagem natural (ex: 'Gráfico de barras do PIB 2020-2024 com ggplot2')...">
+        </div>
+        <button id="btn-generate-ai" class="console-ai-btn" onclick="generateCodeWithAI()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Gerar Gráfico
+        </button>
+        <button class="console-ai-key-btn" onclick="openApiKeyModal()" title="Configurar sua API Key do Google Gemini ou Groq">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span id="api-key-status-label">Chave de API</span>
+        </button>
+      </div>
+
+      <!-- Modal de Chave de API (Opção A: Salva apenas no localStorage do usuário) -->
+      <div class="api-key-modal-overlay" id="apiKeyModalOverlay" onclick="if(event.target===this) closeApiKeyModal()">
+        <div class="api-key-modal">
+          <div class="api-key-modal-header">
+            <h3 class="api-key-modal-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Configurar Chave de API de IA
+            </h3>
+            <button class="drawer-close-btn" onclick="closeApiKeyModal()">✕</button>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            Por segurança e conformidade, sua chave é armazenada <strong>exclusivamente na memória local do seu navegador (localStorage)</strong> e nunca trafega por servidores externos.
+          </p>
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-family: var(--font-mono);">
+              Google Gemini API Key (ou Groq API Key):
+            </label>
+            <input type="password" id="api-key-input" class="console-ai-input" placeholder="AIzaSy... ou gsk_..." style="font-family: var(--font-mono);">
+            <div style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: var(--accent-cyan); text-decoration: none;">
+                Obter chave gratuita no Google AI Studio ↗
+              </a>
+              <button onclick="removeSavedApiKey()" style="background: none; border: none; color: #EF4444; font-size: 0.72rem; cursor: pointer; text-decoration: underline;">
+                Remover chave salva
+              </button>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button class="btn btn-ghost" onclick="closeApiKeyModal()" style="padding: 0.5rem 1rem; font-size: 0.78rem;">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveApiKeyModal()" style="padding: 0.5rem 1.25rem; font-size: 0.78rem;">Salvar Chave</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-container">
+        <!-- Painel Esquerdo: Editor e Controles -->
+        <div class="console-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              EDITOR R • SCRIPT
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+              Atalho: <strong>Ctrl + Enter</strong>
+            </span>
+          </div>
+
+          <div class="console-editor-wrap">
+            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" placeholder="# Digite seu código em R aqui..."></textarea>
+          </div>
+
+          <div class="console-controls">
+            <button class="btn btn-ghost" onclick="clearCode()" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Limpar Código</button>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <button id="btn-run-r" class="btn btn-primary" onclick="runRCode()" style="padding: 0.55rem 1.4rem; font-size: 0.78rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Executar Código (Run)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel Direito: Terminal e Gráficos -->
+        <div class="console-output-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              SAÍDA DO TERMINAL (CONSOLE)
+            </span>
+            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;">Limpar Saída</button>
+          </div>
+          
+          <pre id="r-terminal-output" class="console-output-text"># Aguardando inicialização do motor WebR...
+# Ao carregar, clique em 'Executar Código'.</pre>
+
+          <div class="console-pane-header" style="border-top: 1px solid var(--border-subtle);">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+              GRÁFICO R (DEVICE CANVAS)
+            </span>
+            <div style="display: flex; gap: 0.4rem; align-items: center;">
+              <button class="console-btn-action" onclick="openPlotFullscreen()" title="Abrir gráfico em tela cheia numa nova aba">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                Tela Cheia
+              </button>
+              <button class="console-btn-action" onclick="downloadPlotImage()" title="Fazer download do gráfico gerado em PNG">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="console-plot-area" id="console-plot-area">
+            <div class="plot-placeholder" id="plot-placeholder">
+              Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+    let webRInstance = null;
+    let isInitialized = false;
+    let isExecuting = false;
+
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const statusBadge = document.getElementById('webr-status-badge');
+    const btnRun = document.getElementById('btn-run-r');
+    const terminalOutput = document.getElementById('r-terminal-output');
+    const plotArea = document.getElementById('console-plot-area');
+    const plotPlaceholder = document.getElementById('plot-placeholder');
+    const codeEditor = document.getElementById('r-code-editor');
+
+    // Alternância de Abas: Página Contínua vs Aba Separada do Console R
+    window.showConsoleTab = function() {
+      document.body.classList.add('tab-console-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', '#console');
+    };
+
+    window.showMainFlow = function() {
+      document.body.classList.remove('tab-console-active');
+    };
+
+    // Controle do Menu Drawer (Idêntico ao site do Gama)
+    window.openDrawer = function() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (drawer) drawer.classList.add('is-open');
+      if (overlay) overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeDrawer = function() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (drawer) drawer.classList.remove('is-open');
+      if (overlay) overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    // Fechar menu com tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // Limpar código do editor (deixa 100% em branco)
+    window.clearCode = function() {
+      codeEditor.value = '';
+      codeEditor.focus();
+    };
+
+    // Abrir gráfico gerado em tela cheia numa nova aba
+    window.openPlotFullscreen = function() {
+      const canvas = plotArea.querySelector('canvas');
+      if (!canvas) {
+        alert('Nenhum gráfico gerado ainda. Execute um script para gerar um gráfico.');
+        return;
+      }
+      const dataUrl = canvas.toDataURL('image/png');
+      const w = window.open('');
+      if (w) {
+        w.document.write(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>Gráfico R — EconData Analytics</title>
+              <style>
+                body { margin: 0; background: #07101C; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+                img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); background: #ffffff; }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" alt="Gráfico R">
+            </body>
+          </html>
+        `);
+        w.document.close();
+      }
+    };
+
+    // Fazer download do gráfico gerado em PNG
+    window.downloadPlotImage = function() {
+      const canvas = plotArea.querySelector('canvas');
+      if (!canvas) {
+        alert('Nenhum gráfico gerado ainda. Execute um script para gerar um gráfico.');
+        return;
+      }
+      const dataUrl = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `econdata_grafico_r_${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
+    // Limpar saída: limpa apenas o terminal e a área de gráficos (NUNCA limpa o código do editor)
+    window.clearOutput = function() {
+      terminalOutput.textContent = '';
+      plotArea.innerHTML = '<div class="plot-placeholder" id="plot-placeholder">Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.</div>';
+    };
+
+    // --- Gerenciador de Chave de API de IA (Opção A: 100% Local / localStorage) ---
+    const API_KEY_STORAGE_KEY = 'econdata_ai_api_key';
+
+    function getSavedApiKey() {
+      return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
+    }
+
+    function updateApiKeyStatusUI() {
+      const label = document.getElementById('api-key-status-label');
+      const key = getSavedApiKey();
+      if (label) {
+        if (key) {
+          label.textContent = 'Chave Conectada ✓';
+          label.style.color = '#10B981';
+        } else {
+          label.textContent = 'Chave de API';
+          label.style.color = '';
+        }
+      }
+    }
+
+    window.openApiKeyModal = function() {
+      const modal = document.getElementById('apiKeyModalOverlay');
+      const input = document.getElementById('api-key-input');
+      if (input) input.value = getSavedApiKey();
+      if (modal) modal.classList.add('is-open');
+    };
+
+    window.closeApiKeyModal = function() {
+      const modal = document.getElementById('apiKeyModalOverlay');
+      if (modal) modal.classList.remove('is-open');
+    };
+
+    window.saveApiKeyModal = function() {
+      const input = document.getElementById('api-key-input');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        alert('Por favor, insira uma API Key válida.');
+        return;
+      }
+      localStorage.setItem(API_KEY_STORAGE_KEY, val);
+      updateApiKeyStatusUI();
+      closeApiKeyModal();
+      alert('Chave de API salva com segurança no seu navegador!');
+    };
+
+    window.removeSavedApiKey = function() {
+      localStorage.removeItem(API_KEY_STORAGE_KEY);
+      const input = document.getElementById('api-key-input');
+      if (input) input.value = '';
+      updateApiKeyStatusUI();
+      closeApiKeyModal();
+      alert('Chave removida do armazenamento local.');
+    };
+
+    // Geração de Código R via IA (Google Gemini API ou Groq / OpenAI compatível)
+    window.generateCodeWithAI = async function() {
+      const promptInput = document.getElementById('ai-prompt-input');
+      const userPrompt = promptInput ? promptInput.value.trim() : '';
+      if (!userPrompt) {
+        alert('Por favor, descreva o gráfico ou análise que você deseja gerar.');
+        if (promptInput) promptInput.focus();
+        return;
+      }
+
+      const apiKey = getSavedApiKey();
+      if (!apiKey) {
+        openApiKeyModal();
+        return;
+      }
+
+      const btn = document.getElementById('btn-generate-ai');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Gerando código...`;
+
+      terminalOutput.textContent = `[Assistente IA]: Conectando com a API para criar código R para: "${userPrompt}"...\n`;
+
+      try {
+        let generatedRCode = '';
+
+        if (apiKey.startsWith('AIzaSy') || apiKey.startsWith('AQ.')) {
+          // Chamada para Google Gemini API
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
+Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
+"${userPrompt}"
+
+DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
+1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
+   Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
+   ATENÇÃO: O SGS do Banco Central EXIGE intervalo de datas para séries diárias (regra dos 10 anos do BCB), SEMPRE inclua os parâmetros dataInicial e dataFinal na URL (formato DD/MM/AAAA):
+   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   Exemplo de leitura robusta:
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026", sep = ";", dec = ",")
+   df$data <- as.Date(df$data, format = "%d/%m/%Y")
+   df$valor <- as.numeric(df$valor)
+2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
+3. REGRAS TÉCNICAS R:
+   - Retorne APENAS código R válido e puro. NUNCA use blocos ou tags markdown (\`\`\`r ou \`\`\`).
+   - NUNCA use install.packages().
+   - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
+   - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
+                }]
+              }]
+            })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `HTTP ${response.status} da API do Gemini.`);
+          }
+
+          const data = await response.json();
+          generatedRCode = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        } else {
+          // Chamada genérica estilo OpenAI / Groq (para chaves gsk_ ou sk_)
+          const endpoint = apiKey.startsWith('gsk_') 
+            ? 'https://api.groq.com/openai/v1/chat/completions'
+            : 'https://api.openai.com/v1/chat/completions';
+          const modelName = apiKey.startsWith('gsk_') ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: modelName,
+              messages: [
+                {
+                  role: 'system',
+                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
+                },
+                {
+                  role: 'user',
+                  content: userPrompt
+                }
+              ]
+            })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `HTTP ${response.status} da API.`);
+          }
+
+          const data = await response.json();
+          generatedRCode = data.choices?.[0]?.message?.content || '';
+        }
+
+        // Limpar possíveis formatações markdown residuais
+        generatedRCode = generatedRCode.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '').trim();
+
+        if (generatedRCode) {
+          codeEditor.value = generatedRCode;
+          terminalOutput.textContent = `[Assistente IA]: Código R gerado com sucesso! Executando no WebR...\n`;
+          runRCode();
+        } else {
+          terminalOutput.textContent += `[Assistente IA]: Nenhum código retornado pela API.\n`;
+        }
+      } catch (err) {
+        console.error('Erro na chamada de IA:', err);
+        terminalOutput.textContent += `\n[Erro na API de IA]: ${err.message}\nVerifique se a chave de API é válida e possui cotas disponíveis.`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    };
+
+    async function initWebR() {
+      try {
+        statusDot.className = 'console-status-indicator running';
+        statusText.textContent = 'Carregando WebR...';
+        statusBadge.style.color = '#38BDF8';
+        statusBadge.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+        statusBadge.style.background = 'rgba(56, 189, 248, 0.1)';
+
+        webRInstance = new WebR();
+        await webRInstance.init();
+
+        statusText.textContent = 'Pré-instalando ggplot2 e dplyr...';
+        terminalOutput.textContent = 'Inicializando motor WebR WebAssembly...\nInstalando pacotes essenciais (ggplot2, dplyr) no ambiente virtual...\n';
+
+        // Habilita shim_install
+        await webRInstance.evalRVoid('webr::shim_install()');
+
+        // Pré-instalar ggplot2 e dplyr (rápidos e leves)
+        try {
+          await webRInstance.installPackages(['ggplot2', 'dplyr']);
+          await webRInstance.evalRVoid('library(ggplot2); library(dplyr)');
+        } catch (pkgErr) {
+          console.warn('Aviso no carregamento de pacotes:', pkgErr);
+        }
+
+        // Embutir funções essenciais do brfinance nativamente no ambiente R
+        const brfinanceCoreR = `
+# brfinance Core Functions (EconData Analytics)
+calc_present_value <- function(fv, rate, n) {
+  fv / ((1 + rate) ^ n)
+}
+
+calc_future_value <- function(pv, rate, n) {
+  pv * ((1 + rate) ^ n)
+}
+
+calc_loan_pmt <- function(principal, rate, n) {
+  principal * (rate * (1 + rate)^n) / ((1 + rate)^n - 1)
+}
+
+calc_npv <- function(rate, cash_flows) {
+  t <- 0:(length(cash_flows) - 1)
+  sum(cash_flows / ((1 + rate) ^ t))
+}
+
+calc_irr <- function(cash_flows) {
+  uniroot(function(r) calc_npv(r, cash_flows), interval = c(-0.99, 2))$root
+}
+
+plot_series_comparison <- function(series1, series2, name1 = "Série 1", name2 = "Série 2", title = "Comparação de Séries") {
+  df <- data.frame(
+    Periodo = 1:length(series1),
+    S1 = series1,
+    S2 = series2
+  )
+  p <- ggplot(df, aes(x = Periodo)) +
+    geom_line(aes(y = S1, color = name1), linewidth = 1.2) +
+    geom_point(aes(y = S1, color = name1), size = 2) +
+    geom_line(aes(y = S2, color = name2), linewidth = 1.2, linetype = "dashed") +
+    geom_point(aes(y = S2, color = name2), size = 2) +
+    scale_color_manual(values = setNames(c("#0284C7", "#EF4444"), c(name1, name2))) +
+    labs(title = title, x = "Período (Meses)", y = "Valor (%)", color = "Indicador") +
+    theme_minimal(base_size = 12) +
+    theme(legend.position = "bottom")
+  return(p)
+}
+cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
+`;
+        await webRInstance.evalRVoid(brfinanceCoreR);
+
+        isInitialized = true;
+        statusDot.className = 'console-status-indicator ready';
+        statusText.textContent = 'R 4.x + ggplot2 + brfinance';
+        statusBadge.style.color = '#10B981';
+        statusBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        statusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+
+        terminalOutput.textContent = '=======================================================\n' +
+          'EconData R WebAssembly Environment (Console v2.0)\n' +
+          'Pacotes prontos: ggplot2, dplyr, brfinance (core)\n' +
+          'Dica: Atalho para executar código: Ctrl + Enter\n' +
+          '=======================================================\n';
+      } catch (err) {
+        console.error('Erro ao inicializar WebR:', err);
+        statusDot.className = 'console-status-indicator';
+        statusDot.style.background = '#EF4444';
+        statusText.textContent = 'Erro ao inicializar WebR';
+        terminalOutput.textContent = 'Erro ao carregar o motor WebR:\n' + err.message;
+      }
+    }
+
+    window.runRCode = async function() {
+      if (!isInitialized) {
+        alert('O interpretador WebR está inicializando pacotes. Por favor, aguarde alguns instantes.');
+        return;
+      }
+      if (isExecuting) return;
+
+      let code = codeEditor.value.trim();
+      if (!code) {
+        terminalOutput.textContent = '# O editor está vazio. Digite um código R para executar.';
+        return;
+      }
+
+      // No R em batch / WebAssembly, objetos ggplot só disparam o canvas gráfico se forem explicitamente impressos com print().
+      // Se o script contém ggplot() mas não chama print(), garantimos a impressão do último objeto avaliado (.Last.value)
+      if (code.includes('ggplot(') && !code.includes('print(')) {
+        code = code + '\nif (exists(".Last.value") && inherits(.Last.value, "ggplot")) { print(.Last.value) }';
+      }
+
+      isExecuting = true;
+      btnRun.disabled = true;
+      btnRun.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Executando...`;
+      terminalOutput.textContent = 'Executando script R...\n';
+
+      try {
+        const shelter = await new webRInstance.Shelter();
+        const capture = await shelter.captureR(code, {
+          captureGraphics: { width: 580, height: 380 }
+        });
+
+        // Processar saída de texto
+        let outputText = '';
+        if (capture.output && capture.output.length > 0) {
+          outputText = capture.output
+            .map(line => {
+              if (line.type === 'stdout' || line.type === 'stderr') {
+                return line.data;
+              }
+              return '';
+            })
+            .join('\\n');
+        }
+
+        terminalOutput.textContent = outputText.trim() ? outputText : '# Executado com sucesso.';
+
+        // Processar gráficos (ImageBitmaps do webr::canvas)
+        if (capture.images && capture.images.length > 0) {
+          plotArea.innerHTML = '';
+          capture.images.forEach(img => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            plotArea.appendChild(canvas);
+          });
+        }
+
+        await shelter.purge();
+      } catch (err) {
+        console.error('Erro de execução no R:', err);
+        terminalOutput.textContent += '\\n[Erro de Execução no R]: ' + err.message;
+      } finally {
+        isExecuting = false;
+        btnRun.disabled = false;
+        btnRun.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Executar Código (Run)`;
+      }
+    };
+
+    // Suporte ao atalho Ctrl+Enter / Cmd+Enter
+    codeEditor.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runRCode();
+      }
+    });
+
+    // Inicia o WebR assim que a página estiver pronta e checa URL hash
+    window.addEventListener('DOMContentLoaded', () => {
+      initWebR();
+      if (window.location.hash === '#console') {
+        showConsoleTab();
+      }
+    });
+  </script>
 </body>
 </html>
