@@ -1493,6 +1493,7 @@ p {
           <div class="console-presets">
             <button class="preset-btn" onclick="loadPreset('selic')">📈 Gráfico: Trajetória Selic</button>
             <button class="preset-btn" onclick="loadPreset('brfinance')">💰 Finanças: VPL & TIR</button>
+            <button class="preset-btn" onclick="loadPreset('ggplot')">🎨 Testar ggplot2</button>
             <button class="preset-btn" onclick="loadPreset('stats')">📊 Distribuição & Histograma</button>
             <button class="preset-btn" onclick="loadPreset('clean')">🗑️ Limpar</button>
           </div>
@@ -1782,6 +1783,28 @@ if(valor_vpl > 0) {
   cat("Resultado do Parecer: INVIÁVEL (VPL <= 0)\\n")
 }`,
 
+      ggplot: `# Como usar pacotes no WebR (WebAssembly)
+# 1. Instalar o pacote binário Wasm (executado uma vez na sessão)
+webr::install("ggplot2")
+library(ggplot2)
+
+# 2. Criar dados econômicos de exemplo
+dados <- data.frame(
+  Ano = 2015:2024,
+  PIB_Crescimento = c(-3.5, -3.3, 1.3, 1.8, 1.2, -3.3, 5.0, 3.0, 2.9, 3.2)
+)
+
+# 3. Gerar gráfico elegante com ggplot2
+ggplot(dados, aes(x = factor(Ano), y = PIB_Crescimento, fill = PIB_Crescimento > 0)) +
+  geom_col(show.legend = FALSE, width = 0.65) +
+  scale_fill_manual(values = c("TRUE" = "#0284C7", "FALSE" = "#EF4444")) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  labs(title = "Crescimento Anual do PIB Brasileiro (%)",
+       subtitle = "Série Histórica e Recuperação Recente",
+       x = "Ano", y = "Variação do PIB (%)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())`,
+
       stats: `# Análise Estatística: Distribuição e Histograma
 # Amostra de retornos com teste de normalidade simulado
 set.seed(42)
@@ -1833,6 +1856,13 @@ print(x)
         webRInstance = new WebR();
         await webRInstance.init();
 
+        // Habilita install.packages() transparente no WebR mapeando para o repositório Wasm
+        try {
+          await webRInstance.evalRVoid('webr::shim_install()');
+        } catch (e) {
+          console.warn('webr::shim_install aviso:', e);
+        }
+
         isInitialized = true;
         statusDot.className = 'console-status-indicator ready';
         statusText.textContent = 'R 4.x Pronto';
@@ -1840,7 +1870,9 @@ print(x)
         statusBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
         statusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
 
-        terminalOutput.textContent = 'WebR (R WebAssembly) inicializado com sucesso!\\nDigite seu código ou utilize os exemplos acima e clique em "Executar Código".\\n';
+        terminalOutput.textContent = 'WebR (R WebAssembly) inicializado com sucesso!\\n' +
+          'Dica: Pacotes Wasm (como ggplot2, dplyr) podem ser instalados com install.packages("nome") ou webr::install("nome").\\n' +
+          'Digite seu código ou utilize os exemplos acima e clique em "Executar Código".\\n';
         
         // Define o preset default inicial se estiver vazio
         if (!codeEditor.value) {
