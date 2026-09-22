@@ -1085,6 +1085,133 @@ body.tab-console-active .console-section {
   color: #FFFFFF;
 }
 
+/* Barra do Assistente de IA (Opção A) */
+.console-ai-bar {
+  background: rgba(16, 35, 61, 0.9);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  flex-wrap: wrap;
+}
+
+.console-ai-input-wrap {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.console-ai-input {
+  width: 100%;
+  background: rgba(7, 16, 28, 0.9);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.55rem 0.9rem;
+  color: #FFFFFF;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  outline: none;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.console-ai-btn {
+  background: linear-gradient(135deg, #0284C7, #0369A1);
+  color: #FFFFFF;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-btn:hover {
+  background: linear-gradient(135deg, #0369A1, #0284C7);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.console-ai-key-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-ai-key-btn:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+/* Modal de Configuração de API Key */
+.api-key-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 16, 28, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.api-key-modal-overlay.is-open {
+  display: flex;
+}
+
+.api-key-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 480px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+}
+
+.api-key-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.api-key-modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .console-container {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
@@ -1920,6 +2047,58 @@ body.tab-console-active .console-section {
         </div>
       </div>
 
+      <!-- Barra de IA para Geração Automática de Gráficos (Opção A) -->
+      <div class="console-ai-bar">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="mono-tag" style="font-size: 0.7rem; background: rgba(56, 189, 248, 0.15);">IA ASSISTANT</span>
+        </div>
+        <div class="console-ai-input-wrap">
+          <input type="text" id="ai-prompt-input" class="console-ai-input" placeholder="Descreva o gráfico que deseja em linguagem natural (ex: 'Gráfico de barras do PIB 2020-2024 com ggplot2')...">
+        </div>
+        <button id="btn-generate-ai" class="console-ai-btn" onclick="generateCodeWithAI()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Gerar Gráfico
+        </button>
+        <button class="console-ai-key-btn" onclick="openApiKeyModal()" title="Configurar sua API Key do Google Gemini ou Groq">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span id="api-key-status-label">Chave de API</span>
+        </button>
+      </div>
+
+      <!-- Modal de Chave de API (Opção A: Salva apenas no localStorage do usuário) -->
+      <div class="api-key-modal-overlay" id="apiKeyModalOverlay" onclick="if(event.target===this) closeApiKeyModal()">
+        <div class="api-key-modal">
+          <div class="api-key-modal-header">
+            <h3 class="api-key-modal-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Configurar Chave de API de IA
+            </h3>
+            <button class="drawer-close-btn" onclick="closeApiKeyModal()">✕</button>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            Por segurança e conformidade, sua chave é armazenada <strong>exclusivamente na memória local do seu navegador (localStorage)</strong> e nunca trafega por servidores externos.
+          </p>
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-family: var(--font-mono);">
+              Google Gemini API Key (ou Groq API Key):
+            </label>
+            <input type="password" id="api-key-input" class="console-ai-input" placeholder="AIzaSy... ou gsk_..." style="font-family: var(--font-mono);">
+            <div style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: var(--accent-cyan); text-decoration: none;">
+                Obter chave gratuita no Google AI Studio ↗
+              </a>
+              <button onclick="removeSavedApiKey()" style="background: none; border: none; color: #EF4444; font-size: 0.72rem; cursor: pointer; text-decoration: underline;">
+                Remover chave salva
+              </button>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button class="btn btn-ghost" onclick="closeApiKeyModal()" style="padding: 0.5rem 1rem; font-size: 0.78rem;">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveApiKeyModal()" style="padding: 0.5rem 1.25rem; font-size: 0.78rem;">Salvar Chave</button>
+          </div>
+        </div>
+      </div>
+
       <div class="console-container">
         <!-- Painel Esquerdo: Editor e Controles -->
         <div class="console-pane">
@@ -2088,10 +2267,176 @@ body.tab-console-active .console-section {
       document.body.removeChild(a);
     };
 
+    // Limpar saída: limpa apenas o terminal e a área de gráficos (NUNCA limpa o código do editor)
     window.clearOutput = function() {
       terminalOutput.textContent = '';
-      codeEditor.value = '';
       plotArea.innerHTML = '<div class="plot-placeholder" id="plot-placeholder">Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.</div>';
+    };
+
+    // --- Gerenciador de Chave de API de IA (Opção A: 100% Local / localStorage) ---
+    const API_KEY_STORAGE_KEY = 'econdata_ai_api_key';
+
+    function getSavedApiKey() {
+      return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
+    }
+
+    function updateApiKeyStatusUI() {
+      const label = document.getElementById('api-key-status-label');
+      const key = getSavedApiKey();
+      if (label) {
+        if (key) {
+          label.textContent = 'Chave Conectada ✓';
+          label.style.color = '#10B981';
+        } else {
+          label.textContent = 'Chave de API';
+          label.style.color = '';
+        }
+      }
+    }
+
+    window.openApiKeyModal = function() {
+      const modal = document.getElementById('apiKeyModalOverlay');
+      const input = document.getElementById('api-key-input');
+      if (input) input.value = getSavedApiKey();
+      if (modal) modal.classList.add('is-open');
+    };
+
+    window.closeApiKeyModal = function() {
+      const modal = document.getElementById('apiKeyModalOverlay');
+      if (modal) modal.classList.remove('is-open');
+    };
+
+    window.saveApiKeyModal = function() {
+      const input = document.getElementById('api-key-input');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        alert('Por favor, insira uma API Key válida.');
+        return;
+      }
+      localStorage.setItem(API_KEY_STORAGE_KEY, val);
+      updateApiKeyStatusUI();
+      closeApiKeyModal();
+      alert('Chave de API salva com segurança no seu navegador!');
+    };
+
+    window.removeSavedApiKey = function() {
+      localStorage.removeItem(API_KEY_STORAGE_KEY);
+      const input = document.getElementById('api-key-input');
+      if (input) input.value = '';
+      updateApiKeyStatusUI();
+      closeApiKeyModal();
+      alert('Chave removida do armazenamento local.');
+    };
+
+    // Geração de Código R via IA (Google Gemini API ou Groq / OpenAI compatível)
+    window.generateCodeWithAI = async function() {
+      const promptInput = document.getElementById('ai-prompt-input');
+      const userPrompt = promptInput ? promptInput.value.trim() : '';
+      if (!userPrompt) {
+        alert('Por favor, descreva o gráfico ou análise que você deseja gerar.');
+        if (promptInput) promptInput.focus();
+        return;
+      }
+
+      const apiKey = getSavedApiKey();
+      if (!apiKey) {
+        openApiKeyModal();
+        return;
+      }
+
+      const btn = document.getElementById('btn-generate-ai');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Gerando código...`;
+
+      terminalOutput.textContent = `[Assistente IA]: Conectando com a API para criar código R para: "${userPrompt}"...\n`;
+
+      try {
+        let generatedRCode = '';
+
+        if (apiKey.startsWith('AIzaSy')) {
+          // Chamada para Google Gemini API
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: `Você é um estatístico e programador sênior em R especialista em ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+O ambiente tem instalado: R 4.x, ggplot2, dplyr, e funções nativas de matemática financeira (calc_present_value, calc_loan_pmt, calc_npv, plot_series_comparison).
+Gere um script R executável, limpo e direto para atender ao seguinte pedido do usuário:
+"${userPrompt}"
+Regras CRÍTICAS:
+1. Retorne APENAS código R válido puro. Não use markdown, não use \`\`\`r ou \`\`\`.
+2. Não use install.packages() pois os pacotes já estão no ambiente.
+3. Se gerar um gráfico ggplot, certifique-se de chamar print() no objeto ou deixá-lo renderizado.
+4. Crie dados sintéticos ou realistas da economia brasileira se o usuário não especificou uma tabela.`
+                }]
+              }]
+            })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `HTTP ${response.status} da API do Gemini.`);
+          }
+
+          const data = await response.json();
+          generatedRCode = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        } else {
+          // Chamada genérica estilo OpenAI / Groq (para chaves gsk_ ou sk_)
+          const endpoint = apiKey.startsWith('gsk_') 
+            ? 'https://api.groq.com/openai/v1/chat/completions'
+            : 'https://api.openai.com/v1/chat/completions';
+          const modelName = apiKey.startsWith('gsk_') ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: modelName,
+              messages: [
+                {
+                  role: 'system',
+                  content: 'Você é um programador sênior em R especialista em ggplot2 e brfinance para o núcleo EconData Analytics. Retorne APENAS código R puro e funcional sem blocos markdown.'
+                },
+                {
+                  role: 'user',
+                  content: userPrompt
+                }
+              ]
+            })
+          });
+
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `HTTP ${response.status} da API.`);
+          }
+
+          const data = await response.json();
+          generatedRCode = data.choices?.[0]?.message?.content || '';
+        }
+
+        // Limpar possíveis formatações markdown residuais
+        generatedRCode = generatedRCode.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '').trim();
+
+        if (generatedRCode) {
+          codeEditor.value = generatedRCode;
+          terminalOutput.textContent = `[Assistente IA]: Código R gerado com sucesso! Executando no WebR...\n`;
+          runRCode();
+        } else {
+          terminalOutput.textContent += `[Assistente IA]: Nenhum código retornado pela API.\n`;
+        }
+      } catch (err) {
+        console.error('Erro na chamada de IA:', err);
+        terminalOutput.textContent += `\n[Erro na API de IA]: ${err.message}\nVerifique se a chave de API é válida e possui cotas disponíveis.`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
     };
 
     async function initWebR() {
