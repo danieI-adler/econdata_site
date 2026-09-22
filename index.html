@@ -396,11 +396,11 @@ p {
 }
 
 .leadership-avatar {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: rgba(56, 189, 248, 0.12);
-  border: 1px solid var(--border-blue);
+  border: 2px solid var(--border-blue);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -409,6 +409,14 @@ p {
   font-weight: 700;
   color: var(--accent-cyan);
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.leadership-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .leadership-info {
@@ -430,6 +438,30 @@ p {
   font-weight: 700;
   color: #FFFFFF;
   margin-top: 0.15rem;
+}
+
+.leadership-name a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.leadership-name a:hover {
+  color: var(--accent-cyan);
+}
+
+.leadership-name a svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.leadership-name a:hover svg {
+  opacity: 1;
 }
 
 .leadership-meta {
@@ -944,55 +976,97 @@ p {
 
       <div class="leadership-grid">
         <div class="leadership-card">
-          <div class="leadership-avatar">GP</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/geronimo_pulitini.png" alt="Foto de Gerônimo Pulitini">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Presidência</span>
-            <h3 class="leadership-name">Gerônimo Pulitini</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/geronimosp" target="_blank" rel="noopener noreferrer">
+                Gerônimo Pulitini
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">EconData Analytics • PUC-Rio</span>
           </div>
         </div>
 
         <div class="leadership-card">
-          <div class="leadership-avatar">VP</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/vitor_pompeu.png" alt="Foto de Vitor Pompeu">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Vice-Presidência</span>
-            <h3 class="leadership-name">Vitor Pompeu</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/vitor-pompeu-salom%C3%A3o-a79011377" target="_blank" rel="noopener noreferrer">
+                Vitor Pompeu
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">EconData Analytics • PUC-Rio</span>
           </div>
         </div>
 
         <div class="leadership-card">
-          <div class="leadership-avatar">GB</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/guilherme_bastos.png" alt="Foto de Guilherme Bastos">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Diretoria de Eventos</span>
-            <h3 class="leadership-name">Guilherme Bastos</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/guilherme-bastos-938b31382" target="_blank" rel="noopener noreferrer">
+                Guilherme Bastos
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">EconData Week & Visitas Técnicas</span>
           </div>
         </div>
 
         <div class="leadership-card">
-          <div class="leadership-avatar">MF</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/mateus_franca.png" alt="Foto de Mateus França">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Diretoria de Pessoas</span>
-            <h3 class="leadership-name">Mateus França</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/mateusfrancaleite" target="_blank" rel="noopener noreferrer">
+                Mateus França
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">Processo Seletivo & Integração</span>
           </div>
         </div>
 
         <div class="leadership-card">
-          <div class="leadership-avatar">MO</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/maria_luiza_oliveira.jpg" alt="Foto de Maria Luiza Oliveira">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Diretoria de Projetos</span>
-            <h3 class="leadership-name">Maria Luiza Oliveira</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/maria-luiza-de-oliveira-126754383" target="_blank" rel="noopener noreferrer">
+                Maria Luiza Oliveira
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">Coordenação de Pesquisa Aplicada</span>
           </div>
         </div>
 
         <div class="leadership-card">
-          <div class="leadership-avatar">DR</div>
+          <div class="leadership-avatar">
+            <img src="assets/img/diretoria/danilo_rogozinski.jpg" alt="Foto de Danilo Rogozinski">
+          </div>
           <div class="leadership-info">
             <span class="leadership-role">Diretoria de Conteúdo</span>
-            <h3 class="leadership-name">Danilo Rogozinski</h3>
+            <h3 class="leadership-name">
+              <a href="https://www.linkedin.com/in/danilo-rogozinski-415036369" target="_blank" rel="noopener noreferrer">
+                Danilo Rogozinski
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </h3>
             <span class="leadership-meta">Publicações & Comunicação Analítica</span>
           </div>
         </div>
