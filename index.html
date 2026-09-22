@@ -1046,10 +1046,43 @@ p {
     padding: 1.25rem;
   }
 }
-/* Console R Interativo (WebR) */
+/* Console R (WebR) - Seção & Modo Aba Separada */
 .console-section {
+  display: none; /* Por padrão, o console fica oculto do fluxo contínuo do site */
   background: radial-gradient(circle at 50% 0%, rgba(16, 35, 61, 0.6) 0%, transparent 60%);
-  transition: all 0.3s ease;
+  padding: 3rem 0 5rem;
+  min-height: calc(100vh - 70px);
+}
+
+/* Quando ativo na aba Console, exibe apenas a seção do Console */
+body.tab-console-active .main-content-flow {
+  display: none !important;
+}
+
+body.tab-console-active .console-section {
+  display: block !important;
+}
+
+.console-btn-action {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.console-btn-action:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+  color: #FFFFFF;
 }
 
 .console-container {
@@ -1239,7 +1272,7 @@ p {
           <span></span>
         </button>
 
-        <a href="#" class="brand">
+        <a href="#" class="brand" onclick="showMainFlow()">
           <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
           <div class="brand-text-block">
             <span class="brand-title">ECONDATA</span>
@@ -1250,13 +1283,13 @@ p {
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#diretoria" class="nav-link">Diretoria</a></li>
-          <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
-          <li><a href="#processo-seletivo" class="nav-link">Processo Seletivo</a></li>
-          <li><a href="#projetos" class="nav-link">Projetos</a></li>
-          <li><a href="#console" class="nav-link" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
-          <li><a href="#visitas" class="nav-link">Mercado</a></li>
-          <li><a href="#contato" class="nav-link">Contato</a></li>
+          <li><a href="#diretoria" class="nav-link" onclick="showMainFlow()">Diretoria</a></li>
+          <li><a href="#capacitacao" class="nav-link" onclick="showMainFlow()">Capacitação</a></li>
+          <li><a href="#processo-seletivo" class="nav-link" onclick="showMainFlow()">Processo Seletivo</a></li>
+          <li><a href="#projetos" class="nav-link" onclick="showMainFlow()">Projetos</a></li>
+          <li><a href="#visitas" class="nav-link" onclick="showMainFlow()">Mercado</a></li>
+          <li><a href="#contato" class="nav-link" onclick="showMainFlow()">Contato</a></li>
+          <li><a href="#console" class="nav-link" onclick="showConsoleTab(); return false;" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
         </ul>
       </nav>
     </div>
@@ -1277,29 +1310,29 @@ p {
     </div>
 
     <nav class="drawer-nav">
-      <a href="#diretoria" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#diretoria" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Diretoria (26.2)</span> <span>→</span>
       </a>
-      <a href="#capacitacao" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#capacitacao" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Capacitação & Módulos</span> <span>→</span>
       </a>
-      <a href="#processo-seletivo" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#processo-seletivo" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Processo Seletivo</span> <span>→</span>
       </a>
-      <a href="#projetos" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#projetos" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Projetos & brfinance</span> <span>→</span>
       </a>
-      <a href="#console" class="drawer-item-btn highlight-console" onclick="closeDrawer()">
-        <span>📊 Console R (WebAssembly)</span> <span>→</span>
-      </a>
-      <a href="#areas" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#areas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Vertentes Analíticas</span> <span>→</span>
       </a>
-      <a href="#visitas" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#visitas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Visitas & Parceiros</span> <span>→</span>
       </a>
-      <a href="#contato" class="drawer-item-btn" onclick="closeDrawer()">
+      <a href="#contato" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
         <span>Contato & Redes</span> <span>→</span>
+      </a>
+      <a href="#console" class="drawer-item-btn highlight-console" onclick="showConsoleTab(); closeDrawer(); return false;">
+        <span>📊 Console R</span> <span>→</span>
       </a>
     </nav>
 
@@ -1315,6 +1348,8 @@ p {
     </div>
   </aside>
 
+  <!-- Conteúdo Principal do Site (Fluxo Contínuo) -->
+  <main class="main-content-flow" id="mainFlow">
   <section class="hero">
     <div class="container hero-grid">
       <div>
@@ -1700,88 +1735,6 @@ p {
     </div>
   </section>
 
-  <!-- Console R Interativo (WebR / WebAssembly) -->
-  <section class="section console-section" id="console">
-    <div class="container">
-      <div class="section-head">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
-          <span class="mono-tag">AMBIENTE DE EXECUÇÃO • WEBR (WEBASSEMBLY)</span>
-          <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
-            <span class="console-status-indicator" id="status-dot"></span>
-            <span id="status-text">Inicializando WebR...</span>
-          </span>
-        </div>
-        <h2 class="section-title">Console R Interativo</h2>
-        <p style="margin-top: 0.5rem;">
-          Ambiente R completo com <strong>ggplot2</strong>, <strong>dplyr</strong> e as funções do pacote <strong>brfinance</strong> pré-carregadas. Execute análises e gere gráficos com renderização nativa em tempo real.
-        </p>
-      </div>
-
-      <div class="console-container">
-        <!-- Painel Esquerdo: Editor e Controles -->
-        <div class="console-pane">
-          <div class="console-pane-header">
-            <span class="console-pane-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-              EDITOR R • SCRIPT
-            </span>
-            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
-              Atalho: <strong>Ctrl + Enter</strong>
-            </span>
-          </div>
-
-          <div class="console-presets">
-            <button class="preset-btn" onclick="loadPreset('ggplot')">🎨 ggplot2: PIB & Inflação</button>
-            <button class="preset-btn" onclick="loadPreset('brfinance')">🇧🇷 brfinance: Análise de Séries</button>
-            <button class="preset-btn" onclick="loadPreset('selic')">📈 Selic: Simulação Temporal</button>
-            <button class="preset-btn" onclick="loadPreset('clean')">🗑️ Limpar</button>
-          </div>
-
-          <div class="console-editor-wrap">
-            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" placeholder="# Digite seu código em R aqui..."></textarea>
-          </div>
-
-          <div class="console-controls">
-            <button class="btn btn-ghost" onclick="loadPreset('clean')" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Limpar Código</button>
-            <div style="display: flex; gap: 0.75rem; align-items: center;">
-              <button id="btn-run-r" class="btn btn-primary" onclick="runRCode()" style="padding: 0.55rem 1.4rem; font-size: 0.78rem;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Executar Código (Run)
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Painel Direito: Terminal e Gráficos -->
-        <div class="console-output-pane">
-          <div class="console-pane-header">
-            <span class="console-pane-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              SAÍDA DO TERMINAL (CONSOLE)
-            </span>
-            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;">Limpar Saída</button>
-          </div>
-          
-          <pre id="r-terminal-output" class="console-output-text"># Aguardando inicialização do motor WebR...
-# Ao carregar, clique em 'Executar Código' ou escolha um exemplo acima.</pre>
-
-          <div class="console-pane-header" style="border-top: 1px solid var(--border-subtle);">
-            <span class="console-pane-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
-              GRÁFICO R (DEVICE CANVAS)
-            </span>
-          </div>
-
-          <div class="console-plot-area" id="console-plot-area">
-            <div class="plot-placeholder" id="plot-placeholder">
-              Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code>, <code>hist()</code> ou <code>lines()</code>.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="areas">
     <div class="container">
       <div class="section-head">
@@ -1952,6 +1905,88 @@ p {
       </div>
     </div>
   </footer>
+  </main>
+
+  <!-- Console R (Aba Separada via Menu) -->
+  <section class="section console-section" id="console">
+    <div class="container">
+      <div class="section-head" style="margin-bottom: 1.75rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <h2 class="section-title" style="margin: 0; font-size: 1.85rem;">Console R</h2>
+          <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
+            <span class="console-status-indicator" id="status-dot"></span>
+            <span id="status-text">Inicializando WebR...</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="console-container">
+        <!-- Painel Esquerdo: Editor e Controles -->
+        <div class="console-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              EDITOR R • SCRIPT
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+              Atalho: <strong>Ctrl + Enter</strong>
+            </span>
+          </div>
+
+          <div class="console-editor-wrap">
+            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" placeholder="# Digite seu código em R aqui..."></textarea>
+          </div>
+
+          <div class="console-controls">
+            <button class="btn btn-ghost" onclick="clearCode()" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Limpar Código</button>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <button id="btn-run-r" class="btn btn-primary" onclick="runRCode()" style="padding: 0.55rem 1.4rem; font-size: 0.78rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Executar Código (Run)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel Direito: Terminal e Gráficos -->
+        <div class="console-output-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              SAÍDA DO TERMINAL (CONSOLE)
+            </span>
+            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;">Limpar Saída</button>
+          </div>
+          
+          <pre id="r-terminal-output" class="console-output-text"># Aguardando inicialização do motor WebR...
+# Ao carregar, clique em 'Executar Código'.</pre>
+
+          <div class="console-pane-header" style="border-top: 1px solid var(--border-subtle);">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+              GRÁFICO R (DEVICE CANVAS)
+            </span>
+            <div style="display: flex; gap: 0.4rem; align-items: center;">
+              <button class="console-btn-action" onclick="openPlotFullscreen()" title="Abrir gráfico em tela cheia numa nova aba">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                Tela Cheia
+              </button>
+              <button class="console-btn-action" onclick="downloadPlotImage()" title="Fazer download do gráfico gerado em PNG">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+
+          <div class="console-plot-area" id="console-plot-area">
+            <div class="plot-placeholder" id="plot-placeholder">
+              Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script type="module">
     import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
@@ -1968,6 +2003,17 @@ p {
     const plotArea = document.getElementById('console-plot-area');
     const plotPlaceholder = document.getElementById('plot-placeholder');
     const codeEditor = document.getElementById('r-code-editor');
+
+    // Alternância de Abas: Página Contínua vs Aba Separada do Console R
+    window.showConsoleTab = function() {
+      document.body.classList.add('tab-console-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', '#console');
+    };
+
+    window.showMainFlow = function() {
+      document.body.classList.remove('tab-console-active');
+    };
 
     // Controle do Menu Drawer (Idêntico ao site do Gama)
     window.openDrawer = function() {
@@ -1991,110 +2037,60 @@ p {
       if (e.key === 'Escape') closeDrawer();
     });
 
-    const PRESETS = {
-      ggplot: `# 1. Análise Gráfica com ggplot2 (Pré-carregado no WebR)
-# Dados Macroeconômicos Brasileiros: PIB e Inflação Histórica
-dados_macro <- data.frame(
-  Ano = c(2018, 2019, 2020, 2021, 2022, 2023, 2024),
-  PIB = c(1.8, 1.2, -3.3, 5.0, 3.0, 2.9, 3.2),
-  IPCA = c(3.75, 4.31, 4.52, 10.06, 5.79, 4.62, 4.50)
-)
-
-# Criando gráfico com tema institucional
-p <- ggplot(dados_macro, aes(x = factor(Ano), y = PIB, fill = PIB > 0)) +
-  geom_col(width = 0.65, show.legend = FALSE) +
-  geom_text(aes(label = paste0(PIB, "%")), vjust = ifelse(dados_macro$PIB >= 0, -0.6, 1.4), size = 3.8, fontface = "bold") +
-  scale_fill_manual(values = c("TRUE" = "#0284C7", "FALSE" = "#EF4444")) +
-  geom_hline(yintercept = 0, color = "#94A3B8", linewidth = 0.8) +
-  labs(
-    title = "Crescimento Anual do PIB Brasileiro (%)",
-    subtitle = "Série Histórica e Indicadores de Atividade",
-    x = "Ano",
-    y = "Variação Anual (%)"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    plot.title = element_text(face = "bold", color = "#0F172A"),
-    plot.subtitle = element_text(color = "#475569"),
-    panel.grid.minor = element_blank()
-  )
-
-# ATENÇÃO: No R / WebR, sempre chamamos print(p) para renderizar plots do ggplot2
-print(p)
-
-cat("=== Séries de Inflação e Crescimento ===\\n")
-print(dados_macro)
-`,
-
-      brfinance: `# Pacote brfinance (Núcleo EconData)
-# Rotinas de Cálculo Financeiro & Comparação de Séries
-
-# 1. Simulação das séries oficiais do SGS / Banco Central
-meses <- 1:12
-selic <- c(11.75, 11.25, 10.75, 10.50, 10.50, 10.50, 10.75, 11.25, 12.25, 13.25, 14.00, 14.25)
-ipca_acum <- c(4.51, 4.50, 3.93, 3.69, 3.93, 4.23, 4.50, 4.24, 4.42, 4.76, 4.87, 4.83)
-
-# 2. Utilizando plot_series_comparison (função inspirada no pacote brfinance)
-p <- plot_series_comparison(
-  series1 = selic, 
-  series2 = ipca_acum, 
-  name1 = "Taxa Selic (%)", 
-  name2 = "IPCA Acumulado 12M (%)", 
-  title = "brfinance: Comparativo de Indicadores Macroeconômicos (BCB/IBGE)"
-)
-print(p)
-
-# 3. Matemática Financeira: Análise de Empréstimo com calc_loan_pmt()
-parcela <- calc_loan_pmt(principal = 50000, rate = 0.012, n = 24)
-cat("=== brfinance::calc_loan_pmt ===\\n")
-cat("Valor Financiado: R$ 50.000,00\\n")
-cat("Taxa de Juros: 1.2% a.m.\\n")
-cat("Prazo: 24 meses\\n")
-cat("Valor da Parcela Mensal (PMT): R$", round(parcela, 2), "\\n")
-cat("Total Pago: R$", round(parcela * 24, 2), "\\n")
-cat("Total de Juros: R$", round(parcela * 24 - 50000, 2), "\\n")
-`,
-
-      selic: `# Projeção da Trajetória da Selic (Base R Graphics)
-horizonte <- 1:24
-trajetoria <- 10.75 + cumsum(rnorm(24, mean = -0.12, sd = 0.3))
-
-plot(horizonte, trajetoria, type = "b", pch = 19, col = "#0284C7",
-     lwd = 2.5, xlab = "Meses à Frente", ylab = "Taxa Selic Projetada (%)",
-     main = "Projeção da Selic — Modelo Estatístico Autoregressivo",
-     ylim = c(min(trajetoria) - 0.5, max(trajetoria) + 0.5))
-
-grid(col = "gray80", lty = "dotted")
-abline(h = 10.75, col = "#EF4444", lty = 2, lwd = 1.5)
-legend("topright", legend = c("Selic Projetada", "Nível Atual (10.75%)"),
-       col = c("#0284C7", "#EF4444"), lty = c(1, 2), pch = c(19, NA), bty = "n")
-
-cat("=== Sumário da Projeção ===\\n")
-cat("Mínima projetada:", round(min(trajetoria), 2), "% | Máxima:", round(max(trajetoria), 2), "%\\n")
-cat("Taxa esperada ao final de 24 meses:", round(tail(trajetoria, 1), 2), "%\\n")
-`,
-
-      clean: `# Digite seu código em R aqui:
-library(ggplot2)
-library(dplyr)
-
-p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
-  geom_point(size = 3) +
-  labs(title = "Consumo vs Peso dos Veículos", x = "Peso (1000 lbs)", y = "Milhas por Galão (MPG)") +
-  theme_minimal()
-
-print(p)
-`
+    // Limpar código do editor (deixa 100% em branco)
+    window.clearCode = function() {
+      codeEditor.value = '';
+      codeEditor.focus();
     };
 
-    window.loadPreset = function(presetKey) {
-      if (PRESETS[presetKey]) {
-        codeEditor.value = PRESETS[presetKey];
+    // Abrir gráfico gerado em tela cheia numa nova aba
+    window.openPlotFullscreen = function() {
+      const canvas = plotArea.querySelector('canvas');
+      if (!canvas) {
+        alert('Nenhum gráfico gerado ainda. Execute um script para gerar um gráfico.');
+        return;
+      }
+      const dataUrl = canvas.toDataURL('image/png');
+      const w = window.open('');
+      if (w) {
+        w.document.write(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>Gráfico R — EconData Analytics</title>
+              <style>
+                body { margin: 0; background: #07101C; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+                img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); background: #ffffff; }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" alt="Gráfico R">
+            </body>
+          </html>
+        `);
+        w.document.close();
       }
     };
 
+    // Fazer download do gráfico gerado em PNG
+    window.downloadPlotImage = function() {
+      const canvas = plotArea.querySelector('canvas');
+      if (!canvas) {
+        alert('Nenhum gráfico gerado ainda. Execute um script para gerar um gráfico.');
+        return;
+      }
+      const dataUrl = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `econdata_grafico_r_${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
     window.clearOutput = function() {
-      terminalOutput.textContent = '# Terminal limpo. Pronto para nova execução.';
+      terminalOutput.textContent = '';
+      codeEditor.value = '';
       plotArea.innerHTML = '<div class="plot-placeholder" id="plot-placeholder">Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.</div>';
     };
 
@@ -2170,26 +2166,22 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\\n")
 
         isInitialized = true;
         statusDot.className = 'console-status-indicator ready';
-        statusText.textContent = 'R 4.x + ggplot2 + brfinance Pronto';
+        statusText.textContent = 'R 4.x + ggplot2 + brfinance';
         statusBadge.style.color = '#10B981';
         statusBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
         statusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
 
-        terminalOutput.textContent = '=======================================================\\n' +
-          'EconData R WebAssembly Environment (Console v2.0)\\n' +
-          'Pacotes prontos: ggplot2, dplyr, brfinance (core)\\n' +
-          'Dica: Para gráficos ggplot2, use print(p). Atalho: Ctrl + Enter\\n' +
-          '=======================================================\\n';
-        
-        if (!codeEditor.value) {
-          loadPreset('ggplot');
-        }
+        terminalOutput.textContent = '=======================================================\n' +
+          'EconData R WebAssembly Environment (Console v2.0)\n' +
+          'Pacotes prontos: ggplot2, dplyr, brfinance (core)\n' +
+          'Dica: Atalho para executar código: Ctrl + Enter\n' +
+          '=======================================================\n';
       } catch (err) {
         console.error('Erro ao inicializar WebR:', err);
         statusDot.className = 'console-status-indicator';
         statusDot.style.background = '#EF4444';
         statusText.textContent = 'Erro ao inicializar WebR';
-        terminalOutput.textContent = 'Erro ao carregar o motor WebR:\\n' + err.message;
+        terminalOutput.textContent = 'Erro ao carregar o motor WebR:\n' + err.message;
       }
     }
 
@@ -2270,10 +2262,12 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\\n")
       }
     });
 
-    // Inicia o WebR assim que a página estiver pronta
+    // Inicia o WebR assim que a página estiver pronta e checa URL hash
     window.addEventListener('DOMContentLoaded', () => {
-      loadPreset('ggplot');
       initWebR();
+      if (window.location.hash === '#console') {
+        showConsoleTab();
+      }
     });
   </script>
 </body>
