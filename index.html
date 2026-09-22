@@ -868,6 +868,185 @@ p {
     padding: 1.25rem;
   }
 }
+/* Console R Interativo (WebR) */
+.console-section {
+  background: radial-gradient(circle at 50% 0%, rgba(16, 35, 61, 0.6) 0%, transparent 60%);
+}
+
+.console-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.75rem;
+  background: var(--bg-navy);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.console-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.console-pane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: rgba(7, 16, 28, 0.8);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.console-pane-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.console-status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F59E0B;
+  display: inline-block;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.console-status-indicator.ready {
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.console-status-indicator.running {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+.console-presets {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(11, 25, 44, 0.9);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+}
+
+.preset-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.preset-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+  color: #FFFFFF;
+}
+
+.console-editor-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  background: #040912;
+}
+
+.console-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  background: transparent;
+  color: #F8FAFC;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border: none;
+  padding: 1.25rem;
+  resize: vertical;
+  outline: none;
+  tab-size: 2;
+  box-sizing: border-box;
+}
+
+.console-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: rgba(7, 16, 28, 0.9);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.console-output-pane {
+  background: #060D17;
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+}
+
+.console-output-text {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: #CBD5E1;
+  padding: 1.25rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: auto;
+  max-height: 240px;
+  flex: 1;
+  background: #03070E;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.console-plot-area {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #050B14;
+}
+
+.console-plot-area canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.plot-placeholder {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .console-container {
+    grid-template-columns: 1fr;
+  }
+  .console-output-pane {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+  }
+}
   </style>
 </head>
 <body>
@@ -888,6 +1067,7 @@ p {
           <li><a href="#capacitacao" class="nav-link">Capacitação</a></li>
           <li><a href="#processo-seletivo" class="nav-link">Processo Seletivo</a></li>
           <li><a href="#projetos" class="nav-link">Projetos</a></li>
+          <li><a href="#console" class="nav-link" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
           <li><a href="#visitas" class="nav-link">Mercado</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
@@ -1280,6 +1460,88 @@ p {
     </div>
   </section>
 
+  <!-- Console R Interativo (WebR / WebAssembly) -->
+  <section class="section console-section" id="console">
+    <div class="container">
+      <div class="section-head">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <span class="mono-tag">AMBIENTE DE EXECUÇÃO • WEBR (WEBASSEMBLY)</span>
+          <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
+            <span class="console-status-indicator" id="status-dot"></span>
+            <span id="status-text">Inicializando WebR...</span>
+          </span>
+        </div>
+        <h2 class="section-title">Console R Interativo</h2>
+        <p style="margin-top: 0.5rem;">
+          Execute código em <strong>R 100% no seu navegador</strong> via WebAssembly. Teste a lógica analítica do pacote <code>brfinance</code>, gere gráficos macroeconômicos ou realize simulações financeiras sem precisar instalar nada na sua máquina.
+        </p>
+      </div>
+
+      <div class="console-container">
+        <!-- Painel Esquerdo: Editor e Controles -->
+        <div class="console-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              EDITOR R • SCRIPT
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+              Atalho: <strong>Ctrl + Enter</strong>
+            </span>
+          </div>
+
+          <div class="console-presets">
+            <button class="preset-btn" onclick="loadPreset('selic')">📈 Gráfico: Trajetória Selic</button>
+            <button class="preset-btn" onclick="loadPreset('brfinance')">💰 Finanças: VPL & TIR</button>
+            <button class="preset-btn" onclick="loadPreset('stats')">📊 Distribuição & Histograma</button>
+            <button class="preset-btn" onclick="loadPreset('clean')">🗑️ Limpar</button>
+          </div>
+
+          <div class="console-editor-wrap">
+            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" placeholder="# Digite seu código em R aqui..."></textarea>
+          </div>
+
+          <div class="console-controls">
+            <button class="btn btn-ghost" onclick="loadPreset('clean')" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Limpar Código</button>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <button id="btn-run-r" class="btn btn-primary" onclick="runRCode()" style="padding: 0.55rem 1.4rem; font-size: 0.78rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Executar Código (Run)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel Direito: Terminal e Gráficos -->
+        <div class="console-output-pane">
+          <div class="console-pane-header">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              SAÍDA DO TERMINAL (CONSOLE)
+            </span>
+            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;">Limpar Saída</button>
+          </div>
+          
+          <pre id="r-terminal-output" class="console-output-text"># Aguardando inicialização do motor WebR...
+# Ao carregar, clique em 'Executar Código' ou escolha um exemplo acima.</pre>
+
+          <div class="console-pane-header" style="border-top: 1px solid var(--border-subtle);">
+            <span class="console-pane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+              GRÁFICO R (DEVICE CANVAS)
+            </span>
+          </div>
+
+          <div class="console-plot-area" id="console-plot-area">
+            <div class="plot-placeholder" id="plot-placeholder">
+              Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code>, <code>hist()</code> ou <code>lines()</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="areas">
     <div class="container">
       <div class="section-head">
@@ -1428,6 +1690,7 @@ p {
             <li><a href="#capacitacao">Capacitação & IA</a></li>
             <li><a href="#processo-seletivo">Processo Seletivo</a></li>
             <li><a href="#projetos">Projetos & brfinance</a></li>
+            <li><a href="#console">Console R (WebAssembly)</a></li>
             <li><a href="#areas">Áreas de Atuação</a></li>
             <li><a href="#visitas">Mercado & Parceiros</a></li>
           </ul>
@@ -1450,5 +1713,222 @@ p {
     </div>
   </footer>
 
+  <script type="module">
+    import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+    let webRInstance = null;
+    let isInitialized = false;
+    let isExecuting = false;
+
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const statusBadge = document.getElementById('webr-status-badge');
+    const btnRun = document.getElementById('btn-run-r');
+    const terminalOutput = document.getElementById('r-terminal-output');
+    const plotArea = document.getElementById('console-plot-area');
+    const plotPlaceholder = document.getElementById('plot-placeholder');
+    const codeEditor = document.getElementById('r-code-editor');
+
+    const PRESETS = {
+      selic: `# Gráfico Macroeconômico: Simulação de Trajetória da Selic
+# Inspirado nas rotinas do brfinance (Banco Central / Copom)
+meses <- 1:24
+selic_proj <- 10.75 + cumsum(rnorm(24, mean = -0.15, sd = 0.25))
+
+# Plot com estilo clássico e elegante
+plot(meses, selic_proj, type = "b", pch = 19, col = "#0284C7",
+     lwd = 2.5, xlab = "Meses à Frente", ylab = "Taxa Selic Projetada (%)",
+     main = "Projeção Macroeconômica da Selic (24 Meses)",
+     ylim = c(min(selic_proj) - 0.5, max(selic_proj) + 0.5))
+
+grid(col = "gray80", lty = "dotted")
+abline(h = 10.75, col = "#EF4444", lty = 2, lwd = 1.5)
+legend("topright", legend = c("Selic Projetada", "Meta Vigente"),
+       col = c("#0284C7", "#EF4444"), lty = c(1, 2), pch = c(19, NA), bty = "n")
+
+cat("=== Sumário da Série Simulada ===\\n")
+cat("Taxa Inicial:", 10.75, "%\\n")
+cat("Taxa Projetada Mês 24:", round(tail(selic_proj, 1), 2), "%\\n")
+cat("Mínima:", round(min(selic_proj), 2), "% | Máxima:", round(max(selic_proj), 2), "%\\n")`,
+
+      brfinance: `# Lógica de Matemática Financeira (Base de Pacotes como brfinance)
+# Exemplo: Avaliação de Investimento de Capital (VPL e TIR)
+
+fluxos <- c(-100000, 30000, 40000, 45000, 35000)
+taxa_desconto <- 0.1075  # Selic como taxa de desconto (10.75%)
+
+# Função de VPL (Valor Presente Líquido)
+vpl <- function(taxa, cf) {
+  t <- 0:(length(cf) - 1)
+  sum(cf / ((1 + taxa) ^ t))
+}
+
+# Cálculo da TIR via uniroot
+tir <- function(cf) {
+  uniroot(function(r) vpl(r, cf), interval = c(0, 1))$root
+}
+
+valor_vpl <- vpl(taxa_desconto, fluxos)
+valor_tir <- tir(fluxos)
+
+cat("=== Análise de Viabilidade Financeira ===\\n")
+cat("Fluxo de Caixa Inicial: R$", format(fluxos[1], big.mark="."), "\\n")
+cat("Taxa de Desconto (Selic):", taxa_desconto * 100, "% a.a.\\n")
+cat("Valor Presente Líquido (VPL): R$", round(valor_vpl, 2), "\\n")
+cat("Taxa Interna de Retorno (TIR):", round(valor_tir * 100, 2), "% a.a.\\n")
+if(valor_vpl > 0) {
+  cat("Resultado do Parecer: PROJETO ECONOMICAMENTE VIÁVEL (VPL > 0)\\n")
+} else {
+  cat("Resultado do Parecer: INVIÁVEL (VPL <= 0)\\n")
+}`,
+
+      stats: `# Análise Estatística: Distribuição e Histograma
+# Amostra de retornos com teste de normalidade simulado
+set.seed(42)
+retornos <- rnorm(1500, mean = 0.0008, sd = 0.015)
+
+# Histograma com curva de densidade estimada
+hist(retornos, breaks = 40, probability = TRUE,
+     col = "#E0F2FE", border = "#0284C7",
+     main = "Distribuição dos Retornos Diários (Séries Financeiras)",
+     xlab = "Retorno Diário", ylab = "Densidade")
+
+lines(density(retornos), col = "#0369A1", lwd = 2.5)
+curve(dnorm(x, mean = mean(retornos), sd = sd(retornos)), 
+      col = "#DC2626", lwd = 1.5, lty = 2, add = TRUE)
+
+legend("topright", legend = c("Densidade Empírica", "Normal Teórica"),
+       col = c("#0369A1", "#DC2626"), lty = c(1, 2), lwd = c(2.5, 1.5), bty = "n")
+
+cat("=== Estatísticas Descritivas dos Retornos ===\\n")
+cat("Média:", round(mean(retornos)*100, 4), "%\\n")
+cat("Volatilidade Diária (Desv. Padrão):", round(sd(retornos)*100, 4), "%\\n")
+cat("Quantil 5% (Value at Risk paramétrico 95%):", round(quantile(retornos, 0.05)*100, 2), "%\\n")`,
+
+      clean: `# Digite ou cole seu script em R aqui:
+x <- rnorm(10)
+print(x)
+`
+    };
+
+    window.loadPreset = function(presetKey) {
+      if (PRESETS[presetKey]) {
+        codeEditor.value = PRESETS[presetKey];
+      }
+    };
+
+    window.clearOutput = function() {
+      terminalOutput.textContent = '# Terminal limpo. Pronto para nova execução.';
+      plotArea.innerHTML = '<div class="plot-placeholder" id="plot-placeholder">Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code>, <code>hist()</code> ou <code>lines()</code>.</div>';
+    };
+
+    async function initWebR() {
+      try {
+        statusDot.className = 'console-status-indicator running';
+        statusText.textContent = 'Carregando WebR WebAssembly...';
+        statusBadge.style.color = '#38BDF8';
+        statusBadge.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+        statusBadge.style.background = 'rgba(56, 189, 248, 0.1)';
+
+        webRInstance = new WebR();
+        await webRInstance.init();
+
+        isInitialized = true;
+        statusDot.className = 'console-status-indicator ready';
+        statusText.textContent = 'R 4.x Pronto';
+        statusBadge.style.color = '#10B981';
+        statusBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        statusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+
+        terminalOutput.textContent = 'WebR (R WebAssembly) inicializado com sucesso!\\nDigite seu código ou utilize os exemplos acima e clique em "Executar Código".\\n';
+        
+        // Define o preset default inicial se estiver vazio
+        if (!codeEditor.value) {
+          loadPreset('selic');
+        }
+      } catch (err) {
+        console.error('Erro ao inicializar WebR:', err);
+        statusDot.className = 'console-status-indicator';
+        statusDot.style.background = '#EF4444';
+        statusText.textContent = 'Erro ao inicializar WebR';
+        terminalOutput.textContent = 'Erro ao carregar o motor WebR:\\n' + err.message + '\\nVerifique sua conexão ou recarregue a página.';
+      }
+    }
+
+    window.runRCode = async function() {
+      if (!isInitialized) {
+        alert('O interpretador WebR ainda está inicializando. Por favor, aguarde alguns instantes.');
+        return;
+      }
+      if (isExecuting) return;
+
+      const code = codeEditor.value.trim();
+      if (!code) {
+        terminalOutput.textContent = '# O editor está vazio. Digite um código R para executar.';
+        return;
+      }
+
+      isExecuting = true;
+      btnRun.disabled = true;
+      btnRun.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Executando...`;
+      terminalOutput.textContent = 'Executando script R...\\n';
+
+      try {
+        const shelter = await new webRInstance.Shelter();
+        const capture = await shelter.captureR(code);
+
+        // Processar saída de texto
+        let outputText = '';
+        if (capture.output && capture.output.length > 0) {
+          outputText = capture.output
+            .map(line => {
+              if (line.type === 'stdout' || line.type === 'stderr') {
+                return line.data;
+              }
+              return '';
+            })
+            .join('\\n');
+        }
+
+        terminalOutput.textContent = outputText.trim() ? outputText : '# Executado com sucesso (sem retorno de texto no console).';
+
+        // Processar gráficos (ImageBitmaps do webr::canvas)
+        if (capture.images && capture.images.length > 0) {
+          plotArea.innerHTML = '';
+          capture.images.forEach(img => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            plotArea.appendChild(canvas);
+          });
+        }
+
+        await shelter.purge();
+      } catch (err) {
+        console.error('Erro de execução no R:', err);
+        terminalOutput.textContent += '\\n[Erro de Execução no R]: ' + err.message;
+      } finally {
+        isExecuting = false;
+        btnRun.disabled = false;
+        btnRun.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Executar Código (Run)`;
+      }
+    };
+
+    // Suporte ao atalho Ctrl+Enter / Cmd+Enter
+    codeEditor.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runRCode();
+      }
+    });
+
+    // Inicia o WebR assim que a página estiver pronta
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPreset('selic');
+      initWebR();
+    });
+  </script>
 </body>
 </html>
