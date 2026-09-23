@@ -387,6 +387,15 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
         return;
       }
 
+      // --- Interceptador Easter Egg: "TERMO" (Case-Sensitive) ---
+      if (code === 'TERMO') {
+        terminalOutput.textContent = '[Easter Egg Descoberto!]: Executando jogo TERMO...\nAdivinhe a palavra de 5 letras em até 6 tentativas no painel ao lado!\n';
+        if (typeof window.launchTermoGame === 'function') {
+          window.launchTermoGame(plotArea);
+        }
+        return;
+      }
+
       // No R em batch / WebAssembly, objetos ggplot só disparam o canvas gráfico se forem explicitamente impressos com print().
       // Se o script contém ggplot() mas não chama print(), garantimos a impressão do último objeto avaliado (.Last.value)
       if (code.includes('ggplot(') && !code.includes('print(')) {
