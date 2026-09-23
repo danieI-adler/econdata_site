@@ -6,6 +6,7 @@ on:
       - main
       - organiza-codigo
       - console-R
+      - tema-claro
   workflow_dispatch:
 
 permissions:
