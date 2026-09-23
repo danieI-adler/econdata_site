@@ -1,9 +1,11 @@
-﻿name: Deploy GitHub Pages
+name: Deploy GitHub Pages
 
 on:
   push:
     branches:
       - main
+      - organiza-codigo
+      - console-R
   workflow_dispatch:
 
 permissions:
