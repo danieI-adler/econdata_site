@@ -44,6 +44,11 @@
           <li><a href="#visitas" class="nav-link" onclick="showMainFlow()">Mercado</a></li>
           <li><a href="#contato" class="nav-link" onclick="showMainFlow()">Contato</a></li>
           <li><a href="#console" class="nav-link" onclick="showConsoleTab(); return false;" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
+          <li>
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Alternar Tema Claro/Escuro" title="Alternar Tema Claro/Escuro">
+              <span id="themeToggleIcon">☀️</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
@@ -88,6 +93,9 @@
       <a href="#console" class="drawer-item-btn highlight-console" onclick="showConsoleTab(); closeDrawer(); return false;">
         <span>📊 Console R</span> <span>→</span>
       </a>
+      <button class="drawer-item-btn" onclick="toggleTheme()" style="margin-top: 0.5rem; border: 1px dashed var(--border-subtle);">
+        <span id="drawerThemeLabel">☀️ Mudar para Tema Claro</span> <span>🌓</span>
+      </button>
     </nav>
 
     <div class="drawer-footer">
