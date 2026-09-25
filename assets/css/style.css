@@ -1737,6 +1737,152 @@ body.tab-console-active .console-section {
   color: #0284C7;
 }
 
+/* --- Console R (WebAssembly) & Assistente IA no Tema Claro --- */
+[data-theme="light"] .console-section {
+  background: #F8FAFC;
+}
+
+[data-theme="light"] .console-container {
+  background: #CBD5E1;
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .console-pane {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .console-pane-header {
+  background: #F8FAFC;
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .console-pane-title {
+  color: #0284C7;
+}
+
+[data-theme="light"] .console-presets {
+  background: #F1F5F9;
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .console-editor-wrap {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .console-textarea {
+  background: #FFFFFF;
+  color: #0F172A;
+}
+
+[data-theme="light"] .console-controls {
+  background: #F8FAFC;
+  border-top-color: #E2E8F0;
+}
+
+[data-theme="light"] .console-output-pane {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .console-output-text {
+  background: #F8FAFC;
+  color: #1E293B;
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .console-plot-area {
+  background: #F1F5F9;
+}
+
+[data-theme="light"] .console-plot-area canvas {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .plot-placeholder {
+  color: #64748B;
+}
+
+[data-theme="light"] .console-ai-bar {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .console-ai-input {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+[data-theme="light"] .console-ai-input::placeholder {
+  color: #94A3B8;
+}
+
+[data-theme="light"] .console-ai-key-btn {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #475569;
+}
+
+[data-theme="light"] .console-ai-key-btn:hover {
+  background: #E2E8F0;
+  border-color: #0284C7;
+  color: #0284C7;
+}
+
+/* Modal de API Key */
+[data-theme="light"] .api-key-modal-overlay {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+[data-theme="light"] .api-key-modal {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+}
+
+[data-theme="light"] .api-key-modal-title {
+  color: #0F172A;
+}
+
+/* --- Rodapé (Footer) no Tema Claro --- */
+[data-theme="light"] .footer {
+  background: #FFFFFF;
+  border-top: 1px solid #E2E8F0;
+}
+
+[data-theme="light"] .footer-grid {
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .footer p {
+  color: #475569;
+}
+
+[data-theme="light"] .footer-brand-title,
+[data-theme="light"] .footer span {
+  color: #0F172A;
+}
+
+[data-theme="light"] .footer-col h5 {
+  color: #0F172A;
+}
+
+[data-theme="light"] .footer-links a {
+  color: #334155;
+}
+
+[data-theme="light"] .footer-links a:hover {
+  color: #0284C7;
+}
+
+[data-theme="light"] .footer-bottom,
+[data-theme="light"] .footer-bottom span {
+  color: #64748B;
+}
+
+
 /* --- Easter Egg: Jogo TERMO --- */
 .termo-overlay-game {
   width: 100%;
