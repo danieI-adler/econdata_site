@@ -31,26 +31,26 @@
 
 [data-theme="light"] {
   --bg-deep: #F8FAFC;
-  --bg-navy: #F1F5F9;
-  --bg-surface: #E2E8F0;
-  --bg-card: rgba(255, 255, 255, 0.9);
-  --bg-card-hover: rgba(255, 255, 255, 1);
+  --bg-navy: #FFFFFF;
+  --bg-surface: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
 
-  --border-subtle: rgba(15, 23, 42, 0.1);
-  --border-blue: rgba(2, 132, 199, 0.35);
-  --border-focus: rgba(2, 132, 199, 0.6);
+  --border-subtle: #E2E8F0;
+  --border-blue: rgba(2, 132, 199, 0.4);
+  --border-focus: #0284C7;
 
   --text-main: #0F172A;
   --text-heading: #0B192C;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
+  --text-secondary: #1E293B;
+  --text-muted: #334155;
   --accent-cyan: #0284C7;
   --accent-emerald: #059669;
 
-  --header-bg: rgba(255, 255, 255, 0.92);
-  --drawer-bg: rgba(255, 255, 255, 0.98);
-  --console-bg: #F8FAFC;
-  --console-term-bg: #F1F5F9;
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --drawer-bg: #FFFFFF;
+  --console-bg: #FFFFFF;
+  --console-term-bg: #F8FAFC;
 }
 
 *, *::before, *::after {
@@ -1438,80 +1438,303 @@ body.tab-console-active .console-section {
 }
 
 [data-theme="light"] .drawer-header {
+  background: #F8FAFC;
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .drawer-toggle-btn {
   background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .drawer-toggle-btn span {
+  background: #0F172A;
 }
 
 [data-theme="light"] .drawer-close-btn {
   color: #0F172A;
-  border-color: rgba(15, 23, 42, 0.2);
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .drawer-close-btn:hover {
+  background: #E2E8F0;
+  border-color: #0F172A;
 }
 
 [data-theme="light"] .drawer-footer {
   background: #F8FAFC;
-  border-top-color: var(--border-subtle);
+  border-top-color: #E2E8F0;
+}
+
+[data-theme="light"] .side-drawer {
+  background: #FFFFFF;
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .drawer-item-btn {
+  color: #334155;
+}
+
+[data-theme="light"] .drawer-item-btn:hover {
+  color: #0284C7;
+  background: #F0F9FF;
 }
 
 [data-theme="light"] .hero-lead {
   color: #334155;
 }
 
-[data-theme="light"] .card,
-[data-theme="light"] .stat-card,
-[data-theme="light"] .partner-item,
-[data-theme="light"] .leadership-card,
-[data-theme="light"] .project-item,
-[data-theme="light"] .area-card,
-[data-theme="light"] .step-card {
+/* Hero Executive Card no Tema Claro */
+[data-theme="light"] .hero-executive-card {
   background: #FFFFFF;
-  border-color: rgba(15, 23, 42, 0.08);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  border: 1px solid #CBD5E1;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
-[data-theme="light"] .console-pane,
-[data-theme="light"] .console-output-pane {
-  background: #FFFFFF;
-  border-color: var(--border-subtle);
+[data-theme="light"] .hec-header {
+  border-bottom-color: #E2E8F0;
 }
 
-[data-theme="light"] .console-pane-header {
+[data-theme="light"] .hec-pillar-item {
   background: #F8FAFC;
-  border-bottom-color: var(--border-subtle);
+  border-color: #E2E8F0;
 }
 
-[data-theme="light"] .console-textarea {
-  background: #FFFFFF;
+[data-theme="light"] .hec-pillar-content h4 {
   color: #0F172A;
 }
 
-[data-theme="light"] .console-controls {
-  background: #F8FAFC;
-  border-top-color: var(--border-subtle);
+[data-theme="light"] .hec-pillar-content p {
+  color: #475569;
 }
 
-[data-theme="light"] .console-output-text {
+[data-theme="light"] .hec-footer {
+  border-top-color: #E2E8F0;
+  color: #64748B;
+}
+
+/* Stats Strip no Tema Claro */
+[data-theme="light"] .stats-strip {
+  background: #FFFFFF;
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .stat-cell {
+  border-right-color: #E2E8F0;
+}
+
+[data-theme="light"] .stat-big {
+  color: #0F172A;
+}
+
+[data-theme="light"] .stat-desc {
+  color: #475569;
+}
+
+/* Diretoria e Liderança */
+[data-theme="light"] .leadership-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .leadership-card:hover {
+  background: #FFFFFF;
+  border-color: #0284C7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+}
+
+[data-theme="light"] .leadership-name {
+  color: #0F172A;
+}
+
+[data-theme="light"] .leadership-meta {
+  color: #64748B;
+}
+
+/* Capacitação & Módulos */
+[data-theme="light"] .module-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .module-card:hover {
+  background: #FFFFFF;
+  border-color: #0284C7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+}
+
+[data-theme="light"] .module-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .module-desc {
+  color: #334155;
+}
+
+[data-theme="light"] .module-list li {
+  color: #1E293B;
+}
+
+/* Pipeline Integrado (SQL/Power BI) */
+[data-theme="light"] .db-flow-container {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .db-flow-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .flow-step-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .flow-step-card h4 {
+  color: #0F172A;
+}
+
+[data-theme="light"] .flow-step-card p {
+  color: #475569;
+}
+
+/* Processo Seletivo */
+[data-theme="light"] .ps-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .ps-card:hover {
+  border-color: #0284C7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.08);
+}
+
+[data-theme="light"] .ps-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .ps-desc {
+  color: #334155;
+}
+
+/* Projetos & Tabela de Metadados */
+[data-theme="light"] .project-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .project-card:hover {
+  border-color: #0284C7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.08);
+}
+
+[data-theme="light"] .project-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .project-body {
+  color: #334155;
+}
+
+[data-theme="light"] .project-meta-table {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .project-meta-table td {
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .pmt-label {
+  color: #64748B;
+}
+
+[data-theme="light"] .pmt-val {
+  color: #0F172A;
+  font-weight: 600;
+}
+
+/* Visitas Técnicas & Vertentes */
+[data-theme="light"] .visit-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .visit-card:hover {
+  border-color: #0284C7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.08);
+}
+
+[data-theme="light"] .visit-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .visit-desc {
+  color: #475569;
+}
+
+/* Parceiros EconData Week */
+[data-theme="light"] .partners-wall {
+  background: #E2E8F0;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .partner-item {
+  background: #FFFFFF;
+  color: #1E293B;
+}
+
+[data-theme="light"] .partner-item:hover {
+  background: #F0F9FF;
+  color: #0284C7;
+}
+
+/* Tags e Botões de Ação */
+[data-theme="light"] .mono-tag {
+  background: #F0F9FF;
+  color: #0284C7;
+  border-color: rgba(2, 132, 199, 0.3);
+}
+
+[data-theme="light"] .btn-ghost {
+  background: transparent;
+  color: #0F172A;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .btn-ghost:hover {
   background: #F1F5F9;
-  color: #0F172A;
-  border-bottom-color: var(--border-subtle);
+  border-color: #0F172A;
 }
 
-[data-theme="light"] .console-plot-area {
-  background: #F8FAFC;
-}
-
-[data-theme="light"] .console-ai-bar {
-  background: #FFFFFF;
-  border-color: var(--border-blue);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="light"] .console-ai-input {
-  background: #F8FAFC;
-  color: #0F172A;
-}
-
-[data-theme="light"] .footer {
+[data-theme="light"] .preset-btn {
   background: #F1F5F9;
-  border-top-color: var(--border-subtle);
+  border-color: #CBD5E1;
+  color: #334155;
+}
+
+[data-theme="light"] .preset-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+[data-theme="light"] .console-btn-action {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #334155;
+}
+
+[data-theme="light"] .console-btn-action:hover {
+  background: #E2E8F0;
+  border-color: #0284C7;
+  color: #0284C7;
 }
 
 /* --- Easter Egg: Jogo TERMO --- */
