@@ -1411,8 +1411,9 @@ body.tab-console-active .console-section {
   }
 }
 
-/* --- ESTILOS ESPECÍFICOS DO TEMA CLARO & BOTÃO DE TEMA --- */
-.theme-toggle-btn {
+/* --- ESTILOS ESPECÍFICOS DO TEMA CLARO & BOTÃO DE TEMA E IDIOMA --- */
+.theme-toggle-btn,
+.lang-toggle-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
@@ -1424,12 +1425,16 @@ body.tab-console-active .console-section {
   justify-content: center;
   gap: 0.4rem;
   font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.theme-toggle-btn:hover {
+.theme-toggle-btn:hover,
+.lang-toggle-btn:hover {
   background: rgba(56, 189, 248, 0.15);
   border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
 }
 
 [data-theme="light"] .header {

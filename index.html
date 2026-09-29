@@ -30,20 +30,26 @@
           <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" class="brand-logo-img">
           <div class="brand-text-block">
             <span class="brand-title">ECONDATA</span>
-            <span class="brand-subtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
+            <span class="brand-subtitle" data-i18n="brandSubtitle">CIÊNCIA DE DADOS • PUC-RIO</span>
           </div>
         </a>
       </div>
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#diretoria" class="nav-link" onclick="showMainFlow()">Diretoria</a></li>
-          <li><a href="#capacitacao" class="nav-link" onclick="showMainFlow()">Capacitação</a></li>
-          <li><a href="#processo-seletivo" class="nav-link" onclick="showMainFlow()">Processo Seletivo</a></li>
-          <li><a href="#projetos" class="nav-link" onclick="showMainFlow()">Projetos</a></li>
-          <li><a href="#visitas" class="nav-link" onclick="showMainFlow()">Mercado</a></li>
-          <li><a href="#contato" class="nav-link" onclick="showMainFlow()">Contato</a></li>
-          <li><a href="#console" class="nav-link" onclick="showConsoleTab(); return false;" style="color: var(--accent-cyan); font-weight: 700;">Console R</a></li>
+          <li><a href="#diretoria" class="nav-link" onclick="showMainFlow()" data-i18n="navDiretoria">Diretoria</a></li>
+          <li><a href="#capacitacao" class="nav-link" onclick="showMainFlow()" data-i18n="navCapacitacao">Capacitação</a></li>
+          <li><a href="#processo-seletivo" class="nav-link" onclick="showMainFlow()" data-i18n="navProcessoSeletivo">Processo Seletivo</a></li>
+          <li><a href="#projetos" class="nav-link" onclick="showMainFlow()" data-i18n="navProjetos">Projetos</a></li>
+          <li><a href="#visitas" class="nav-link" onclick="showMainFlow()" data-i18n="navMercado">Mercado</a></li>
+          <li><a href="#contato" class="nav-link" onclick="showMainFlow()" data-i18n="navContato">Contato</a></li>
+          <li><a href="#console" class="nav-link" onclick="showConsoleTab(); return false;" style="color: var(--accent-cyan); font-weight: 700;" data-i18n="navConsole">Console R</a></li>
+          <li>
+            <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Alternar Idioma (PT/EN)" title="Switch Language / Alternar Idioma">
+              <span id="langToggleFlag">🇧🇷</span>
+              <span id="langToggleLabel">PT</span>
+            </button>
+          </li>
           <li>
             <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Alternar Tema Claro/Escuro" title="Alternar Tema Claro/Escuro">
               <span id="themeToggleIcon">☀️</span>
@@ -70,30 +76,33 @@
 
     <nav class="drawer-nav">
       <a href="#diretoria" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Diretoria (26.2)</span> <span>→</span>
+        <span data-i18n="drawerDiretoria">Diretoria (26.2)</span> <span>→</span>
       </a>
       <a href="#capacitacao" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Capacitação & Módulos</span> <span>→</span>
+        <span data-i18n="drawerCapacitacao">Capacitação & Módulos</span> <span>→</span>
       </a>
       <a href="#processo-seletivo" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Processo Seletivo</span> <span>→</span>
+        <span data-i18n="drawerProcessoSeletivo">Processo Seletivo</span> <span>→</span>
       </a>
       <a href="#projetos" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Projetos & brfinance</span> <span>→</span>
+        <span data-i18n="drawerProjetos">Projetos & brfinance</span> <span>→</span>
       </a>
       <a href="#areas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Vertentes Analíticas</span> <span>→</span>
+        <span data-i18n="drawerAreas">Vertentes Analíticas</span> <span>→</span>
       </a>
       <a href="#visitas" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Visitas & Parceiros</span> <span>→</span>
+        <span data-i18n="drawerVisitas">Visitas & Parceiros</span> <span>→</span>
       </a>
       <a href="#contato" class="drawer-item-btn" onclick="showMainFlow(); closeDrawer()">
-        <span>Contato & Redes</span> <span>→</span>
+        <span data-i18n="drawerContato">Contato & Redes</span> <span>→</span>
       </a>
       <a href="#console" class="drawer-item-btn highlight-console" onclick="showConsoleTab(); closeDrawer(); return false;">
-        <span>📊 Console R</span> <span>→</span>
+        <span data-i18n="drawerConsole">📊 Console R</span> <span>→</span>
       </a>
-      <button class="drawer-item-btn" onclick="toggleTheme()" style="margin-top: 0.5rem; border: 1px dashed var(--border-subtle);">
+      <button class="drawer-item-btn" onclick="toggleLanguage()" style="margin-top: 0.5rem; border: 1px dashed var(--border-blue);">
+        <span id="drawerLangLabel">🇺🇸 Switch to English</span> <span>🌐</span>
+      </button>
+      <button class="drawer-item-btn" onclick="toggleTheme()" style="margin-top: 0.35rem; border: 1px dashed var(--border-subtle);">
         <span id="drawerThemeLabel">☀️ Mudar para Tema Claro</span> <span>🌓</span>
       </button>
     </nav>
@@ -101,11 +110,11 @@
     <div class="drawer-footer">
       <a href="https://github.com/danieI-adler/econdata_site" target="_blank" rel="noopener noreferrer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span>Repositório GitHub</span>
+        <span data-i18n="drawerGithub">Repositório GitHub</span>
       </a>
       <a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-        <span>LinkedIn Institucional</span>
+        <span data-i18n="drawerLinkedin">LinkedIn Institucional</span>
       </a>
     </div>
   </aside>
@@ -115,50 +124,50 @@
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <div class="mono-tag">DEPARTAMENTO DE ECONOMIA • PUC-RIO</div>
+        <div class="mono-tag" data-i18n="heroDept">DEPARTAMENTO DE ECONOMIA • PUC-RIO</div>
         <h1 class="hero-title">
-          CIÊNCIA DE DADOS APLICADA À <span>ECONOMIA</span>.
+          <span data-i18n="heroTitlePrefix">CIÊNCIA DE DADOS APLICADA À </span><span data-i18n="heroTitleSpan">ECONOMIA</span><span data-i18n="heroTitleDot">.</span>
         </h1>
-        <p class="hero-lead">
+        <p class="hero-lead" data-i18n="heroLead">
           Núcleo discente de inteligência analítica da PUC-Rio. Desenvolvemos capacitação prática em IA, bancos de dados e programação estatística, conectando alunos de graduação às principais instituições do mercado de capitais e consultorias.
         </p>
         <div class="hero-actions">
-          <a href="#capacitacao" class="btn btn-primary">Ver Capacitação</a>
-          <a href="#diretoria" class="btn btn-ghost">Gestão 26.2</a>
+          <a href="#capacitacao" class="btn btn-primary" data-i18n="heroBtnPrimary">Ver Capacitação</a>
+          <a href="#diretoria" class="btn btn-ghost" data-i18n="heroBtnGhost">Gestão 26.2</a>
         </div>
       </div>
 
       <div class="hero-executive-card">
         <div class="hec-header">
-          <span class="hec-badge">GESTÃO VIGENTE • 2026.2</span>
+          <span class="hec-badge" data-i18n="hecBadge">GESTÃO VIGENTE • 2026.2</span>
           <span class="mono-tag">PUC-RIO</span>
         </div>
         <div class="hec-pillars">
           <div class="hec-pillar-item">
             <span class="hec-pillar-num">01</span>
             <div class="hec-pillar-content">
-              <h4>Formação Técnica Rigorosa</h4>
-              <p>Módulos de IA prática (LLMs e agentes), SQL direto na fonte, Power BI, Excel analítico e R com dplyr.</p>
+              <h4 data-i18n="hecPillar1Title">Formação Técnica Rigorosa</h4>
+              <p data-i18n="hecPillar1Desc">Módulos de IA prática (LLMs e agentes), SQL direto na fonte, Power BI, Excel analítico e R com dplyr.</p>
             </div>
           </div>
           <div class="hec-pillar-item">
             <span class="hec-pillar-num">02</span>
             <div class="hec-pillar-content">
-              <h4>Conexão com o Mercado</h4>
-              <p>Workshops, visitas institucionais e conferências com as maiores gestoras, bancos e consultorias do país.</p>
+              <h4 data-i18n="hecPillar2Title">Conexão com o Mercado</h4>
+              <p data-i18n="hecPillar2Desc">Workshops, visitas institucionais e conferências com as maiores gestoras, bancos e consultorias do país.</p>
             </div>
           </div>
           <div class="hec-pillar-item">
             <span class="hec-pillar-num">03</span>
             <div class="hec-pillar-content">
-              <h4>Pesquisa & Código Aberto</h4>
-              <p>Projetos empíricos reais e ferramentas públicas como o pacote brfinance para séries macroeconômicas.</p>
+              <h4 data-i18n="hecPillar3Title">Pesquisa & Código Aberto</h4>
+              <p data-i18n="hecPillar3Desc">Projetos empíricos reais e ferramentas públicas como o pacote brfinance para séries macroeconômicas.</p>
             </div>
           </div>
         </div>
         <div class="hec-footer">
-          <span>DEPARTAMENTO DE ECONOMIA</span>
-          <span>EST. 2022</span>
+          <span data-i18n="hecDept">DEPARTAMENTO DE ECONOMIA</span>
+          <span data-i18n="hecEst">EST. 2022</span>
         </div>
       </div>
     </div>
@@ -167,28 +176,28 @@
   <section class="stats-strip">
     <div class="stat-cell">
       <div class="stat-big tabular-num">+26</div>
-      <div class="stat-desc">Membros ativos entre pesquisadores e analistas discentes da PUC-Rio.</div>
+      <div class="stat-desc" data-i18n="stat1Desc">Membros ativos entre pesquisadores e analistas discentes da PUC-Rio.</div>
     </div>
     <div class="stat-cell">
       <div class="stat-big tabular-num">3ª</div>
-      <div class="stat-desc">Edições da EconData Week organizadas com líderes do mercado de capitais.</div>
+      <div class="stat-desc" data-i18n="stat2Desc">Edições da EconData Week organizadas com líderes do mercado de capitais.</div>
     </div>
     <div class="stat-cell">
       <div class="stat-big tabular-num">+10</div>
-      <div class="stat-desc">Instituições parceiras em visitas técnicas, palestras e workshops.</div>
+      <div class="stat-desc" data-i18n="stat3Desc">Instituições parceiras em visitas técnicas, palestras e workshops.</div>
     </div>
     <div class="stat-cell">
       <div class="stat-big tabular-num">100%</div>
-      <div class="stat-desc">Foco em dados econômicos reais, código reprodutível e rigor metodológico.</div>
+      <div class="stat-desc" data-i18n="stat4Desc">Foco em dados econômicos reais, código reprodutível e rigor metodológico.</div>
     </div>
   </section>
 
   <section class="section" id="diretoria">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">LIDERANÇA DISCENTE</span>
-        <h2 class="section-title">Diretoria Atual — Gestão 2026.2</h2>
-        <p style="margin-top: 0.5rem;">Responsáveis pela coordenação executiva, capacitação técnica, projetos e relacionamento institucional do núcleo.</p>
+        <span class="mono-tag" data-i18n="dirTag">LIDERANÇA DISCENTE</span>
+        <h2 class="section-title" data-i18n="dirTitle">Diretoria Atual — Gestão 2026.2</h2>
+        <p style="margin-top: 0.5rem;" data-i18n="dirSubtitle">Responsáveis pela coordenação executiva, capacitação técnica, projetos e relacionamento institucional do núcleo.</p>
       </div>
 
       <div class="leadership-grid">
@@ -197,7 +206,7 @@
             <img src="assets/img/diretoria/geronimo_pulitini.png" alt="Foto de Gerônimo Pulitini">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Presidência</span>
+            <span class="leadership-role" data-i18n="rolePresidencia">Presidência</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/geronimosp" target="_blank" rel="noopener noreferrer">
                 Gerônimo Pulitini
@@ -213,7 +222,7 @@
             <img src="assets/img/diretoria/vitor_pompeu.png" alt="Foto de Vitor Pompeu">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Vice-Presidência</span>
+            <span class="leadership-role" data-i18n="roleVicePresidencia">Vice-Presidência</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/vitor-pompeu-salom%C3%A3o-a79011377" target="_blank" rel="noopener noreferrer">
                 Vitor Pompeu
@@ -229,14 +238,14 @@
             <img src="assets/img/diretoria/guilherme_bastos.png" alt="Foto de Guilherme Bastos">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Diretoria de Eventos</span>
+            <span class="leadership-role" data-i18n="roleEventos">Diretoria de Eventos</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/guilherme-bastos-938b31382" target="_blank" rel="noopener noreferrer">
                 Guilherme Bastos
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
             </h3>
-            <span class="leadership-meta">EconData Week & Visitas Técnicas</span>
+            <span class="leadership-meta" data-i18n="metaEventos">EconData Week & Visitas Técnicas</span>
           </div>
         </div>
 
@@ -245,14 +254,14 @@
             <img src="assets/img/diretoria/mateus_franca.png" alt="Foto de Mateus França">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Diretoria de Pessoas</span>
+            <span class="leadership-role" data-i18n="rolePessoas">Diretoria de Pessoas</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/mateusfrancaleite" target="_blank" rel="noopener noreferrer">
                 Mateus França
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
             </h3>
-            <span class="leadership-meta">Processo Seletivo & Integração</span>
+            <span class="leadership-meta" data-i18n="metaPessoas">Processo Seletivo & Integração</span>
           </div>
         </div>
 
@@ -261,14 +270,14 @@
             <img src="assets/img/diretoria/maria_luiza_oliveira.jpg" alt="Foto de Maria Luiza Oliveira">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Diretoria de Projetos</span>
+            <span class="leadership-role" data-i18n="roleProjetos">Diretoria de Projetos</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/maria-luiza-de-oliveira-126754383" target="_blank" rel="noopener noreferrer">
                 Maria Luiza Oliveira
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
             </h3>
-            <span class="leadership-meta">Coordenação de Pesquisa Aplicada</span>
+            <span class="leadership-meta" data-i18n="metaProjetos">Coordenação de Pesquisa Aplicada</span>
           </div>
         </div>
 
@@ -277,14 +286,14 @@
             <img src="assets/img/diretoria/danilo_rogozinski.jpg" alt="Foto de Danilo Rogozinski">
           </div>
           <div class="leadership-info">
-            <span class="leadership-role">Diretoria de Conteúdo</span>
+            <span class="leadership-role" data-i18n="roleConteudo">Diretoria de Conteúdo</span>
             <h3 class="leadership-name">
               <a href="https://www.linkedin.com/in/danilo-rogozinski-415036369" target="_blank" rel="noopener noreferrer">
                 Danilo Rogozinski
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
             </h3>
-            <span class="leadership-meta">Publicações & Comunicação Analítica</span>
+            <span class="leadership-meta" data-i18n="metaConteudo">Publicações & Comunicação Analítica</span>
           </div>
         </div>
       </div>
@@ -294,48 +303,48 @@
   <section class="section" id="capacitacao">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">FORMAÇÃO TÉCNICA CONTINUADA</span>
-        <h2 class="section-title">Capacitação EconData</h2>
-        <p style="margin-top: 0.5rem;">Estrutura curricular prática concebida para capacitar membros em ferramentas modernas de análise e engenharia de dados.</p>
+        <span class="mono-tag" data-i18n="capTag">FORMAÇÃO TÉCNICA CONTINUADA</span>
+        <h2 class="section-title" data-i18n="capTitle">Capacitação EconData</h2>
+        <p style="margin-top: 0.5rem;" data-i18n="capSubtitle">Estrutura curricular prática concebida para capacitar membros em ferramentas modernas de análise e engenharia de dados.</p>
       </div>
 
       <div class="training-modules-grid">
         <div class="module-card">
           <div>
-            <span class="module-tag">MODERN AI WORKFLOWS</span>
-            <h3 class="module-title">IA na Prática</h3>
-            <p class="module-desc">Capacitação focada em aplicações contemporâneas de inteligência artificial na rotina analítica econômica e financeira:</p>
+            <span class="module-tag" data-i18n="mod1Tag">MODERN AI WORKFLOWS</span>
+            <h3 class="module-title" data-i18n="mod1Title">IA na Prática</h3>
+            <p class="module-desc" data-i18n="mod1Desc">Capacitação focada em aplicações contemporâneas de inteligência artificial na rotina analítica econômica e financeira:</p>
             <ul class="module-list">
-              <li>Entender a arquitetura e funcionamento de Large Language Models (LLMs).</li>
-              <li>Construir e orquestrar agentes de IA no dia a dia analítico.</li>
-              <li>Aplicar Codex para acelerar resolução de problemas analíticos reais.</li>
+              <li data-i18n="mod1Li1">Entender a arquitetura e funcionamento de Large Language Models (LLMs).</li>
+              <li data-i18n="mod1Li2">Construir e orquestrar agentes de IA no dia a dia analítico.</li>
+              <li data-i18n="mod1Li3">Aplicar Codex para acelerar resolução de problemas analíticos reais.</li>
             </ul>
           </div>
         </div>
 
         <div class="module-card">
           <div>
-            <span class="module-tag">DATA WRANGLING & STATS</span>
-            <h3 class="module-title">Fundamentos de R</h3>
-            <p class="module-desc">A espinha dorsal estatística do núcleo continua presente com o ferramental mais exigido em macroeconomia empírica:</p>
+            <span class="module-tag" data-i18n="mod2Tag">DATA WRANGLING & STATS</span>
+            <h3 class="module-title" data-i18n="mod2Title">Fundamentos de R</h3>
+            <p class="module-desc" data-i18n="mod2Desc">A espinha dorsal estatística do núcleo continua presente com o ferramental mais exigido em macroeconomia empírica:</p>
             <ul class="module-list">
-              <li>Tipos de dados, estruturas vetoriais e lógicas condicionais.</li>
-              <li>Criação e modularização de funções analíticas.</li>
-              <li>Manipulação robusta de dados tabulares com dplyr e tidyverse.</li>
-              <li>Visualização estatística e confecção de gráficos em R.</li>
+              <li data-i18n="mod2Li1">Tipos de dados, estruturas vetoriais e lógicas condicionais.</li>
+              <li data-i18n="mod2Li2">Criação e modularização de funções analíticas.</li>
+              <li data-i18n="mod2Li3">Manipulação robusta de dados tabulares com dplyr e tidyverse.</li>
+              <li data-i18n="mod2Li4">Visualização estatística e confecção de gráficos em R.</li>
             </ul>
           </div>
         </div>
 
         <div class="module-card">
           <div>
-            <span class="module-tag">FINANCIAL MODELING</span>
-            <h3 class="module-title">Excel & Analytics</h3>
-            <p class="module-desc">Domínio das ferramentas analíticas de planilha exigidas pelas principais mesas e gestoras:</p>
+            <span class="module-tag" data-i18n="mod3Tag">FINANCIAL MODELING</span>
+            <h3 class="module-title" data-i18n="mod3Title">Excel & Analytics</h3>
+            <p class="module-desc" data-i18n="mod3Desc">Domínio das ferramentas analíticas de planilha exigidas pelas principais mesas e gestoras:</p>
             <ul class="module-list">
-              <li>Modelagem avançada de planilhas financeiras.</li>
-              <li>Funções lógicas, matriciais e tratamento de dados com Power Query.</li>
-              <li>Conexão com fontes externas de dados para atualização contínua.</li>
+              <li data-i18n="mod3Li1">Modelagem avançada de planilhas financeiras.</li>
+              <li data-i18n="mod3Li2">Funções lógicas, matriciais e tratamento de dados com Power Query.</li>
+              <li data-i18n="mod3Li3">Conexão com fontes externas de dados para atualização contínua.</li>
             </ul>
           </div>
         </div>
@@ -343,24 +352,24 @@
 
       <div class="db-flow-container">
         <div class="db-flow-title">
-          <span class="mono-tag">PIPELINE INTEGRADO</span>
-          <span>Banco de Dados na Prática — Fluxo de Trabalho</span>
+          <span class="mono-tag" data-i18n="pipeTag">PIPELINE INTEGRADO</span>
+          <span data-i18n="pipeTitle">Banco de Dados na Prática — Fluxo de Trabalho</span>
         </div>
         <div class="flow-steps">
           <div class="flow-step-card">
-            <span class="flow-step-num">01 · SQL</span>
-            <h4>Consulta Direto na Fonte</h4>
-            <p>Consultar, filtrar, agregar e cruzar dados estruturados diretamente nos repositórios e bases relacionais.</p>
+            <span class="flow-step-num" data-i18n="pipeStep1Num">01 · SQL</span>
+            <h4 data-i18n="pipeStep1Title">Consulta Direto na Fonte</h4>
+            <p data-i18n="pipeStep1Desc">Consultar, filtrar, agregar e cruzar dados estruturados diretamente nos repositórios e bases relacionais.</p>
           </div>
           <div class="flow-step-card">
-            <span class="flow-step-num">02 · BANCO DE DADOS</span>
-            <h4>Modelagem & Conexão</h4>
-            <p>Organizar relacionamentos, normalização e conectar as tabelas estruturais de cada projeto analítico.</p>
+            <span class="flow-step-num" data-i18n="pipeStep2Num">02 · BANCO DE DADOS</span>
+            <h4 data-i18n="pipeStep2Title">Modelagem & Conexão</h4>
+            <p data-i18n="pipeStep2Desc">Organizar relacionamentos, normalização e conectar as tabelas estruturais de cada projeto analítico.</p>
           </div>
           <div class="flow-step-card">
-            <span class="flow-step-num">03 · POWER BI</span>
-            <h4>Dashboards Interativos</h4>
-            <p>Transformar tabelas modeladas em painéis dinâmicos e intuitivos para tomada de decisão executiva.</p>
+            <span class="flow-step-num" data-i18n="pipeStep3Num">03 · POWER BI</span>
+            <h4 data-i18n="pipeStep3Title">Dashboards Interativos</h4>
+            <p data-i18n="pipeStep3Desc">Transformar tabelas modeladas em painéis dinâmicos e intuitivos para tomada de decisão executiva.</p>
           </div>
         </div>
       </div>
@@ -370,28 +379,28 @@
   <section class="section" id="processo-seletivo">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">INGRESSO DISCENTE</span>
-        <h2 class="section-title">Processo Seletivo</h2>
-        <p style="margin-top: 0.5rem;">Como ingressar no EconData Analytics da PUC-Rio. Avaliamos motivação, curiosidade analítica e potencial de aprendizado.</p>
+        <span class="mono-tag" data-i18n="psTag">INGRESSO DISCENTE</span>
+        <h2 class="section-title" data-i18n="psTitle">Processo Seletivo</h2>
+        <p style="margin-top: 0.5rem;" data-i18n="psSubtitle">Como ingressar no EconData Analytics da PUC-Rio. Avaliamos motivação, curiosidade analítica e potencial de aprendizado.</p>
       </div>
 
       <div class="ps-timeline">
         <div class="ps-card">
-          <span class="ps-badge">ETAPA 01</span>
-          <h3 class="ps-title">Informações Iniciais</h3>
-          <p class="ps-desc">Preenchimento da ficha cadastral do candidato com dados acadêmicos, disponibilidade de horários e trajetória no curso de graduação.</p>
+          <span class="ps-badge" data-i18n="ps1Badge">ETAPA 01</span>
+          <h3 class="ps-title" data-i18n="ps1Title">Informações Iniciais</h3>
+          <p class="ps-desc" data-i18n="ps1Desc">Preenchimento da ficha cadastral do candidato com dados acadêmicos, disponibilidade de horários e trajetória no curso de graduação.</p>
         </div>
 
         <div class="ps-card">
-          <span class="ps-badge">ETAPA 02</span>
-          <h3 class="ps-title">Questionário & Vídeo</h3>
-          <p class="ps-desc">Envio de questionário aprofundado de interesse e breve apresentação em vídeo demonstrando motivação, fit cultural e expectativas com o núcleo.</p>
+          <span class="ps-badge" data-i18n="ps2Badge">ETAPA 02</span>
+          <h3 class="ps-title" data-i18n="ps2Title">Questionário & Vídeo</h3>
+          <p class="ps-desc" data-i18n="ps2Desc">Envio de questionário aprofundado de interesse e breve apresentação em vídeo demonstrando motivação, fit cultural e expectativas com o núcleo.</p>
         </div>
 
         <div class="ps-card">
-          <span class="ps-badge">ETAPA 03</span>
-          <h3 class="ps-title">Teste de Competências</h3>
-          <p class="ps-desc">Avaliação prática voltada ao raciocínio lógico, capacidade de resolução de problemas e aptidão para o aprendizado quantitativo.</p>
+          <span class="ps-badge" data-i18n="ps3Badge">ETAPA 03</span>
+          <h3 class="ps-title" data-i18n="ps3Title">Teste de Competências</h3>
+          <p class="ps-desc" data-i18n="ps3Desc">Avaliação prática voltada ao raciocínio lógico, capacidade de resolução de problemas e aptidão para o aprendizado quantitativo.</p>
         </div>
       </div>
     </div>
@@ -400,98 +409,98 @@
   <section class="section" id="projetos">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">PESQUISA & PRODUÇÃO</span>
-        <h2 class="section-title">Projetos & Ferramentas Open Source</h2>
+        <span class="mono-tag" data-i18n="projTag">PESQUISA & PRODUÇÃO</span>
+        <h2 class="section-title" data-i18n="projTitle">Projetos & Ferramentas Open Source</h2>
       </div>
 
       <div class="projects-grid">
         <div class="project-card">
           <div>
-            <span class="mono-tag">PACOTE EM R • OPEN SOURCE</span>
+            <span class="mono-tag" data-i18n="p1Tag">PACOTE EM R • OPEN SOURCE</span>
             <h3 class="project-title">brfinance</h3>
-            <p class="project-body">
+            <p class="project-body" data-i18n="p1Desc">
               Pacote em R desenvolvido por um ex-membro do EconData que facilita o acesso a dados macroeconômicos brasileiros. Com poucas linhas de código, é possível baixar e visualizar indicadores como taxa Selic, inflação e desemprego, utilizando dados oficiais do Banco Central e IBGE, além de gerar gráficos comparativos entre séries.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Linguagem</td>
+                <td class="pmt-label" data-i18n="p1LabelLang">Linguagem</td>
                 <td class="pmt-val">R</td>
               </tr>
               <tr>
-                <td class="pmt-label">Fontes Oficiais</td>
+                <td class="pmt-label" data-i18n="p1LabelSources">Fontes Oficiais</td>
                 <td class="pmt-val">BACEN & IBGE</td>
               </tr>
               <tr>
-                <td class="pmt-label">Séries</td>
-                <td class="pmt-val">Selic, IPCA, Desemprego</td>
+                <td class="pmt-label" data-i18n="p1LabelSeries">Séries</td>
+                <td class="pmt-val" data-i18n="p1ValSeries">Selic, IPCA, Desemprego</td>
               </tr>
               <tr>
-                <td class="pmt-label">Origem</td>
-                <td class="pmt-val">Ex-membro EconData</td>
+                <td class="pmt-label" data-i18n="p1LabelOrigin">Origem</td>
+                <td class="pmt-val" data-i18n="p1ValOrigin">Ex-membro EconData</td>
               </tr>
             </table>
           </div>
-          <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="project-link">
+          <a href="https://github.com/efram2/brfinance" target="_blank" rel="noopener noreferrer" class="project-link" data-i18n="p1Link">
             Acessar no GitHub ↗
           </a>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">AULA ABERTA & MODELAGEM</span>
-            <h3 class="project-title">Redes Neurais para Economia</h3>
-            <p class="project-body">
+            <span class="mono-tag" data-i18n="p2Tag">AULA ABERTA & MODELAGEM</span>
+            <h3 class="project-title" data-i18n="p2Title">Redes Neurais para Economia</h3>
+            <p class="project-body" data-i18n="p2Desc">
               Material instrucional e código prático aplicado para estudantes de graduação, demonstrando a arquitetura e calibração de redes neurais profundas aplicadas à modelagem de séries econômicas.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Formato</td>
-                <td class="pmt-val">Aula Aberta à PUC-Rio</td>
+                <td class="pmt-label" data-i18n="p2LabelFormat">Formato</td>
+                <td class="pmt-val" data-i18n="p2ValFormat">Aula Aberta à PUC-Rio</td>
               </tr>
               <tr>
-                <td class="pmt-label">Tópicos</td>
+                <td class="pmt-label" data-i18n="p2LabelTopics">Tópicos</td>
                 <td class="pmt-val">Perceptron, MLP, Backprop</td>
               </tr>
               <tr>
-                <td class="pmt-label">Público</td>
-                <td class="pmt-val">Graduação em Economia</td>
+                <td class="pmt-label" data-i18n="p2LabelAudience">Público</td>
+                <td class="pmt-val" data-i18n="p2ValAudience">Graduação em Economia</td>
               </tr>
               <tr>
-                <td class="pmt-label">Apoio</td>
-                <td class="pmt-val">Depto. de Economia</td>
+                <td class="pmt-label" data-i18n="p2LabelSupport">Apoio</td>
+                <td class="pmt-val" data-i18n="p2ValSupport">Depto. de Economia</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Módulo Curricular</span>
+          <span class="project-link" style="color: var(--text-muted);" data-i18n="p2Link">Módulo Curricular</span>
         </div>
 
         <div class="project-card">
           <div>
-            <span class="mono-tag">CAPACITAÇÃO PRÁTICA</span>
-            <h3 class="project-title">Ambiente Analítico Integrado</h3>
-            <p class="project-body">
+            <span class="mono-tag" data-i18n="p3Tag">CAPACITAÇÃO PRÁTICA</span>
+            <h3 class="project-title" data-i18n="p3Title">Ambiente Analítico Integrado</h3>
+            <p class="project-body" data-i18n="p3Desc">
               Estruturação dos pipelines de dados unindo extração automatizada via SQL, engenharia de dados em bancos locais e geração de relatórios dinâmicos para tomada de decisão.
             </p>
             <table class="project-meta-table">
               <tr>
-                <td class="pmt-label">Objetivo</td>
-                <td class="pmt-val">Padrão Mercado</td>
+                <td class="pmt-label" data-i18n="p3LabelGoal">Objetivo</td>
+                <td class="pmt-val" data-i18n="p3ValGoal">Padrão Mercado</td>
               </tr>
               <tr>
-                <td class="pmt-label">Ferramental</td>
+                <td class="pmt-label" data-i18n="p3LabelTools">Ferramental</td>
                 <td class="pmt-val">SQL, Power BI, Excel</td>
               </tr>
               <tr>
-                <td class="pmt-label">Ciclo</td>
-                <td class="pmt-val">Formação Contínua</td>
+                <td class="pmt-label" data-i18n="p3LabelCycle">Ciclo</td>
+                <td class="pmt-val" data-i18n="p3ValCycle">Formação Contínua</td>
               </tr>
               <tr>
-                <td class="pmt-label">Coordenação</td>
-                <td class="pmt-val">Diretoria de Projetos</td>
+                <td class="pmt-label" data-i18n="p3LabelCoord">Coordenação</td>
+                <td class="pmt-val" data-i18n="p3ValCoord">Diretoria de Projetos</td>
               </tr>
             </table>
           </div>
-          <span class="project-link" style="color: var(--text-muted);">Capacitação Interna</span>
+          <span class="project-link" style="color: var(--text-muted);" data-i18n="p3Link">Capacitação Interna</span>
         </div>
       </div>
     </div>
@@ -500,46 +509,46 @@
   <section class="section" id="areas">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">METODOLOGIAS & COMPETÊNCIAS</span>
-        <h2 class="section-title">Vertentes de Ciência de Dados do Núcleo</h2>
-        <p style="margin-top: 0.5rem;">Da coleta e tratamento de bases complexas à modelagem preditiva e visualização para tomada de decisão.</p>
+        <span class="mono-tag" data-i18n="areasTag">METODOLOGIAS & COMPETÊNCIAS</span>
+        <h2 class="section-title" data-i18n="areasTitle">Vertentes de Ciência de Dados do Núcleo</h2>
+        <p style="margin-top: 0.5rem;" data-i18n="areasSubtitle">Da coleta e tratamento de bases complexas à modelagem preditiva e visualização para tomada de decisão.</p>
       </div>
 
       <div class="visits-grid">
         <div class="visit-card">
-          <span class="visit-role">Econometria & ML</span>
-          <h3 class="visit-title">Data Mining & Descoberta</h3>
-          <p class="visit-desc">Extração de padrões ocultos em bases massivas, segmentação e agrupamento aplicados a microdados e comércio internacional.</p>
+          <span class="visit-role" data-i18n="v1Role">Econometria & ML</span>
+          <h3 class="visit-title" data-i18n="v1Title">Data Mining & Descoberta</h3>
+          <p class="visit-desc" data-i18n="v1Desc">Extração de padrões ocultos em bases massivas, segmentação e agrupamento aplicados a microdados e comércio internacional.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Visualização Avançada</span>
-          <h3 class="visit-title">Data Visualization & Dashboards</h3>
-          <p class="visit-desc">Comunicação analítica eficaz com gráficos estatísticos e dashboards interativos para tornar tendências macroeconômicas intuitivas.</p>
+          <span class="visit-role" data-i18n="v2Role">Visualização Avançada</span>
+          <h3 class="visit-title" data-i18n="v2Title">Data Visualization & Dashboards</h3>
+          <p class="visit-desc" data-i18n="v2Desc">Comunicação analítica eficaz com gráficos estatísticos e dashboards interativos para tornar tendências macroeconômicas intuitivas.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Engenharia de Dados</span>
-          <h3 class="visit-title">Big Data & Fontes Alternativas</h3>
-          <p class="visit-desc">Tratamento e combinação de bases estruturadas de alta frequência (APIs do Banco Central, SIDRA/IBGE e dados públicos).</p>
+          <span class="visit-role" data-i18n="v3Role">Engenharia de Dados</span>
+          <h3 class="visit-title" data-i18n="v3Title">Big Data & Fontes Alternativas</h3>
+          <p class="visit-desc" data-i18n="v3Desc">Tratamento e combinação de bases estruturadas de alta frequência (APIs do Banco Central, SIDRA/IBGE e dados públicos).</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">NLP & Sentimento</span>
-          <h3 class="visit-title">Text Analysis & Atas do COPOM</h3>
-          <p class="visit-desc">Mineração de texto e processamento de linguagem natural (NLP) para mensurar sentimento e tom em comunicados de política monetária.</p>
+          <span class="visit-role" data-i18n="v4Role">NLP & Sentimento</span>
+          <h3 class="visit-title" data-i18n="v4Title">Text Analysis & Atas do COPOM</h3>
+          <p class="visit-desc" data-i18n="v4Desc">Mineração de texto e processamento de linguagem natural (NLP) para mensurar sentimento e tom em comunicados de política monetária.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Aprendizado Supervisionado</span>
-          <h3 class="visit-title">Machine Learning Preditivo</h3>
-          <p class="visit-desc">Modelos de árvores e regressões regularizadas para identificar relações não lineares e projetar indicadores de atividade econômica.</p>
+          <span class="visit-role" data-i18n="v5Role">Aprendizado Supervisionado</span>
+          <h3 class="visit-title" data-i18n="v5Title">Machine Learning Preditivo</h3>
+          <p class="visit-desc" data-i18n="v5Desc">Modelos de árvores e regressões regularizadas para identificar relações não lineares e projetar indicadores de atividade econômica.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Economia Regional</span>
-          <h3 class="visit-title">Spatial Analysis & Geoprocessamento</h3>
-          <p class="visit-desc">Análise econométrica espacial com dados georreferenciados para avaliar desenvolvimento regional e mercado de trabalho.</p>
+          <span class="visit-role" data-i18n="v6Role">Economia Regional</span>
+          <h3 class="visit-title" data-i18n="v6Title">Spatial Analysis & Geoprocessamento</h3>
+          <p class="visit-desc" data-i18n="v6Desc">Análise econométrica espacial com dados georreferenciados para avaliar desenvolvimento regional e mercado de trabalho.</p>
         </div>
       </div>
     </div>
@@ -548,63 +557,63 @@
   <section class="section" id="visitas">
     <div class="container">
       <div class="section-head">
-        <span class="mono-tag">CONEXÃO COM O MERCADO</span>
-        <h2 class="section-title">Visitas Institucionais & Palestras</h2>
-        <p style="margin-top: 0.5rem;">Aproximando os alunos de economia das principais instituições financeiras, gestoras e consultorias do país.</p>
+        <span class="mono-tag" data-i18n="visitasTag">CONEXÃO COM O MERCADO</span>
+        <h2 class="section-title" data-i18n="visitasTitle">Visitas Institucionais & Palestras</h2>
+        <p style="margin-top: 0.5rem;" data-i18n="visitasSubtitle">Aproximando os alunos de economia das principais instituições financeiras, gestoras e consultorias do país.</p>
       </div>
 
       <div class="visits-grid">
         <div class="visit-card">
-          <span class="visit-role">Visita Técnica</span>
+          <span class="visit-role" data-i18n="vtTechnical">Visita Técnica</span>
           <h3 class="visit-title">BTG Pactual</h3>
-          <p class="visit-desc">Visita ao maior banco de investimentos da América Latina para imersão em mesas de operações, research e sales.</p>
+          <p class="visit-desc" data-i18n="vtBtgDesc">Visita ao maior banco de investimentos da América Latina para imersão em mesas de operações, research e sales.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Visita Técnica</span>
+          <span class="visit-role" data-i18n="vtTechnical">Visita Técnica</span>
           <h3 class="visit-title">Itaú Asset Management</h3>
-          <p class="visit-desc">Apresentação com gestores e analistas sobre alocação de ativos, gestão quantitativa e oportunidades de estágio.</p>
+          <p class="visit-desc" data-i18n="vtItauDesc">Apresentação com gestores e analistas sobre alocação de ativos, gestão quantitativa e oportunidades de estágio.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Visita Técnica</span>
+          <span class="visit-role" data-i18n="vtTechnical">Visita Técnica</span>
           <h3 class="visit-title">Banco BOCOM BBM</h3>
-          <p class="visit-desc">Tour institucional com recepção executiva e imersão macro com equipes de economia e mercado de capitais.</p>
+          <p class="visit-desc" data-i18n="vtBocomDesc">Tour institucional com recepção executiva e imersão macro com equipes de economia e mercado de capitais.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Visita Técnica</span>
+          <span class="visit-role" data-i18n="vtTechnical">Visita Técnica</span>
           <h3 class="visit-title">Visagio Consultoria</h3>
-          <p class="visit-desc">Imersão com consultores sobre a rotina de consultoria de gestão e aplicação prática de analytics em negócios.</p>
+          <p class="visit-desc" data-i18n="vtVisagioDesc">Imersão com consultores sobre a rotina de consultoria de gestão e aplicação prática de analytics em negócios.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Visita Técnica</span>
+          <span class="visit-role" data-i18n="vtTechnical">Visita Técnica</span>
           <h3 class="visit-title">Civitas Rio</h3>
-          <p class="visit-desc">Encontro em parceria com o NEA para conhecer o ecossistema e projetos analíticos aplicados ao desenvolvimento carioca.</p>
+          <p class="visit-desc" data-i18n="vtCivitasDesc">Encontro em parceria com o NEA para conhecer o ecossistema e projetos analíticos aplicados ao desenvolvimento carioca.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Semana Integrada de Economia</span>
+          <span class="visit-role" data-i18n="vtSemana">Semana Integrada de Economia</span>
           <h3 class="visit-title">Armínio Fraga & Lideranças</h3>
-          <p class="visit-desc">Ciclo de debates de alto nível com Armínio Fraga, David Cohen, José Márcio Camargo e Vitor Pereira.</p>
+          <p class="visit-desc" data-i18n="vtArminioDesc">Ciclo de debates de alto nível com Armínio Fraga, David Cohen, José Márcio Camargo e Vitor Pereira.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Palestra Convidada</span>
+          <span class="visit-role" data-i18n="vtConvidada">Palestra Convidada</span>
           <h3 class="visit-title">Bruno Bondarovsky</h3>
-          <p class="visit-desc">Palestra compartilhando experiências práticas sobre gestão, finanças e tomada de decisão fundamentada em dados.</p>
+          <p class="visit-desc" data-i18n="vtBrunoDesc">Palestra compartilhando experiências práticas sobre gestão, finanças e tomada de decisão fundamentada em dados.</p>
         </div>
 
         <div class="visit-card">
-          <span class="visit-role">Palestra Inaugural</span>
+          <span class="visit-role" data-i18n="vtInaugural">Palestra Inaugural</span>
           <h3 class="visit-title">Erick Coser (Datarisk)</h3>
-          <p class="visit-desc">Visão prática sobre fundação de empresas de inteligência analítica e desafios de ciência de dados no ecossistema brasileiro.</p>
+          <p class="visit-desc" data-i18n="vtErickDesc">Visão prática sobre fundação de empresas de inteligência analítica e desafios de ciência de dados no ecossistema brasileiro.</p>
         </div>
       </div>
 
       <div style="margin-top: 3rem;">
-        <span class="mono-tag">PARCEIROS NA ECONDATA WEEK</span>
+        <span class="mono-tag" data-i18n="partnersTag">PARCEIROS NA ECONDATA WEEK</span>
         <div class="partners-wall">
           <div class="partner-item">BCG X</div>
           <div class="partner-item">Itaú Asset Management</div>
@@ -630,40 +639,40 @@
             <img src="assets/img/econdata_logo_full.png" alt="Logo EconData Analytics" style="width: auto; height: 28px; border-radius: 3px;">
             <span style="font-weight: 800; font-size: 1rem; letter-spacing: 0.04em;">ECONDATA ANALYTICS</span>
           </div>
-          <p style="font-size: 0.85rem; max-width: 38ch;">
+          <p style="font-size: 0.85rem; max-width: 38ch;" data-i18n="footerDept">
             Núcleo de Ciência de Dados dos Alunos de Economia da Pontifícia Universidade Católica do Rio de Janeiro.
           </p>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;" data-i18n="footerAddress">
             Rua Marquês de São Vicente, 225 — Gávea, Rio de Janeiro - RJ, 22451-900
           </p>
         </div>
 
         <div class="footer-col">
-          <h5>Navegação</h5>
+          <h5 data-i18n="footerNavTitle">Navegação</h5>
           <ul class="footer-links">
-            <li><a href="#diretoria">Diretoria (2026.2)</a></li>
-            <li><a href="#capacitacao">Capacitação & IA</a></li>
-            <li><a href="#processo-seletivo">Processo Seletivo</a></li>
-            <li><a href="#projetos">Projetos & brfinance</a></li>
-            <li><a href="#console">Console R (WebAssembly)</a></li>
-            <li><a href="#areas">Áreas de Atuação</a></li>
-            <li><a href="#visitas">Mercado & Parceiros</a></li>
+            <li><a href="#diretoria" data-i18n="drawerDiretoria">Diretoria (2026.2)</a></li>
+            <li><a href="#capacitacao" data-i18n="drawerCapacitacao">Capacitação & IA</a></li>
+            <li><a href="#processo-seletivo" data-i18n="navProcessoSeletivo">Processo Seletivo</a></li>
+            <li><a href="#projetos" data-i18n="drawerProjetos">Projetos & brfinance</a></li>
+            <li><a href="#console" data-i18n="navConsole">Console R (WebAssembly)</a></li>
+            <li><a href="#areas" data-i18n="drawerAreas">Áreas de Atuação</a></li>
+            <li><a href="#visitas" data-i18n="drawerVisitas">Mercado & Parceiros</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h5>Contato & Redes Sociais</h5>
+          <h5 data-i18n="footerContactTitle">Contato & Redes Sociais</h5>
           <ul class="footer-links">
             <li><a href="https://www.instagram.com/econdata_analytics/" target="_blank" rel="noopener noreferrer">Instagram • @econdata_analytics</a></li>
             <li><a href="https://br.linkedin.com/company/econdata-analytics" target="_blank" rel="noopener noreferrer">LinkedIn • EconData Analytics</a></li>
-            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer">Depto. de Economia PUC-Rio</a></li>
+            <li><a href="https://www.econ.puc-rio.br/graduacao/nucleos/" target="_blank" rel="noopener noreferrer" data-i18n="footerDeptLink">Depto. de Economia PUC-Rio</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 ECONDATA Analytics • PUC-Rio</span>
-        <span>Hospedado no GitHub Pages</span>
+        <span data-i18n="footerCopy">© 2026 ECONDATA Analytics • PUC-Rio</span>
+        <span data-i18n="footerHost">Hospedado no GitHub Pages</span>
       </div>
     </div>
   </footer>
@@ -674,10 +683,10 @@
     <div class="container">
       <div class="section-head" style="margin-bottom: 1.75rem;">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
-          <h2 class="section-title" style="margin: 0; font-size: 1.85rem;">Console R</h2>
+          <h2 class="section-title" style="margin: 0; font-size: 1.85rem;" data-i18n="consoleTitle">Console R</h2>
           <span id="webr-status-badge" class="mono-tag" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #F59E0B;">
             <span class="console-status-indicator" id="status-dot"></span>
-            <span id="status-text">Inicializando WebR...</span>
+            <span id="status-text" data-i18n="consoleWebRInitializing">Inicializando WebR...</span>
           </span>
         </div>
       </div>
@@ -685,18 +694,18 @@
       <!-- Barra de IA para Geração Automática de Gráficos (Opção A) -->
       <div class="console-ai-bar">
         <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span class="mono-tag" style="font-size: 0.7rem; background: rgba(56, 189, 248, 0.15);">IA ASSISTANT</span>
+          <span class="mono-tag" style="font-size: 0.7rem; background: rgba(56, 189, 248, 0.15);" data-i18n="consoleAiTag">IA ASSISTANT</span>
         </div>
         <div class="console-ai-input-wrap">
-          <input type="text" id="ai-prompt-input" class="console-ai-input" placeholder="Descreva o gráfico que deseja em linguagem natural (ex: 'Gráfico de barras do PIB 2020-2024 com ggplot2')...">
+          <input type="text" id="ai-prompt-input" class="console-ai-input" data-i18n-placeholder="consoleAiPlaceholder" placeholder="Descreva o gráfico que deseja em linguagem natural (ex: 'Gráfico de barras do PIB 2020-2024 com ggplot2')...">
         </div>
         <button id="btn-generate-ai" class="console-ai-btn" onclick="generateCodeWithAI()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-          Gerar Gráfico
+          <span data-i18n="consoleAiBtn">Gerar Gráfico</span>
         </button>
         <button class="console-ai-key-btn" onclick="openApiKeyModal()" title="Configurar sua API Key do Google Gemini ou Groq">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          <span id="api-key-status-label">Chave de API</span>
+          <span id="api-key-status-label" data-i18n="consoleAiKeyLabel">Chave de API</span>
         </button>
       </div>
 
@@ -706,30 +715,30 @@
           <div class="api-key-modal-header">
             <h3 class="api-key-modal-title">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              Configurar Chave de API de IA
+              <span data-i18n="consoleModalTitle">Configurar Chave de API de IA</span>
             </h3>
             <button class="drawer-close-btn" onclick="closeApiKeyModal()">✕</button>
           </div>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;" data-i18n-html="consoleModalDesc">
             Por segurança e conformidade, sua chave é armazenada <strong>exclusivamente na memória local do seu navegador (localStorage)</strong> e nunca trafega por servidores externos.
           </p>
           <div style="margin-bottom: 1.25rem;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-family: var(--font-mono);">
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-family: var(--font-mono);" data-i18n="consoleModalKeyLabel">
               Google Gemini API Key (ou Groq API Key):
             </label>
             <input type="password" id="api-key-input" class="console-ai-input" placeholder="AIzaSy... ou gsk_..." style="font-family: var(--font-mono);">
             <div style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: var(--accent-cyan); text-decoration: none;">
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: var(--accent-cyan); text-decoration: none;" data-i18n="consoleModalGetKey">
                 Obter chave gratuita no Google AI Studio ↗
               </a>
-              <button onclick="removeSavedApiKey()" style="background: none; border: none; color: #EF4444; font-size: 0.72rem; cursor: pointer; text-decoration: underline;">
+              <button onclick="removeSavedApiKey()" style="background: none; border: none; color: #EF4444; font-size: 0.72rem; cursor: pointer; text-decoration: underline;" data-i18n="consoleModalRemoveKey">
                 Remover chave salva
               </button>
             </div>
           </div>
           <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
-            <button class="btn btn-ghost" onclick="closeApiKeyModal()" style="padding: 0.5rem 1rem; font-size: 0.78rem;">Cancelar</button>
-            <button class="btn btn-primary" onclick="saveApiKeyModal()" style="padding: 0.5rem 1.25rem; font-size: 0.78rem;">Salvar Chave</button>
+            <button class="btn btn-ghost" onclick="closeApiKeyModal()" style="padding: 0.5rem 1rem; font-size: 0.78rem;" data-i18n="consoleModalCancel">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveApiKeyModal()" style="padding: 0.5rem 1.25rem; font-size: 0.78rem;" data-i18n="consoleModalSave">Salvar Chave</button>
           </div>
         </div>
       </div>
@@ -740,23 +749,23 @@
           <div class="console-pane-header">
             <span class="console-pane-title">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-              EDITOR R • SCRIPT
+              <span data-i18n="consoleEditorTitle">EDITOR R • SCRIPT</span>
             </span>
-            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);" data-i18n-html="consoleEditorShortcut">
               Atalho: <strong>Ctrl + Enter</strong>
             </span>
           </div>
 
           <div class="console-editor-wrap">
-            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" placeholder="# Digite seu código em R aqui..."></textarea>
+            <textarea id="r-code-editor" class="console-textarea" spellcheck="false" data-i18n-placeholder="consoleEditorPlaceholder" placeholder="# Digite seu código em R aqui..."></textarea>
           </div>
 
           <div class="console-controls">
-            <button class="btn btn-ghost" onclick="clearCode()" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Limpar Código</button>
+            <button class="btn btn-ghost" onclick="clearCode()" style="padding: 0.5rem 1rem; font-size: 0.75rem;" data-i18n="consoleBtnClearCode">Limpar Código</button>
             <div style="display: flex; gap: 0.75rem; align-items: center;">
               <button id="btn-run-r" class="btn btn-primary" onclick="runRCode()" style="padding: 0.55rem 1.4rem; font-size: 0.78rem;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Executar Código (Run)
+                <span data-i18n="consoleBtnRun">Executar Código (Run)</span>
               </button>
             </div>
           </div>
@@ -767,33 +776,33 @@
           <div class="console-pane-header">
             <span class="console-pane-title">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              SAÍDA DO TERMINAL (CONSOLE)
+              <span data-i18n="consoleTerminalTitle">SAÍDA DO TERMINAL (CONSOLE)</span>
             </span>
-            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;">Limpar Saída</button>
+            <button class="preset-btn" onclick="clearOutput()" style="padding: 0.2rem 0.6rem; font-size: 0.65rem;" data-i18n="consoleBtnClearOutput">Limpar Saída</button>
           </div>
           
-          <pre id="r-terminal-output" class="console-output-text"># Aguardando inicialização do motor WebR...
+          <pre id="r-terminal-output" class="console-output-text" data-i18n="consoleTerminalWait"># Aguardando inicialização do motor WebR...
 # Ao carregar, clique em 'Executar Código'.</pre>
 
           <div class="console-pane-header" style="border-top: 1px solid var(--border-subtle);">
             <span class="console-pane-title">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
-              GRÁFICO R (DEVICE CANVAS)
+              <span data-i18n="consolePlotTitle">GRÁFICO R (DEVICE CANVAS)</span>
             </span>
             <div style="display: flex; gap: 0.4rem; align-items: center;">
               <button class="console-btn-action" onclick="openPlotFullscreen()" title="Abrir gráfico em tela cheia numa nova aba">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                Tela Cheia
+                <span data-i18n="consoleBtnFullscreen">Tela Cheia</span>
               </button>
               <button class="console-btn-action" onclick="downloadPlotImage()" title="Fazer download do gráfico gerado em PNG">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                Download
+                <span data-i18n="consoleBtnDownload">Download</span>
               </button>
             </div>
           </div>
 
           <div class="console-plot-area" id="console-plot-area">
-            <div class="plot-placeholder" id="plot-placeholder">
+            <div class="plot-placeholder" id="plot-placeholder" data-i18n-html="consolePlotEmpty">
               Nenhum gráfico gerado ainda.<br>Gere um gráfico com <code>plot()</code> ou <code>ggplot()</code>.
             </div>
           </div>
@@ -803,6 +812,7 @@
   </section>
 
   <!-- Scripts do Site e Console R WebAssembly -->
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/termo-words.js" defer></script>
   <script src="assets/js/termo-game.js" defer></script>
