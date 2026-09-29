@@ -2306,3 +2306,291 @@ body.tab-console-active .console-section {
 [data-theme="light"] .lig4-status {
   color: #334155;
 }
+
+/* ==========================================================================
+   EASTER EGG: XADREZ (CHESS)
+   ========================================================================== */
+.chess-overlay-game {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  animation: fadeIn var(--duration-fast) ease-out;
+  box-sizing: border-box;
+}
+
+.chess-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.chess-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.chess-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.chess-title strong {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.chess-title small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.chess-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.chess-stats strong {
+  color: #38BDF8;
+}
+
+.chess-btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all var(--duration-fast);
+}
+
+.chess-btn-icon:hover {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.chess-board-wrapper {
+  background: #2D3748;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 38px);
+  grid-template-rows: repeat(8, 38px);
+  border: 2px solid #1A202C;
+  user-select: none;
+}
+
+.chess-sq {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+.chess-sq.light {
+  background: #E2E8F0;
+}
+
+.chess-sq.dark {
+  background: #64748B;
+}
+
+.chess-sq.selected {
+  background: #FBBF24 !important;
+}
+
+.chess-sq.valid-move::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: rgba(16, 185, 129, 0.75);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.chess-sq.valid-capture {
+  background: rgba(239, 68, 68, 0.6) !important;
+}
+
+.chess-piece {
+  font-size: 1.85rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+}
+
+.chess-piece.white-piece {
+  color: #FFFFFF;
+  text-shadow: 0 0 2px #000000;
+}
+
+.chess-piece.black-piece {
+  color: #0F172A;
+}
+
+.chess-status {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 20px;
+  margin: 0.4rem 0;
+}
+
+.chess-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Tema Claro para o Xadrez */
+[data-theme="light"] .chess-overlay-game {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .chess-board-wrapper {
+  background: #475569;
+}
+
+[data-theme="light"] .chess-sq.light {
+  background: #F8FAFC;
+}
+
+[data-theme="light"] .chess-sq.dark {
+  background: #94A3B8;
+}
+
+[data-theme="light"] .chess-status {
+  color: #334155;
+}
+
+/* ==========================================================================
+   EASTER EGG: JOGO DA TOUPEIRA (TOCA DELIVERY 3D)
+   ========================================================================== */
+.toupeira-overlay-game {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn var(--duration-fast) ease-out;
+  box-sizing: border-box;
+}
+
+.toupeira-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.toupeira-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.toupeira-icon {
+  font-size: 1.4rem;
+}
+
+.toupeira-title strong {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.toupeira-title small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.toupeira-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toupeira-frame-wrapper {
+  flex: 1;
+  width: 100%;
+  min-height: 400px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #000000;
+  position: relative;
+}
+
+.toupeira-frame-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: block;
+  border: none;
+}
+
+.toupeira-footer {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.toupeira-footer kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 0.7rem;
+}
+
+[data-theme="light"] .toupeira-overlay-game {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .toupeira-footer {
+  color: #334155;
+}
+
+[data-theme="light"] .toupeira-footer kbd {
+  background: #E2E8F0;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}

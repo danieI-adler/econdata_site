@@ -405,6 +405,24 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
         return;
       }
 
+      // --- Interceptador Easter Egg: "XADREZ" / "CHESS" (Case-Sensitive) ---
+      if (code === 'XADREZ' || code === 'CHESS') {
+        terminalOutput.textContent = '[Easter Egg Descoberto!]: Executando jogo de Xadrez...\nDesafie a IA Minimax no tabuleiro ao lado!\n';
+        if (typeof window.launchChessGame === 'function') {
+          window.launchChessGame(plotArea);
+        }
+        return;
+      }
+
+      // --- Interceptador Easter Egg: "TOUPEIRA" / "TOCA" / "DELIVERY" (Case-Sensitive) ---
+      if (code === 'TOUPEIRA' || code === 'TOCA' || code === 'DELIVERY') {
+        terminalOutput.textContent = '[Easter Egg Descoberto!]: Executando Toca Delivery (Jogo da Toupeira 3D)...\nAcelere pelas ruas de Copacabana e Santa Teresa no painel ao lado!\n';
+        if (typeof window.launchToupeiraGame === 'function') {
+          window.launchToupeiraGame(plotArea);
+        }
+        return;
+      }
+
       // No R em batch / WebAssembly, objetos ggplot só disparam o canvas gráfico se forem explicitamente impressos com print().
       // Se o script contém ggplot() mas não chama print(), garantimos a impressão do último objeto avaliado (.Last.value)
       if (code.includes('ggplot(') && !code.includes('print(')) {
