@@ -2083,3 +2083,13 @@ body.tab-console-active .console-section {
   background: #CBD5E1 !important;
   color: #64748B !important;
 }
+
+@keyframes termo-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.termo-msg.shake {
+  animation: termo-shake 0.35s ease-in-out;
+}

@@ -2,28 +2,44 @@
 // Ativado exclusivamente quando o usuário digita "TERMO" no Console R
 
 (function() {
-  const TERMO_WORDS = [
+  const FALLBACK_WORDS = [
     "DADOS", "VALOR", "SELIC", "LUCRO", "ACOES", "BOLSA", "ATIVO", "BANCO", "TAXAS", "RISCO",
     "FUNDO", "MOEDA", "PRECO", "CONTA", "SALDO", "RENDA", "CUSTO", "CAMBIO", "TITULO", "DIVIDA",
-    "MERCADO", "PRAZO", "JUROS", "OFERTA", "GANHO", "PERDA", "SALDO", "MACRO", "MICRO", "INDEX",
-    "TERMO", "LOGICA", "VETOR", "GRAFO", "MATRIZ", "CHAVE", "LINHA", "SERIE", "TESTE", "MODELO",
-    "TEMPO", "POUCO", "MUITO", "CERTO", "FORTE", "PLANO", "METAS", "FONTE", "CASOS", "REGRA",
-    "PASSO", "ORDEM", "PONTO", "GRUPO", "BLOCO", "CORPO", "FLUXO", "SIGLA", "FAVOR", "PODER",
-    "SABER", "FORMA", "PARTE", "NOITE", "TARDE", "LUGAR", "MUNDO", "MUNDO", "IDEIA", "TEXTO",
-    "AUTOR", "VALER", "VIVER", "DIZER", "FAZER", "GERAR", "CRIAR", "SUBIR", "MEDIR", "FIXAR",
-    "NOTAS", "CARRO", "CASAL", "FOLHA", "LIVRO", "LETRA", "CAMPO", "PRAIA", "PEDRA", "PORTA",
-    "VERDE", "CLARO", "PRETO", "PRATA", "OURO", "BRUTO", "NOBRE", "TOTAL", "UNIAO", "BASE"
+    "MERCADO", "PRAZO", "JUROS", "OFERTA", "GANHO", "PERDA", "MACRO", "MICRO", "INDEX", "TERMO",
+    "LOGICA", "VETOR", "GRAFO", "MATRIZ", "CHAVE", "LINHA", "SERIE", "TESTE", "MODELO", "TEMPO",
+    "POUCO", "MUITO", "CERTO", "FORTE", "PLANO", "METAS", "FONTE", "CASOS", "REGRA", "PASSO",
+    "ORDEM", "PONTO", "GRUPO", "BLOCO", "CORPO", "FLUXO", "SIGLA", "FAVOR", "PODER", "SABER",
+    "FORMA", "PARTE", "NOITE", "TARDE", "LUGAR", "MUNDO", "IDEIA", "TEXTO", "AUTOR", "VALER",
+    "VIVER", "DIZER", "FAZER", "GERAR", "CRIAR", "SUBIR", "MEDIR", "FIXAR", "NOTAS", "CARRO",
+    "CASAL", "FOLHA", "LIVRO", "LETRA", "CAMPO", "PRAIA", "PEDRA", "PORTA", "VERDE", "CLARO",
+    "PRETO", "PRATA", "OURO", "BRUTO", "NOBRE", "TOTAL", "UNIAO", "BASE"
   ].filter(w => w.length === 5);
 
   let targetWord = "";
   let currentAttempt = 0;
   let currentLetter = 0;
   let isGameOver = false;
+  let dictionarySet = null;
   const MAX_ATTEMPTS = 6;
   const WORD_LENGTH = 5;
 
+  function getDictionaryList() {
+    if (Array.isArray(window.TERMO_DICTIONARY) && window.TERMO_DICTIONARY.length > 0) {
+      return window.TERMO_DICTIONARY;
+    }
+    return FALLBACK_WORDS;
+  }
+
+  function getDictionarySet() {
+    if (!dictionarySet) {
+      dictionarySet = new Set(getDictionaryList());
+    }
+    return dictionarySet;
+  }
+
   function pickRandomWord() {
-    return TERMO_WORDS[Math.floor(Math.random() * TERMO_WORDS.length)];
+    const list = getDictionaryList();
+    return list[Math.floor(Math.random() * list.length)];
   }
 
   window.launchTermoGame = function(containerEl) {
@@ -138,6 +154,16 @@
 
       // Validar tentativa
       const guess = Array.from(cells).map(c => c.textContent).join('');
+      const dict = getDictionarySet();
+      if (!dict.has(guess)) {
+        if (msgEl) {
+          msgEl.textContent = 'Essa palavra não é aceita no dicionário.';
+          msgEl.classList.add('shake');
+          setTimeout(() => msgEl.classList.remove('shake'), 400);
+        }
+        return;
+      }
+
       checkGuess(guess, cells, msgEl);
     } else if (/^[A-Z]$/.test(key)) {
       if (currentLetter < WORD_LENGTH) {
