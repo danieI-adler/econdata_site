@@ -200,13 +200,16 @@ Gere um script R executável, limpo e elegante para atender ao seguinte pedido d
 DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
 1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
    Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
-   ATENÇÃO: O SGS do Banco Central EXIGE intervalo de datas para séries diárias (regra dos 10 anos do BCB), SEMPRE inclua os parâmetros dataInicial e dataFinal na URL (formato DD/MM/AAAA):
-   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
-   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
-   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
-   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026"
+   ATENÇÃO CRÍTICA (REGRA DOS 10 ANOS DO BANCO CENTRAL):
+   O SGS do Banco Central rejeita com erro HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos entre dataInicial e dataFinal.
+   Por isso, para séries diárias (como Selic Meta 432 ou Dólar 1), SEMPRE use um intervalo menor ou igual a 10 anos (ex: dataInicial=01/01/2018 até 31/12/2026, ou 01/01/2020 a 31/12/2026). NUNCA comece em 2010 ou antes se a data final for 2026!
+   URLs oficiais para séries diárias:
+   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
+   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
+   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
+   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
    Exemplo de leitura robusta:
-   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2024&dataFinal=31/12/2026", sep = ";", dec = ",")
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026", sep = ";", dec = ",")
    df$data <- as.Date(df$data, format = "%d/%m/%Y")
    df$valor <- as.numeric(df$valor)
 2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
@@ -245,7 +248,7 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
               messages: [
                 {
                   role: 'system',
-                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
+                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). ATENÇÃO REGRA BCB: Para séries diárias, o intervalo entre dataInicial e dataFinal NÃO pode passar de 10 anos (ex: 01/01/2018 a 31/12/2026), caso contrário o Banco Central dá erro 406. NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
                 },
                 {
                   role: 'user',
@@ -428,6 +431,14 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
       if (code.includes('ggplot(') && !code.includes('print(')) {
         code = code + '\nif (exists(".Last.value") && inherits(.Last.value, "ggplot")) { print(.Last.value) }';
       }
+
+      // Auto-correção para a API do Banco Central (SGS):
+      // O BCB rejeita com HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos.
+      // Se o código tiver uma URL do SGS com dataInicial anterior a 2017 e dataFinal até 2026/atualidade,
+      // ajustamos automaticamente a dataInicial para 01/01/2018 para garantir execução perfeita sem quebrar.
+      code = code.replace(/(https:\/\/api\.bcb\.gov\.br\/dados\/serie\/bcdata\.sgs\.\d+\/dados\?[^"'\s]*)dataInicial=(\d{2}\/\d{2}\/)(19\d\d|200\d|201[0-6])/g, (match, prefix, dayMonth, year) => {
+        return `${prefix}dataInicial=01/01/2018`;
+      });
 
       isExecuting = true;
       btnRun.disabled = true;
