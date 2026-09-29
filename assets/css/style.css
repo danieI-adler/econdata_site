@@ -2093,3 +2093,211 @@ body.tab-console-active .console-section {
 .termo-msg.shake {
   animation: termo-shake 0.35s ease-in-out;
 }
+
+/* --- Easter Egg: Jogo 4 em Linha (Connect 4) --- */
+.lig4-overlay-game {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 0.6rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.lig4-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lig4-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+}
+
+.lig4-badge {
+  font-size: 0.65rem;
+  background: rgba(2, 132, 199, 0.2);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.lig4-ai-tag {
+  font-size: 0.65rem;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.lig4-scoreboard {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  margin-bottom: 0.65rem;
+}
+
+.lig4-score-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lig4-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.lig4-dot.human { background: #EF4444; }
+.lig4-dot.ai { background: #F59E0B; }
+.lig4-dot.tie { background: #64748B; }
+
+.lig4-board-wrapper {
+  background: #1E3A8A;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.65rem;
+}
+
+.lig4-col-selectors {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.lig4-col-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 3px 0;
+  cursor: pointer;
+  font-size: 0.72rem;
+  transition: all var(--duration-fast);
+}
+
+.lig4-col-btn:hover {
+  background: #38BDF8;
+  color: #0F172A;
+  transform: translateY(-2px);
+}
+
+.lig4-board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.lig4-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.lig4-slot {
+  width: 36px;
+  height: 36px;
+  background: #0F172A;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.lig4-piece {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lig4-piece.drop {
+  animation: lig4-drop-anim 0.3s ease-out;
+}
+
+@keyframes lig4-drop-anim {
+  0% { transform: translateY(-120px) scale(0.9); opacity: 0; }
+  70% { transform: translateY(5px); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.lig4-piece.piece-human {
+  background: radial-gradient(circle at 35% 35%, #F87171, #DC2626);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.5);
+}
+
+.lig4-piece.piece-ai {
+  background: radial-gradient(circle at 35% 35%, #FDE047, #D97706);
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.5);
+}
+
+.lig4-piece.win-highlight {
+  animation: lig4-pulse 0.7s infinite alternate;
+  border: 2px solid #FFFFFF;
+}
+
+@keyframes lig4-pulse {
+  0% { transform: scale(0.95); filter: brightness(1); }
+  100% { transform: scale(1.1); filter: brightness(1.3); }
+}
+
+.lig4-status {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.lig4-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Tema Claro para o Jogo 4 em Linha */
+[data-theme="light"] .lig4-overlay-game {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .lig4-board-wrapper {
+  background: #2563EB;
+}
+
+[data-theme="light"] .lig4-slot {
+  background: #F1F5F9;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .lig4-status {
+  color: #334155;
+}
