@@ -3159,4 +3159,25 @@ body.tab-console-active .console-section {
   color: #334155;
 }
 
+.quiz-code-block {
+  background: #040912;
+  border: 1px solid var(--border-blue);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #38BDF8;
+  margin: 0.6rem 0;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.45;
+}
+
+[data-theme="light"] .quiz-code-block {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #0369A1;
+}
+
+
 
