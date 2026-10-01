@@ -75,18 +75,14 @@ body {
   transition: background-color 200ms ease, color 200ms ease;
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(16, 35, 61, 0.8) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(11, 25, 44, 0.9) 0%, transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    radial-gradient(circle at 90% 80%, rgba(11, 25, 44, 0.9) 0%, transparent 50%);
+  background-size: 100% 100%, 100% 100%;
 }
 
 [data-theme="light"] body {
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(226, 232, 240, 0.8) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(241, 245, 249, 0.9) 0%, transparent 50%),
-    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    radial-gradient(circle at 90% 80%, rgba(241, 245, 249, 0.9) 0%, transparent 50%);
 }
 
 .container {
