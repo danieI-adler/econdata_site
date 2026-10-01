@@ -185,14 +185,24 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
         let generatedRCode = '';
 
         if (apiKey.startsWith('AIzaSy') || apiKey.startsWith('AQ.')) {
-          // Chamada para Google Gemini API
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [{
-                  text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+          // Chamada para Google Gemini API (Tentativa primária com gemini-2.5-flash / gemini-1.5-flash)
+          let response;
+          const candidateModels = [
+            'gemini-2.5-flash',
+            'gemini-1.5-flash',
+            'gemini-1.5-pro'
+          ];
+
+          let lastErr = null;
+          for (const model of candidateModels) {
+            try {
+              response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  contents: [{
+                    parts: [{
+                      text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
 O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
 Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
 "${userPrompt}"
@@ -218,14 +228,19 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
    - NUNCA use install.packages().
    - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
    - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
-                }]
-              }]
-            })
-          });
+                    }]
+                  }]
+                })
+              });
+              if (response.ok) break;
+            } catch (err) {
+              lastErr = err;
+            }
+          }
 
-          if (!response.ok) {
-            const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error?.message || `HTTP ${response.status} da API do Gemini.`);
+          if (!response || !response.ok) {
+            const errData = response ? await response.json().catch(() => ({})) : {};
+            throw new Error(errData.error?.message || lastErr?.message || `HTTP ${response?.status} da API do Gemini.`);
           }
 
           const data = await response.json();
@@ -422,6 +437,15 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
         terminalOutput.textContent = '[Easter Egg Descoberto!]: Executando Toca Delivery (Jogo da Toupeira 3D)...\nAcelere pelas ruas de Copacabana e Santa Teresa no painel ao lado!\n';
         if (typeof window.launchToupeiraGame === 'function') {
           window.launchToupeiraGame(plotArea);
+        }
+        return;
+      }
+
+      // --- Interceptador Easter Egg: "DAMAS" / "CHECKERS" (Case-Sensitive) ---
+      if (code === 'DAMAS' || code === 'CHECKERS') {
+        terminalOutput.textContent = '[Easter Egg Descoberto!]: Executando jogo de Damas Clássico...\nRegra oficial com captura obrigatória e damas coroadas no tabuleiro ao lado!\n';
+        if (typeof window.launchDamasGame === 'function') {
+          window.launchDamasGame(plotArea);
         }
         return;
       }

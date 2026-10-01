@@ -2425,6 +2425,16 @@ body.tab-console-active .console-section {
   background: #FBBF24 !important;
 }
 
+.chess-sq.in-check {
+  background: radial-gradient(circle, #EF4444 40%, #B91C1C 100%) !important;
+  animation: check-pulse 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes check-pulse {
+  0% { filter: brightness(1); transform: scale(0.98); }
+  100% { filter: brightness(1.25); transform: scale(1.02); }
+}
+
 .chess-sq.valid-move::after {
   content: '';
   width: 12px;
@@ -2593,4 +2603,185 @@ body.tab-console-active .console-section {
   background: #E2E8F0;
   border-color: #CBD5E1;
   color: #0F172A;
-}
+}
+
+/* ==========================================================================
+   EASTER EGG: JOGO DE DAMAS (CHECKERS / DRAUGHTS)
+   ========================================================================== */
+.damas-overlay-game {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  animation: fadeIn var(--duration-fast) ease-out;
+  box-sizing: border-box;
+}
+
+.damas-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.damas-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.damas-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.damas-title strong {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.damas-title small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.damas-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.damas-stats strong {
+  color: #38BDF8;
+}
+
+.damas-board-wrapper {
+  background: #2D3748;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.damas-board {
+  display: grid;
+  grid-template-columns: repeat(8, 38px);
+  grid-template-rows: repeat(8, 38px);
+  border: 2px solid #1A202C;
+  user-select: none;
+}
+
+.damas-sq {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+.damas-sq.light {
+  background: #E2E8F0;
+}
+
+.damas-sq.dark {
+  background: #475569;
+}
+
+.damas-sq.selected {
+  background: #FBBF24 !important;
+}
+
+.damas-sq.valid-move::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: rgba(16, 185, 129, 0.75);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.damas-sq.valid-capture {
+  background: rgba(239, 68, 68, 0.55) !important;
+}
+
+.damas-piece {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.damas-piece.piece-human {
+  background: radial-gradient(circle at 35% 35%, #FFFFFF, #CBD5E1);
+  border: 2px solid #94A3B8;
+}
+
+.damas-piece.piece-ai {
+  background: radial-gradient(circle at 35% 35%, #334155, #0F172A);
+  border: 2px solid #000000;
+}
+
+.damas-piece.is-king::before {
+  content: attr(data-crown);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.damas-status {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 20px;
+  margin: 0.4rem 0;
+}
+
+.damas-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Tema Claro para Damas */
+[data-theme="light"] .damas-overlay-game {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .damas-board-wrapper {
+  background: #334155;
+}
+
+[data-theme="light"] .damas-sq.light {
+  background: #F8FAFC;
+}
+
+[data-theme="light"] .damas-sq.dark {
+  background: #64748B;
+}
+
+[data-theme="light"] .damas-status {
+  color: #334155;
+}
+

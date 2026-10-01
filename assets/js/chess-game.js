@@ -1,10 +1,7 @@
-// --- Easter Egg: Jogo de Xadrez (Chess) vs IA Minimax ---
+// --- Easter Egg: Jogo de Xadrez (Chess) Completo com Roque, Xeque-Mate Oficial e IA Minimax Calibrada ---
 // Ativado exclusivamente quando o usuário digita "XADREZ" ou "CHESS" no Console R
 
 (function() {
-  // Peças de Xadrez
-  // 'w' = White (Humano), 'b' = Black (IA EconData)
-  // P = Peão, N = Cavalo, B = Bispo, R = Torre, Q = Rainha, K = Rei
   const SYMBOLS = {
     'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
     'bK': '♚', 'bQ': '♛', 'bR': '♜', 'bB': '♝', 'bN': '♞', 'bP': '♟'
@@ -14,7 +11,6 @@
     'P': 100, 'N': 320, 'B': 330, 'R': 500, 'Q': 900, 'K': 20000
   };
 
-  // Positional heatmaps para incentivar jogo tático e desenvolvimento de centro
   const PAWN_TABLE = [
     [0,  0,  0,  0,  0,  0,  0,  0],
     [50, 50, 50, 50, 50, 50, 50, 50],
@@ -49,13 +45,14 @@
   ];
 
   let board = [];
+  let castling = { wK: true, wQ: true, bK: true, bQ: true };
   let selectedSquare = null;
   let validMovesForSelected = [];
   let isGameOver = false;
   let isAiTurn = false;
-  let turn = 'w'; // 'w' joga primeiro
+  let turn = 'w';
   let scores = { human: 0, ai: 0, draws: 0 };
-  let moveLog = [];
+  let inCheckColor = null;
 
   function createInitialBoard() {
     return [
@@ -78,30 +75,107 @@
     return r >= 0 && r < 8 && c >= 0 && c < 8;
   }
 
-  // Gera movimentos pseudo-legais para uma peça na posição (r, c)
-  function getMoves(b, r, c) {
+  function findKing(b, color) {
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        if (b[r][c] === color + 'K') return [r, c];
+      }
+    }
+    return null;
+  }
+
+  // Verifica se uma casa (r, c) está sob ataque por peças de 'byColor'
+  function isSquareAttacked(b, r, c, byColor) {
+    // 1. Ataque de peões
+    const pawnDir = byColor === 'w' ? 1 : -1; // Se atacante for branco, vem de r+1
+    for (const dc of [-1, 1]) {
+      const pr = r + pawnDir;
+      const pc = c + dc;
+      if (inBounds(pr, pc) && b[pr][pc] === byColor + 'P') return true;
+    }
+
+    // 2. Cavalos
+    const knightOffsets = [
+      [-2, -1], [-2, 1], [-1, -2], [-1, 2],
+      [1, -2], [1, 2], [2, -1], [2, 1]
+    ];
+    for (const [dr, dc] of knightOffsets) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (inBounds(nr, nc) && b[nr][nc] === byColor + 'N') return true;
+    }
+
+    // 3. Bispos e Rainhas (diagonais)
+    const diagDirs = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+    for (const [dr, dc] of diagDirs) {
+      let nr = r + dr;
+      let nc = c + dc;
+      while (inBounds(nr, nc)) {
+        const piece = b[nr][nc];
+        if (piece) {
+          if (piece === byColor + 'B' || piece === byColor + 'Q') return true;
+          break;
+        }
+        nr += dr;
+        nc += dc;
+      }
+    }
+
+    // 4. Torres e Rainhas (retas)
+    const straightDirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    for (const [dr, dc] of straightDirs) {
+      let nr = r + dr;
+      let nc = c + dc;
+      while (inBounds(nr, nc)) {
+        const piece = b[nr][nc];
+        if (piece) {
+          if (piece === byColor + 'R' || piece === byColor + 'Q') return true;
+          break;
+        }
+        nr += dr;
+        nc += dc;
+      }
+    }
+
+    // 5. Rei adjacente
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        if (dr === 0 && dc === 0) continue;
+        const nr = r + dr;
+        const nc = c + dc;
+        if (inBounds(nr, nc) && b[nr][nc] === byColor + 'K') return true;
+      }
+    }
+
+    return false;
+  }
+
+  function isKingInCheck(b, color) {
+    const kingPos = findKing(b, color);
+    if (!kingPos) return true;
+    const enemy = color === 'w' ? 'b' : 'w';
+    return isSquareAttacked(b, kingPos[0], kingPos[1], enemy);
+  }
+
+  // Gera movimentos pseudo-legais (incluindo Roque)
+  function getPseudoMoves(b, r, c, cRights) {
     const piece = b[r][c];
     if (!piece) return [];
     const color = piece[0];
     const type = piece[1];
     const moves = [];
-
     const enemy = color === 'w' ? 'b' : 'w';
 
     if (type === 'P') {
       const dir = color === 'w' ? -1 : 1;
       const startRow = color === 'w' ? 6 : 1;
 
-      // 1 passo à frente
       if (inBounds(r + dir, c) && !b[r + dir][c]) {
         moves.push([r + dir, c]);
-        // 2 passos do início
         if (r === startRow && inBounds(r + 2 * dir, c) && !b[r + 2 * dir][c]) {
           moves.push([r + 2 * dir, c]);
         }
       }
-
-      // Capturas nas diagonais
       for (const dc of [-1, 1]) {
         const nr = r + dir;
         const nc = c + dc;
@@ -117,20 +191,14 @@
       for (const [dr, dc] of knightOffsets) {
         const nr = r + dr;
         const nc = c + dc;
-        if (inBounds(nr, nc)) {
-          if (!b[nr][nc] || b[nr][nc][0] === enemy) {
-            moves.push([nr, nc]);
-          }
+        if (inBounds(nr, nc) && (!b[nr][nc] || b[nr][nc][0] === enemy)) {
+          moves.push([nr, nc]);
         }
       }
     } else if (type === 'B' || type === 'R' || type === 'Q') {
       const directions = [];
-      if (type === 'B' || type === 'Q') {
-        directions.push([-1, -1], [-1, 1], [1, -1], [1, 1]);
-      }
-      if (type === 'R' || type === 'Q') {
-        directions.push([-1, 0], [1, 0], [0, -1], [0, 1]);
-      }
+      if (type === 'B' || type === 'Q') directions.push([-1, -1], [-1, 1], [1, -1], [1, 1]);
+      if (type === 'R' || type === 'Q') directions.push([-1, 0], [1, 0], [0, -1], [0, 1]);
 
       for (const [dr, dc] of directions) {
         let nr = r + dr;
@@ -139,27 +207,46 @@
           if (!b[nr][nc]) {
             moves.push([nr, nc]);
           } else {
-            if (b[nr][nc][0] === enemy) {
-              moves.push([nr, nc]);
-            }
-            break; // Bloqueado
+            if (b[nr][nc][0] === enemy) moves.push([nr, nc]);
+            break;
           }
           nr += dr;
           nc += dc;
         }
       }
     } else if (type === 'K') {
-      const kingOffsets = [
-        [-1, -1], [-1, 0], [-1, 1],
-        [0, -1],           [0, 1],
-        [1, -1],  [1, 0],  [1, 1]
-      ];
-      for (const [dr, dc] of kingOffsets) {
-        const nr = r + dr;
-        const nc = c + dc;
-        if (inBounds(nr, nc)) {
-          if (!b[nr][nc] || b[nr][nc][0] === enemy) {
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          const nr = r + dr;
+          const nc = c + dc;
+          if (inBounds(nr, nc) && (!b[nr][nc] || b[nr][nc][0] === enemy)) {
             moves.push([nr, nc]);
+          }
+        }
+      }
+
+      // Roque (Castling)
+      if (cRights) {
+        const baseRow = color === 'w' ? 7 : 0;
+        if (r === baseRow && c === 4 && !isSquareAttacked(b, baseRow, 4, enemy)) {
+          // Roque Pequeno (Rei-lado: col 4 para col 6)
+          const kRight = color === 'w' ? cRights.wK : cRights.bK;
+          if (kRight && b[baseRow][7] === color + 'R') {
+            if (!b[baseRow][5] && !b[baseRow][6]) {
+              if (!isSquareAttacked(b, baseRow, 5, enemy) && !isSquareAttacked(b, baseRow, 6, enemy)) {
+                moves.push([baseRow, 6]);
+              }
+            }
+          }
+          // Roque Grande (Dama-lado: col 4 para col 2)
+          const qRight = color === 'w' ? cRights.wQ : cRights.bQ;
+          if (qRight && b[baseRow][0] === color + 'R') {
+            if (!b[baseRow][1] && !b[baseRow][2] && !b[baseRow][3]) {
+              if (!isSquareAttacked(b, baseRow, 3, enemy) && !isSquareAttacked(b, baseRow, 2, enemy)) {
+                moves.push([baseRow, 2]);
+              }
+            }
           }
         }
       }
@@ -168,51 +255,88 @@
     return moves;
   }
 
-  // Verifica se o Rei de uma determinada cor foi capturado ou se está presente
-  function findKing(b, color) {
-    for (let r = 0; r < 8; r++) {
-      for (let c = 0; c < 8; c++) {
-        if (b[r][c] === color + 'K') return [r, c];
+  // Aplica movimento no tabuleiro com promoção e roque
+  function applyMove(b, from, to) {
+    const nb = cloneBoard(b);
+    const piece = nb[from[0]][from[1]];
+    nb[from[0]][from[1]] = null;
+
+    // Movimento de Roque: mover a torre junto
+    if (piece === 'wK' || piece === 'bK') {
+      if (from[1] === 4 && to[1] === 6) {
+        // Roque curto
+        nb[from[0]][5] = nb[from[0]][7];
+        nb[from[0]][7] = null;
+      } else if (from[1] === 4 && to[1] === 2) {
+        // Roque longo
+        nb[from[0]][3] = nb[from[0]][0];
+        nb[from[0]][0] = null;
       }
     }
-    return null;
+
+    // Promoção de Peão para Rainha
+    if (piece === 'wP' && to[0] === 0) {
+      nb[to[0]][to[1]] = 'wQ';
+    } else if (piece === 'bP' && to[0] === 7) {
+      nb[to[0]][to[1]] = 'bQ';
+    } else {
+      nb[to[0]][to[1]] = piece;
+    }
+
+    return nb;
   }
 
-  // Todos os movimentos de um lado
-  function getAllMoves(b, color) {
-    const all = [];
+  function updateCastlingRights(cRights, from, to, piece) {
+    const next = { ...cRights };
+    if (piece === 'wK') { next.wK = false; next.wQ = false; }
+    if (piece === 'bK') { next.bK = false; next.bQ = false; }
+
+    if (from[0] === 7 && from[1] === 0) next.wQ = false;
+    if (from[0] === 7 && from[1] === 7) next.wK = false;
+    if (from[0] === 0 && from[1] === 0) next.bQ = false;
+    if (from[0] === 0 && from[1] === 7) next.bK = false;
+
+    if (to[0] === 7 && to[1] === 0) next.wQ = false;
+    if (to[0] === 7 && to[1] === 7) next.wK = false;
+    if (to[0] === 0 && to[1] === 0) next.bQ = false;
+    if (to[0] === 0 && to[1] === 7) next.bK = false;
+
+    return next;
+  }
+
+  // Gera APENAS movimentos estritamente legais (que não deixam o próprio Rei em xeque)
+  function getLegalMoves(b, r, c, cRights) {
+    const pseudo = getPseudoMoves(b, r, c, cRights);
+    const piece = b[r][c];
+    if (!piece) return [];
+    const color = piece[0];
+    const legal = [];
+
+    for (const [tr, tc] of pseudo) {
+      const nextBoard = applyMove(b, [r, c], [tr, tc]);
+      if (!isKingInCheck(nextBoard, color)) {
+        legal.push([tr, tc]);
+      }
+    }
+    return legal;
+  }
+
+  function getAllLegalMoves(b, color, cRights) {
+    const list = [];
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
         if (b[r][c] && b[r][c][0] === color) {
-          const targets = getMoves(b, r, c);
-          for (const [tr, tc] of targets) {
-            all.push({ from: [r, c], to: [tr, tc], piece: b[r][c], target: b[tr][tc] });
+          const targets = getLegalMoves(b, r, c, cRights);
+          for (const target of targets) {
+            list.push({ from: [r, c], to: target, piece: b[r][c], targetPiece: b[target[0]][target[1]] });
           }
         }
       }
     }
-    return all;
+    return list;
   }
 
-  // Aplica movimento com promoção de peão automática para Dama
-  function makeMove(b, from, to) {
-    const newBoard = cloneBoard(b);
-    const piece = newBoard[from[0]][from[1]];
-    newBoard[from[0]][from[1]] = null;
-
-    // Promoção
-    if (piece === 'wP' && to[0] === 0) {
-      newBoard[to[0]][to[1]] = 'wQ';
-    } else if (piece === 'bP' && to[0] === 7) {
-      newBoard[to[0]][to[1]] = 'bQ';
-    } else {
-      newBoard[to[0]][to[1]] = piece;
-    }
-
-    return newBoard;
-  }
-
-  // Avaliação heurística do tabuleiro (Positivo para Pretas/IA, Negativo para Brancas/Humano)
+  // Heurística de avaliação posicional
   function evaluateBoard(b) {
     let score = 0;
     for (let r = 0; r < 8; r++) {
@@ -223,7 +347,6 @@
         const type = piece[1];
         let val = PIECE_VALUES[type] || 0;
 
-        // Bônus posicional
         if (type === 'P') {
           val += color === 'w' ? PAWN_TABLE[r][c] : PAWN_TABLE[7 - r][c];
         } else if (type === 'N') {
@@ -242,37 +365,36 @@
     return score;
   }
 
-  // Minimax com Poda Alpha-Beta (Profundidade 2-3 para resposta rápida e tática)
-  function minimax(b, depth, alpha, beta, isMaximizing) {
+  // Minimax com Poda Alpha-Beta (Profundidade 3 para tática e precisão real)
+  function minimax(b, depth, alpha, beta, isMaximizing, cRights) {
+    const color = isMaximizing ? 'b' : 'w';
+    const moves = getAllLegalMoves(b, color, cRights);
+
+    if (moves.length === 0) {
+      if (isKingInCheck(b, color)) {
+        return { score: isMaximizing ? -50000 + (3 - depth) * 100 : 50000 - (3 - depth) * 100 };
+      }
+      return { score: 0 }; // Empate
+    }
+
     if (depth === 0) {
       return { score: evaluateBoard(b) };
     }
 
-    const whiteKing = findKing(b, 'w');
-    const blackKing = findKing(b, 'b');
-    if (!whiteKing) return { score: 99999 }; // Pretas ganharam
-    if (!blackKing) return { score: -99999 }; // Brancas ganharam
-
-    const color = isMaximizing ? 'b' : 'w';
-    const moves = getAllMoves(b, color);
-
-    if (moves.length === 0) {
-      return { score: 0 }; // Empate por afogamento
-    }
-
-    // Ordenação simples de movimentos para otimizar poda alpha-beta (capturas primeiro)
-    moves.sort((a, bMove) => {
-      const valA = a.target ? PIECE_VALUES[a.target[1]] || 0 : 0;
-      const valB = bMove.target ? PIECE_VALUES[bMove.target[1]] || 0 : 0;
-      return valB - valA;
+    // Ordenação de capturas
+    moves.sort((m1, m2) => {
+      const val1 = m1.targetPiece ? PIECE_VALUES[m1.targetPiece[1]] || 0 : 0;
+      const val2 = m2.targetPiece ? PIECE_VALUES[m2.targetPiece[1]] || 0 : 0;
+      return val2 - val1;
     });
 
     if (isMaximizing) {
       let maxScore = -Infinity;
-      let bestMove = null;
+      let bestMove = moves[0];
       for (const m of moves) {
-        const nb = makeMove(b, m.from, m.to);
-        const result = minimax(nb, depth - 1, alpha, beta, false);
+        const nextBoard = applyMove(b, m.from, m.to);
+        const nextCRights = updateCastlingRights(cRights, m.from, m.to, m.piece);
+        const result = minimax(nextBoard, depth - 1, alpha, beta, false, nextCRights);
         if (result.score > maxScore) {
           maxScore = result.score;
           bestMove = m;
@@ -283,10 +405,11 @@
       return { score: maxScore, move: bestMove };
     } else {
       let minScore = Infinity;
-      let bestMove = null;
+      let bestMove = moves[0];
       for (const m of moves) {
-        const nb = makeMove(b, m.from, m.to);
-        const result = minimax(nb, depth - 1, alpha, beta, true);
+        const nextBoard = applyMove(b, m.from, m.to);
+        const nextCRights = updateCastlingRights(cRights, m.from, m.to, m.piece);
+        const result = minimax(nextBoard, depth - 1, alpha, beta, true, nextCRights);
         if (result.score < minScore) {
           minScore = result.score;
           bestMove = m;
@@ -302,26 +425,28 @@
   window.launchChessGame = function(containerEl) {
     if (!containerEl) return;
     board = createInitialBoard();
+    castling = { wK: true, wQ: true, bK: true, bQ: true };
     selectedSquare = null;
     validMovesForSelected = [];
     isGameOver = false;
     isAiTurn = false;
     turn = 'w';
-    moveLog = [];
+    inCheckColor = null;
 
     containerEl.innerHTML = `
       <div class="chess-overlay-game">
         <div class="chess-header">
           <div class="chess-title">
-            <span class="chess-icon">♟</span>
+            <span class="chess-icon">♚</span>
             <div>
-              <strong>XADREZ · EconData Analytics</strong>
-              <small>Desafie a IA Minimax (Você joga com as Brancas)</small>
+              <strong>XADREZ PROFISSIONAL · EconData</strong>
+              <small>Regras FIDE (Roque, Xeque-Mate Oficial) • IA Minimax Profundidade 3</small>
             </div>
           </div>
           <div class="chess-stats">
             <span title="Vitórias do Jogador">Você: <strong id="chessHumanScore">${scores.human}</strong></span>
             <span title="Vitórias da IA">IA: <strong id="chessAiScore">${scores.ai}</strong></span>
+            <span title="Empates">Empates: <strong id="chessDrawScore">${scores.draws}</strong></span>
             <button class="chess-btn-icon" onclick="window.closeChessGame()" title="Fechar jogo">✕</button>
           </div>
         </div>
@@ -330,7 +455,7 @@
           <div class="chess-board" id="chessBoard"></div>
         </div>
 
-        <div class="chess-status" id="chessStatus">Sua vez: Selecione uma peça branca para mover.</div>
+        <div class="chess-status" id="chessStatus">Sua vez (Brancas). Selecione uma peça para mover.</div>
 
         <div class="chess-actions">
           <button class="console-btn-action" onclick="window.resetChessGame()">Nova Partida</button>
@@ -355,11 +480,13 @@
 
   window.resetChessGame = function() {
     board = createInitialBoard();
+    castling = { wK: true, wQ: true, bK: true, bQ: true };
     selectedSquare = null;
     validMovesForSelected = [];
     isGameOver = false;
     isAiTurn = false;
     turn = 'w';
+    inCheckColor = null;
     const statusEl = document.getElementById('chessStatus');
     if (statusEl) {
       statusEl.textContent = 'Nova partida iniciada! Sua vez (Peças Brancas).';
@@ -373,6 +500,8 @@
     if (!boardEl) return;
     boardEl.innerHTML = '';
 
+    const kingInCheckPos = inCheckColor ? findKing(board, inCheckColor) : null;
+
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
         const square = document.createElement('div');
@@ -381,15 +510,17 @@
         square.dataset.row = r;
         square.dataset.col = c;
 
-        // Destaca selecionado
         if (selectedSquare && selectedSquare[0] === r && selectedSquare[1] === c) {
           square.classList.add('selected');
         }
 
-        // Destaca movimentos válidos
         const isValid = validMovesForSelected.some(([vr, vc]) => vr === r && vc === c);
         if (isValid) {
           square.classList.add(board[r][c] ? 'valid-capture' : 'valid-move');
+        }
+
+        if (kingInCheckPos && kingInCheckPos[0] === r && kingInCheckPos[1] === c) {
+          square.classList.add('in-check');
         }
 
         const piece = board[r][c];
@@ -409,40 +540,55 @@
   function handleSquareClick(r, c) {
     if (isGameOver || isAiTurn) return;
 
-    // Se já havia uma peça selecionada e o clique foi em um movimento válido
     if (selectedSquare) {
       const [sr, sc] = selectedSquare;
       const isValid = validMovesForSelected.some(([vr, vc]) => vr === r && vc === c);
 
       if (isValid) {
-        // Executar movimento do jogador
-        board = makeMove(board, [sr, sc], [r, c]);
+        const movingPiece = board[sr][sc];
+        board = applyMove(board, [sr, sc], [r, c]);
+        castling = updateCastlingRights(castling, [sr, sc], [r, c], movingPiece);
+
         selectedSquare = null;
         validMovesForSelected = [];
-        renderBoard();
 
-        // Verificar vitória imediata
-        if (!findKing(board, 'b')) {
-          endGame('HUMAN');
+        // Verifica estado das pretas após o lance das brancas
+        const blackMoves = getAllLegalMoves(board, 'b', castling);
+        const blackInCheck = isKingInCheck(board, 'b');
+
+        if (blackMoves.length === 0) {
+          if (blackInCheck) {
+            inCheckColor = 'b';
+            renderBoard();
+            endGame('HUMAN');
+          } else {
+            renderBoard();
+            endGame('DRAW');
+          }
           return;
         }
+
+        inCheckColor = blackInCheck ? 'b' : null;
+        renderBoard();
 
         // Passa a vez para a IA
         turn = 'b';
         isAiTurn = true;
         const statusEl = document.getElementById('chessStatus');
-        if (statusEl) statusEl.textContent = 'IA EconData calculando jogada...';
+        if (statusEl) {
+          statusEl.textContent = blackInCheck ? 'Xeque! IA calculando resposta...' : 'IA EconData calculando jogada...';
+          statusEl.style.color = blackInCheck ? '#EF4444' : '';
+        }
 
-        setTimeout(makeAiMove, 350);
+        setTimeout(makeAiMove, 300);
         return;
       }
     }
 
-    // Seleção de peça própria (Branca)
     const clickedPiece = board[r][c];
     if (clickedPiece && clickedPiece[0] === 'w') {
       selectedSquare = [r, c];
-      validMovesForSelected = getMoves(board, r, c);
+      validMovesForSelected = getLegalMoves(board, r, c, castling);
       renderBoard();
     } else {
       selectedSquare = null;
@@ -454,28 +600,42 @@
   function makeAiMove() {
     if (isGameOver) return;
 
-    // Busca Minimax profundidade 2 (rápido e inteligente para jogos web)
-    const depth = 2;
-    const result = minimax(board, depth, -Infinity, Infinity, true);
+    // Busca Minimax profundidade 3
+    const result = minimax(board, 3, -Infinity, Infinity, true, castling);
 
-    if (result.move) {
-      board = makeMove(board, result.move.from, result.move.to);
-      renderBoard();
+    if (result && result.move) {
+      const m = result.move;
+      board = applyMove(board, m.from, m.to);
+      castling = updateCastlingRights(castling, m.from, m.to, m.piece);
 
-      if (!findKing(board, 'w')) {
-        endGame('AI');
+      const whiteMoves = getAllLegalMoves(board, 'w', castling);
+      const whiteInCheck = isKingInCheck(board, 'w');
+
+      if (whiteMoves.length === 0) {
+        if (whiteInCheck) {
+          inCheckColor = 'w';
+          renderBoard();
+          endGame('AI');
+        } else {
+          renderBoard();
+          endGame('DRAW');
+        }
         return;
       }
-    } else {
-      // IA sem movimentos
-      endGame('DRAW');
-      return;
-    }
 
-    turn = 'w';
-    isAiTurn = false;
-    const statusEl = document.getElementById('chessStatus');
-    if (statusEl) statusEl.textContent = 'Sua vez de jogar (Peças Brancas).';
+      inCheckColor = whiteInCheck ? 'w' : null;
+      renderBoard();
+
+      turn = 'w';
+      isAiTurn = false;
+      const statusEl = document.getElementById('chessStatus');
+      if (statusEl) {
+        statusEl.textContent = whiteInCheck ? '⚠️ SEU REI ESTÁ EM XEQUE! Escolha sua defesa.' : 'Sua vez de jogar (Peças Brancas).';
+        statusEl.style.color = whiteInCheck ? '#EF4444' : '';
+      }
+    } else {
+      endGame('DRAW');
+    }
   }
 
   function endGame(winner) {
@@ -488,7 +648,7 @@
       const scoreEl = document.getElementById('chessHumanScore');
       if (scoreEl) scoreEl.textContent = scores.human;
       if (statusEl) {
-        statusEl.textContent = '🏆 Xeque-mate! Você venceu a IA!';
+        statusEl.textContent = '🏆 XEQUE-MATE! Vitória memorável sobre a IA!';
         statusEl.style.color = '#10B981';
       }
     } else if (winner === 'AI') {
@@ -496,13 +656,15 @@
       const scoreEl = document.getElementById('chessAiScore');
       if (scoreEl) scoreEl.textContent = scores.ai;
       if (statusEl) {
-        statusEl.textContent = '🤖 Xeque-mate da IA EconData! Bom jogo!';
+        statusEl.textContent = '💀 XEQUE-MATE! A IA EconData venceu esta partida.';
         statusEl.style.color = '#EF4444';
       }
     } else {
       scores.draws++;
+      const scoreEl = document.getElementById('chessDrawScore');
+      if (scoreEl) scoreEl.textContent = scores.draws;
       if (statusEl) {
-        statusEl.textContent = '🤝 Partida empatada por afogamento!';
+        statusEl.textContent = '🤝 EMPATE! Rei afogado sem lances legais.';
         statusEl.style.color = '#F59E0B';
       }
     }
