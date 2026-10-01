@@ -1,18 +1,24 @@
-// --- Easter Egg: Jogo de Damas Clássico (Checkers / Draughts) vs IA Minimax ---
+// --- Easter Egg: Jogo de Damas Tradicional (Regra Brasileira/Internacional) vs IA Minimax ---
 // Ativado exclusivamente quando o usuário digita "DAMAS" ou "CHECKERS" no Console R
+// Regras Oficiais:
+// 1. Dama "Voadora": Move-se em diagonal por qualquer número de casas vazias para frente ou para trás.
+// 2. Dama pode saltar por cima de uma peça adversária à distância e parar em qualquer casa vazia posterior.
+// 3. Captura com peão para frente ou para trás.
+// 4. Captura Obrigatória e Cadeia de Capturas (Double Jump / Salto Múltiplo contínuo no mesmo turno).
 
 (function() {
   const EMPTY = 0;
-  const HUMAN = 1;      // Peão Branco (sobe o tabuleiro)
-  const HUMAN_KING = 2; // Dama Branca
-  const AI = 3;         // Peão Preto (desce o tabuleiro)
-  const AI_KING = 4;    // Dama Preta
+  const HUMAN = 1;      // Peão Branco
+  const HUMAN_KING = 2; // Dama Branca (movimento longo diagonal)
+  const AI = 3;         // Peão Preto
+  const AI_KING = 4;    // Dama Preta (movimento longo diagonal)
 
   let board = [];
   let selectedSquare = null;
   let validMovesForSelected = [];
   let isGameOver = false;
   let isAiTurn = false;
+  let activeMultiCapture = null; // Quando uma peça está no meio de uma sequência de saltos
   let scores = { human: 0, ai: 0, draws: 0 };
 
   function isHumanPiece(val) {
@@ -44,36 +50,73 @@
     return r >= 0 && r < 8 && c >= 0 && c < 8;
   }
 
-  // Gera capturas obrigatórias para uma peça
+  // Gera movimentos de captura para uma peça em (r, c)
   function getCaptures(b, r, c) {
     const piece = b[r][c];
     if (piece === EMPTY) return [];
     const isH = isHumanPiece(piece);
-    const isK = piece === HUMAN_KING || piece === AI_KING;
+    const isK = (piece === HUMAN_KING || piece === AI_KING);
     const enemyCheck = isH ? isAiPiece : isHumanPiece;
     const captures = [];
 
-    const dirs = isK 
-      ? [[-1, -1], [-1, 1], [1, -1], [1, 1]] 
-      : isH ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]];
+    const diagDirs = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
 
-    // Peão simples também pode capturar para trás na regra tradicional brasileira/internacional
-    const jumpDirs = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+    if (!isK) {
+      // Peão simples: salta exatamente 1 casa por cima de um adversário adjacente
+      for (const [dr, dc] of diagDirs) {
+        const midR = r + dr;
+        const midC = c + dc;
+        const destR = r + 2 * dr;
+        const destC = c + 2 * dc;
 
-    for (const [dr, dc] of jumpDirs) {
-      const midR = r + dr;
-      const midC = c + dc;
-      const destR = r + 2 * dr;
-      const destC = c + 2 * dc;
+        if (inBounds(destR, destC)) {
+          if (enemyCheck(b[midR][midC]) && b[destR][destC] === EMPTY) {
+            captures.push({
+              from: [r, c],
+              to: [destR, destC],
+              jumped: [midR, midC],
+              isCapture: true
+            });
+          }
+        }
+      }
+    } else {
+      // Dama Voadora (Regra Brasileira/Internacional):
+      // Move-se em diagonal por casas livres, pode saltar sobre 1 peça adversária
+      // e pousar em qualquer casa livre após a peça capturada naquela diagonal.
+      for (const [dr, dc] of diagDirs) {
+        let step = 1;
+        let enemyPos = null;
 
-      if (inBounds(destR, destC)) {
-        if (enemyCheck(b[midR][midC]) && b[destR][destC] === EMPTY) {
-          captures.push({
-            from: [r, c],
-            to: [destR, destC],
-            jumped: [midR, midC],
-            isCapture: true
-          });
+        while (true) {
+          const currR = r + dr * step;
+          const currC = c + dc * step;
+          if (!inBounds(currR, currC)) break;
+
+          const currVal = b[currR][currC];
+          if (currVal === EMPTY) {
+            if (enemyPos) {
+              // Já pulou o adversário; qualquer casa vazia subsequente é destino válido de captura!
+              captures.push({
+                from: [r, c],
+                to: [currR, currC],
+                jumped: enemyPos,
+                isCapture: true
+              });
+            }
+          } else if (enemyCheck(currVal)) {
+            if (!enemyPos) {
+              // Primeiro adversário encontrado nesta diagonal
+              enemyPos = [currR, currC];
+            } else {
+              // Dois adversários seguidos na mesma diagonal: não pode pular ambos
+              break;
+            }
+          } else {
+            // Peça da mesma cor bloqueando
+            break;
+          }
+          step++;
         }
       }
     }
@@ -86,23 +129,46 @@
     const piece = b[r][c];
     if (piece === EMPTY) return [];
     const isH = isHumanPiece(piece);
-    const isK = piece === HUMAN_KING || piece === AI_KING;
+    const isK = (piece === HUMAN_KING || piece === AI_KING);
     const moves = [];
 
-    const dirs = isK 
-      ? [[-1, -1], [-1, 1], [1, -1], [1, 1]] 
-      : isH ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]];
+    const diagDirs = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
 
-    for (const [dr, dc] of dirs) {
-      const nr = r + dr;
-      const nc = c + dc;
-      if (inBounds(nr, nc) && b[nr][nc] === EMPTY) {
-        moves.push({
-          from: [r, c],
-          to: [nr, nc],
-          jumped: null,
-          isCapture: false
-        });
+    if (!isK) {
+      // Peão simples anda 1 casa para frente
+      const forwardDirs = isH ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]];
+      for (const [dr, dc] of forwardDirs) {
+        const nr = r + dr;
+        const nc = c + dc;
+        if (inBounds(nr, nc) && b[nr][nc] === EMPTY) {
+          moves.push({
+            from: [r, c],
+            to: [nr, nc],
+            jumped: null,
+            isCapture: false
+          });
+        }
+      }
+    } else {
+      // Dama Voadora: anda ilimitadas casas vazias na diagonal
+      for (const [dr, dc] of diagDirs) {
+        let step = 1;
+        while (true) {
+          const nr = r + dr * step;
+          const nc = c + dc * step;
+          if (!inBounds(nr, nc)) break;
+          if (b[nr][nc] === EMPTY) {
+            moves.push({
+              from: [r, c],
+              to: [nr, nc],
+              jumped: null,
+              isCapture: false
+            });
+          } else {
+            break; // Peça bloqueia caminho
+          }
+          step++;
+        }
       }
     }
 
@@ -128,11 +194,11 @@
       }
     }
 
-    // Regra da captura obrigatória: se houver capturas, apenas capturas são legais
+    // Regra da captura obrigatória: se houver capturas no tabuleiro, APENAS capturas são permitidas!
     return captures.length > 0 ? captures : simples;
   }
 
-  // Aplica movimento no tabuleiro com coroação de Dama
+  // Aplica movimento no tabuleiro com promoção para Dama
   function applyMove(b, m) {
     const nb = cloneBoard(b);
     const piece = nb[m.from[0]][m.from[1]];
@@ -142,7 +208,7 @@
       nb[m.jumped[0]][m.jumped[1]] = EMPTY;
     }
 
-    // Promoção para Dama
+    // Promoção para Dama ao alcançar a última fileira
     if (piece === HUMAN && m.to[0] === 0) {
       nb[m.to[0]][m.to[1]] = HUMAN_KING;
     } else if (piece === AI && m.to[0] === 7) {
@@ -161,21 +227,54 @@
       for (let c = 0; c < 8; c++) {
         const val = b[r][c];
         if (val === EMPTY) continue;
-        if (val === HUMAN) score -= 100 + (7 - r) * 10;
-        else if (val === HUMAN_KING) score -= 280;
-        else if (val === AI) score += 100 + r * 10;
-        else if (val === AI_KING) score += 280;
+        if (val === HUMAN) score -= (100 + (7 - r) * 12);
+        else if (val === HUMAN_KING) score -= 350;
+        else if (val === AI) score += (100 + r * 12);
+        else if (val === AI_KING) score += 350;
       }
     }
     return score;
   }
 
-  // Minimax com Alpha-Beta para Damas
-  function minimaxDamas(b, depth, alpha, beta, isMaximizing) {
-    const moves = getAllMoves(b, !isMaximizing);
+  // Gera todas as sequências completas de turnos (incluindo saltos múltiplos / double jump)
+  function getTurnSequences(b, forHuman) {
+    const initialMoves = getAllMoves(b, forHuman);
+    if (initialMoves.length === 0) return [];
+    if (!initialMoves[0].isCapture) {
+      // Movimentos simples são 1 único lance
+      return initialMoves.map(m => ({ moves: [m], finalBoard: applyMove(b, m) }));
+    }
 
-    if (moves.length === 0) {
-      return { score: isMaximizing ? -10000 : 10000 };
+    // Para capturas, precisamos expandir encadeamentos recursivamente
+    const completeSequences = [];
+
+    function expand(currBoard, history) {
+      const lastMove = history[history.length - 1];
+      const nextCaptures = getCaptures(currBoard, lastMove.to[0], lastMove.to[1]);
+      if (nextCaptures.length === 0) {
+        completeSequences.push({ moves: history, finalBoard: currBoard });
+      } else {
+        for (const nc of nextCaptures) {
+          const nextB = applyMove(currBoard, nc);
+          expand(nextB, [...history, nc]);
+        }
+      }
+    }
+
+    for (const m of initialMoves) {
+      const nextB = applyMove(b, m);
+      expand(nextB, [m]);
+    }
+
+    return completeSequences;
+  }
+
+  // Minimax com sequências completas de turno e Alpha-Beta
+  function minimaxDamas(b, depth, alpha, beta, isMaximizing) {
+    const sequences = getTurnSequences(b, !isMaximizing);
+
+    if (sequences.length === 0) {
+      return { score: isMaximizing ? -100000 : 100000 };
     }
 
     if (depth === 0) {
@@ -184,32 +283,30 @@
 
     if (isMaximizing) {
       let maxScore = -Infinity;
-      let bestMove = moves[0];
-      for (const m of moves) {
-        const nb = applyMove(b, m);
-        const result = minimaxDamas(nb, depth - 1, alpha, beta, false);
+      let bestSeq = sequences[0];
+      for (const seq of sequences) {
+        const result = minimaxDamas(seq.finalBoard, depth - 1, alpha, beta, false);
         if (result.score > maxScore) {
           maxScore = result.score;
-          bestMove = m;
+          bestSeq = seq;
         }
         alpha = Math.max(alpha, maxScore);
         if (beta <= alpha) break;
       }
-      return { score: maxScore, move: bestMove };
+      return { score: maxScore, seq: bestSeq };
     } else {
       let minScore = Infinity;
-      let bestMove = moves[0];
-      for (const m of moves) {
-        const nb = applyMove(b, m);
-        const result = minimaxDamas(nb, depth - 1, alpha, beta, true);
+      let bestSeq = sequences[0];
+      for (const seq of sequences) {
+        const result = minimaxDamas(seq.finalBoard, depth - 1, alpha, beta, true);
         if (result.score < minScore) {
           minScore = result.score;
-          bestMove = m;
+          bestSeq = seq;
         }
         beta = Math.min(beta, minScore);
         if (beta <= alpha) break;
       }
-      return { score: minScore, move: bestMove };
+      return { score: minScore, seq: bestSeq };
     }
   }
 
@@ -221,6 +318,7 @@
     validMovesForSelected = [];
     isGameOver = false;
     isAiTurn = false;
+    activeMultiCapture = null;
 
     containerEl.innerHTML = `
       <div class="damas-overlay-game">
@@ -229,7 +327,7 @@
             <span class="damas-icon">⚪</span>
             <div>
               <strong>JOGO DE DAMAS · EconData Analytics</strong>
-              <small>Captura Obrigatória • Peão Coroado vira Dama • Você é o Branco</small>
+              <small>Dama Voadora • Salto Duplo/Múltiplo • Captura Obrigatória</small>
             </div>
           </div>
           <div class="damas-stats">
@@ -272,6 +370,7 @@
     validMovesForSelected = [];
     isGameOver = false;
     isAiTurn = false;
+    activeMultiCapture = null;
     const statusEl = document.getElementById('damasStatus');
     if (statusEl) {
       statusEl.textContent = 'Nova partida iniciada! Sua vez (Peças Brancas).';
@@ -323,32 +422,36 @@
   function handleSquareClick(r, c) {
     if (isGameOver || isAiTurn) return;
 
+    // Se estiver no meio de um double jump, o jogador é forçado a continuar com a mesma peça
+    if (activeMultiCapture) {
+      const matchMove = validMovesForSelected.find(m => m.to[0] === r && m.to[1] === c);
+      if (matchMove) {
+        board = applyMove(board, matchMove);
+        checkChainCaptureOrPassTurn(matchMove.to[0], matchMove.to[1]);
+      }
+      return;
+    }
+
     if (selectedSquare) {
       const matchMove = validMovesForSelected.find(m => m.to[0] === r && m.to[1] === c);
       if (matchMove) {
         board = applyMove(board, matchMove);
-        selectedSquare = null;
-        validMovesForSelected = [];
 
-        // Checar se o jogo acabou
-        const aiMoves = getAllMoves(board, false);
-        if (aiMoves.length === 0) {
-          renderBoard();
-          endGame('HUMAN');
+        if (matchMove.isCapture) {
+          // Checar se há salto múltiplo adicional disponível
+          checkChainCaptureOrPassTurn(matchMove.to[0], matchMove.to[1]);
           return;
         }
 
-        renderBoard();
-
-        isAiTurn = true;
-        const statusEl = document.getElementById('damasStatus');
-        if (statusEl) statusEl.textContent = 'IA EconData calculando melhor lance...';
-
-        setTimeout(makeAiMove, 350);
+        // Movimento simples concluído -> passar turno para IA
+        selectedSquare = null;
+        validMovesForSelected = [];
+        finishHumanTurn();
         return;
       }
     }
 
+    // Selecionar nova peça
     const val = board[r][c];
     if (val !== EMPTY && isHumanPiece(val)) {
       const allHumanMoves = getAllMoves(board, true);
@@ -362,7 +465,7 @@
         const hasCaptures = allHumanMoves.some(m => m.isCapture);
         const statusEl = document.getElementById('damasStatus');
         if (statusEl && hasCaptures) {
-          statusEl.textContent = '⚠️ Captura obrigatória! Selecione a peça que pode capturar.';
+          statusEl.textContent = '⚠️ Captura obrigatória! Selecione uma peça que pode capturar.';
           statusEl.style.color = '#F59E0B';
         }
       }
@@ -373,36 +476,101 @@
     }
   }
 
-  function makeAiMove() {
+  // Verifica se há novas capturas em cadeia (Double Jump / Salto Múltiplo)
+  function checkChainCaptureOrPassTurn(destR, destC) {
+    const furtherCaptures = getCaptures(board, destR, destC);
+
+    if (furtherCaptures.length > 0) {
+      // O jogador DEVE continuar capturando nesta mesma jogada!
+      activeMultiCapture = [destR, destC];
+      selectedSquare = [destR, destC];
+      validMovesForSelected = furtherCaptures;
+      renderBoard();
+
+      const statusEl = document.getElementById('damasStatus');
+      if (statusEl) {
+        statusEl.textContent = '🔥 Salto duplo/múltiplo disponível! Continue capturando com a mesma peça.';
+        statusEl.style.color = '#10B981';
+      }
+    } else {
+      // Capturas finalizadas
+      activeMultiCapture = null;
+      selectedSquare = null;
+      validMovesForSelected = [];
+      finishHumanTurn();
+    }
+  }
+
+  function finishHumanTurn() {
+    renderBoard();
+
+    // Checar se IA ainda tem jogadas
+    const aiMoves = getAllMoves(board, false);
+    if (aiMoves.length === 0) {
+      endGame('HUMAN');
+      return;
+    }
+
+    isAiTurn = true;
+    const statusEl = document.getElementById('damasStatus');
+    if (statusEl) {
+      statusEl.textContent = 'IA EconData calculando melhor sequência...';
+      statusEl.style.color = '';
+    }
+
+    setTimeout(makeAiMoveSequence, 400);
+  }
+
+  function makeAiMoveSequence() {
     if (isGameOver) return;
 
     const result = minimaxDamas(board, 3, -Infinity, Infinity, true);
 
-    if (result && result.move) {
-      board = applyMove(board, result.move);
+    if (result && result.seq && result.seq.moves && result.seq.moves.length > 0) {
+      const moves = result.seq.moves;
+      let stepIndex = 0;
 
-      const humanMoves = getAllMoves(board, true);
-      if (humanMoves.length === 0) {
-        renderBoard();
-        endGame('AI');
-        return;
+      function executeStep() {
+        if (stepIndex < moves.length) {
+          board = applyMove(board, moves[stepIndex]);
+          renderBoard();
+          stepIndex++;
+          if (stepIndex < moves.length) {
+            // Pequeno delay visual para mostrar cada pulo do salto múltiplo da IA
+            setTimeout(executeStep, 350);
+          } else {
+            // Fim do turno da IA
+            checkAfterAiTurn();
+          }
+        }
       }
 
-      renderBoard();
-      isAiTurn = false;
-      const statusEl = document.getElementById('damasStatus');
-      if (statusEl) {
-        statusEl.textContent = 'Sua vez de jogar (Peças Brancas).';
-        statusEl.style.color = '';
-      }
+      executeStep();
     } else {
       endGame('HUMAN');
+    }
+  }
+
+  function checkAfterAiTurn() {
+    const humanMoves = getAllMoves(board, true);
+    if (humanMoves.length === 0) {
+      renderBoard();
+      endGame('AI');
+      return;
+    }
+
+    isAiTurn = false;
+    const statusEl = document.getElementById('damasStatus');
+    if (statusEl) {
+      statusEl.textContent = 'Sua vez de jogar (Peças Brancas).';
+      statusEl.style.color = '';
     }
   }
 
   function endGame(winner) {
     isGameOver = true;
     isAiTurn = false;
+    activeMultiCapture = null;
     const statusEl = document.getElementById('damasStatus');
 
     if (winner === 'HUMAN') {
