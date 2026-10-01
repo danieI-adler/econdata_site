@@ -185,9 +185,11 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
         let generatedRCode = '';
 
         if (apiKey.startsWith('AIzaSy') || apiKey.startsWith('AQ.')) {
-          // Chamada para Google Gemini API (Tentativa primária com gemini-2.5-flash / gemini-1.5-flash)
+          // Chamada para Google Gemini API (Tentativa com Gemini 3.8 Flash, 3.7 Flash e fallbacks)
           let response;
           const candidateModels = [
+            'gemini-3.8-flash',
+            'gemini-3.7-flash',
             'gemini-2.5-flash',
             'gemini-1.5-flash',
             'gemini-1.5-pro'
