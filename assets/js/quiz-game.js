@@ -234,20 +234,13 @@
   let currentQuestionsList = [];
   let userSelectedOption = null;
 
-  // Carrega Leaderboard do LocalStorage
+  // Carrega Leaderboard do LocalStorage (Apenas pontuações reais registradas por usuários)
   function getLeaderboard() {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       if (data) return JSON.parse(data);
     } catch(e) {}
-    // Placar padrão institucional EconData
-    return [
-      { name: "Satoshi_N", score: 3850, level: "Mestre (5)", date: "2026-09-28" },
-      { name: "Ada_Lovelace", score: 3200, level: "Sênior (4)", date: "2026-09-30" },
-      { name: "DanieI_Adler", score: 2750, level: "Sênior (4)", date: "2026-10-01" },
-      { name: "Alan_Turing", score: 2400, level: "Pleno (3)", date: "2026-09-29" },
-      { name: "Econ_Dev_PUC", score: 1800, level: "Júnior (2)", date: "2026-10-01" }
-    ];
+    return [];
   }
 
   function saveScore(name, score, level) {
@@ -280,35 +273,43 @@
             <span class="quiz-icon">🏆</span>
             <div>
               <strong>HALL DA FAMA · LEADERBOARD ECONDATA</strong>
-              <small>Top Pontuações do Quiz de Programação & Econometria</small>
+              <small>Top Pontuações Reais do Quiz de Programação</small>
             </div>
           </div>
           <button class="chess-btn-icon" onclick="window.closeQuizGame()" title="Fechar">✕</button>
         </div>
 
         <div class="quiz-leaderboard-table-wrap">
-          <table class="quiz-lb-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Desenvolvedor</th>
-                <th>Nível</th>
-                <th>Pontos</th>
-                <th>Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${lb.map((item, idx) => `
-                <tr class="${idx === 0 ? 'top-1' : idx === 1 ? 'top-2' : idx === 2 ? 'top-3' : ''}">
-                  <td class="lb-rank">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : idx + 1}</td>
-                  <td class="lb-name"><strong>${item.name}</strong></td>
-                  <td class="lb-level"><span class="quiz-tag-pill">${item.level}</span></td>
-                  <td class="lb-score tabular-num">${item.score} pts</td>
-                  <td class="lb-date">${item.date}</td>
+          ${lb.length === 0 ? `
+            <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+              <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">📜</div>
+              <strong style="color: var(--text-main); font-size: 0.95rem;">Nenhuma pontuação registrada ainda</strong>
+              <p style="font-size: 0.8rem; margin-top: 0.35rem;">Seja o primeiro a jogar o Quiz e gravar seu nome na Leaderboard!</p>
+            </div>
+          ` : `
+            <table class="quiz-lb-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Desenvolvedor</th>
+                  <th>Nível</th>
+                  <th>Pontos</th>
+                  <th>Data</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                ${lb.map((item, idx) => `
+                  <tr class="${idx === 0 ? 'top-1' : idx === 1 ? 'top-2' : idx === 2 ? 'top-3' : ''}">
+                    <td class="lb-rank">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : idx + 1}</td>
+                    <td class="lb-name"><strong>${item.name}</strong></td>
+                    <td class="lb-level"><span class="quiz-tag-pill">${item.level}</span></td>
+                    <td class="lb-score tabular-num">${item.score} pts</td>
+                    <td class="lb-date">${item.date}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `}
         </div>
 
         <div class="quiz-actions" style="margin-top: 1rem;">
