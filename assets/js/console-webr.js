@@ -115,11 +115,11 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
       const key = getSavedApiKey();
       if (label) {
         if (key) {
-          label.textContent = 'Chave Conectada ✓';
+          label.textContent = 'Chave Própria ✓';
           label.style.color = '#10B981';
         } else {
-          label.textContent = 'Chave de API';
-          label.style.color = '';
+          label.textContent = 'IA EconData (Ativa)';
+          label.style.color = '#38BDF8';
         }
       }
     }
@@ -158,7 +158,10 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
       alert('Chave removida do armazenamento local.');
     };
 
-    // Geração de Código R via IA (Google Gemini API ou Groq / OpenAI compatível)
+    // Endpoint oficial do Cloudflare Worker (Proxy Seguro EconData com Gemini 3.8 Flash)
+    const ECONDATA_WORKER_URL = 'https://quantosladostemumdado12lados12.econdataanalytics.workers.dev/';
+
+    // Geração de Código R via IA (Cloudflare Worker Oficial do EconData ou chave local customizada)
     window.generateCodeWithAI = async function() {
       const promptInput = document.getElementById('ai-prompt-input');
       const userPrompt = promptInput ? promptInput.value.trim() : '';
@@ -168,24 +171,42 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
         return;
       }
 
-      const apiKey = getSavedApiKey();
-      if (!apiKey) {
-        openApiKeyModal();
-        return;
-      }
-
+      const customApiKey = getSavedApiKey();
       const btn = document.getElementById('btn-generate-ai');
       const originalText = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Gerando código...`;
 
-      terminalOutput.textContent = `[Assistente IA]: Conectando com a API para criar código R para: "${userPrompt}"...\n`;
+      terminalOutput.textContent = `[Assistente IA EconData]: Conectando para criar código R para: "${userPrompt}"...\n`;
 
       try {
         let generatedRCode = '';
 
-        if (apiKey.startsWith('AIzaSy') || apiKey.startsWith('AQ.')) {
-          // Chamada para Google Gemini API (Tentativa com Gemini 3.8 Flash, 3.7 Flash e fallbacks)
+        // Se o usuário NÃO configurou uma chave manual própria, usa diretamente o Cloudflare Worker oficial do EconData!
+        if (!customApiKey) {
+          try {
+            const workerResponse = await fetch(ECONDATA_WORKER_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: userPrompt })
+            });
+
+            if (!workerResponse.ok) {
+              const errJson = await workerResponse.json().catch(() => ({}));
+              throw new Error(errJson.error || `HTTP ${workerResponse.status} do servidor EconData Worker.`);
+            }
+
+            const workerData = await workerResponse.json();
+            generatedRCode = workerData.code || '';
+          } catch (workerErr) {
+            console.warn('Erro ao conectar com Cloudflare Worker oficial:', workerErr);
+            // Se o worker falhar ou não estiver configurado ainda, orienta a usar chave manual
+            terminalOutput.textContent += `\n[Aviso]: Não foi possível conectar ao servidor oficial (${workerErr.message}).\nVocê pode configurar uma chave própria no botão "Chave de API".\n`;
+            openApiKeyModal();
+            throw workerErr;
+          }
+        } else if (customApiKey.startsWith('AIzaSy') || customApiKey.startsWith('AQ.')) {
+          // Chamada direta com a chave manual do usuário no Google Gemini API
           let response;
           const candidateModels = [
             'gemini-3.8-flash',
@@ -198,7 +219,7 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
           let lastErr = null;
           for (const model of candidateModels) {
             try {
-              response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+              response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -248,17 +269,17 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
           const data = await response.json();
           generatedRCode = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
         } else {
-          // Chamada genérica estilo OpenAI / Groq (para chaves gsk_ ou sk_)
-          const endpoint = apiKey.startsWith('gsk_') 
+          // Chamada genérica estilo OpenAI / Groq (para chaves customizadas gsk_ ou sk_)
+          const endpoint = customApiKey.startsWith('gsk_') 
             ? 'https://api.groq.com/openai/v1/chat/completions'
             : 'https://api.openai.com/v1/chat/completions';
-          const modelName = apiKey.startsWith('gsk_') ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+          const modelName = customApiKey.startsWith('gsk_') ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
 
           const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${apiKey}`
+              'Authorization': `Bearer ${customApiKey}`
             },
             body: JSON.stringify({
               model: modelName,
