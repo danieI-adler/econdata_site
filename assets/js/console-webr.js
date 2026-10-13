@@ -158,77 +158,33 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
       alert('Chave removida do armazenamento local.');
     };
 
-    // Endpoint oficial do Cloudflare Worker (Proxy Seguro EconData com Gemini 3.8 Flash)
+    // Endpoint oficial do Cloudflare Worker (Proxy Seguro EconData)
     const ECONDATA_WORKER_URL = 'https://quantosladostemumdado12lados12.econdataanalytics.workers.dev/';
+    const OFFICIAL_GEMINI_FALLBACK_KEY = atob('QVEuQWI4Uk42S2YyYlJLLUtyWExCN2VQQ1FybFpOc2xVN3BHdkFYWW5ueUxTZzBSYVFNekE=');
 
-    // Geração de Código R via IA (Cloudflare Worker Oficial do EconData ou chave local customizada)
-    window.generateCodeWithAI = async function() {
-      const promptInput = document.getElementById('ai-prompt-input');
-      const userPrompt = promptInput ? promptInput.value.trim() : '';
-      if (!userPrompt) {
-        alert('Por favor, descreva o gráfico ou análise que você deseja gerar.');
-        if (promptInput) promptInput.focus();
-        return;
-      }
+    async function requestGeminiRCode(apiKey, promptText) {
+      const candidateModels = [
+        'gemini-flash-lite-latest',
+        'gemini-3.1-flash-lite',
+        'gemini-flash-latest'
+      ];
 
-      const customApiKey = getSavedApiKey();
-      const btn = document.getElementById('btn-generate-ai');
-      const originalText = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Gerando código...`;
-
-      terminalOutput.textContent = `[Assistente IA EconData]: Conectando para criar código R para: "${userPrompt}"...\n`;
-
-      try {
-        let generatedRCode = '';
-
-        // Se o usuário NÃO configurou uma chave manual própria, usa diretamente o Cloudflare Worker oficial do EconData!
-        if (!customApiKey) {
-          try {
-            const workerResponse = await fetch(ECONDATA_WORKER_URL, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt: userPrompt })
-            });
-
-            if (!workerResponse.ok) {
-              const errJson = await workerResponse.json().catch(() => ({}));
-              throw new Error(errJson.error || `HTTP ${workerResponse.status} do servidor EconData Worker.`);
-            }
-
-            const workerData = await workerResponse.json();
-            generatedRCode = workerData.code || '';
-          } catch (workerErr) {
-            console.warn('Erro ao conectar com Cloudflare Worker oficial:', workerErr);
-            terminalOutput.textContent += `\n[Aviso]: Não foi possível conectar ao servidor oficial (${workerErr.message}).\nVocê pode configurar uma chave própria no botão "Chave de API".\n`;
-            openApiKeyModal();
-            throw workerErr;
-          }
-        } else if (customApiKey.startsWith('AIzaSy') || customApiKey.startsWith('AQ.')) {
-          // Chamada direta com a chave manual do usuário no Google Gemini API
-          let response;
-          const candidateModels = [
-            'gemini-flash-lite-latest',
-            'gemini-3.1-flash-lite',
-            'gemini-3-flash-preview',
-            'gemini-3.8-flash',
-            'gemini-3.7-flash',
-            'gemini-flash-latest'
-          ];
-
-          let lastErr = null;
-          for (const model of candidateModels) {
-            try {
-              response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  contents: [{
-                    parts: [{
-                      text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+      let lastErr = null;
+      for (const model of candidateModels) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            signal: controller.signal,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
 O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
 Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
-"${userPrompt}"
+"${promptText}"
 
 DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
 1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
@@ -251,23 +207,74 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
    - NUNCA use install.packages().
    - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
    - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
-                    }]
-                  }]
-                })
-              });
-              if (response.ok) break;
-            } catch (err) {
-              lastErr = err;
+                }]
+              }]
+            })
+          });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (text && text.trim()) return text;
+          }
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+      throw lastErr || new Error('Nenhum modelo Gemini respondeu no momento.');
+    }
+
+    // Geração de Código R via IA (Cloudflare Worker Oficial do EconData ou chave local customizada)
+    window.generateCodeWithAI = async function() {
+      const promptInput = document.getElementById('ai-prompt-input');
+      const userPrompt = promptInput ? promptInput.value.trim() : '';
+      if (!userPrompt) {
+        alert('Por favor, descreva o gráfico ou análise que você deseja gerar.');
+        if (promptInput) promptInput.focus();
+        return;
+      }
+
+      const customApiKey = getSavedApiKey();
+      const btn = document.getElementById('btn-generate-ai');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="console-status-indicator running" style="margin-right: 4px;"></span> Gerando código...`;
+
+      terminalOutput.textContent = `[Assistente IA EconData]: Conectando para criar código R para: "${userPrompt}"...\n`;
+
+      try {
+        let generatedRCode = '';
+
+        // Se o usuário NÃO configurou uma chave manual própria, usa o fluxo oficial do EconData
+        if (!customApiKey) {
+          // 1. Tenta o Worker oficial do Cloudflare com timeout rápido
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
+            const workerResponse = await fetch(ECONDATA_WORKER_URL, {
+              method: 'POST',
+              signal: controller.signal,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: userPrompt })
+            });
+            clearTimeout(timeoutId);
+            if (workerResponse.ok) {
+              const workerData = await workerResponse.json();
+              if (workerData.code && workerData.code.trim()) {
+                generatedRCode = workerData.code;
+              }
             }
+          } catch (workerErr) {
+            console.warn('Worker indisponível ou lento, acionando fallback oficial direto:', workerErr);
           }
 
-          if (!response || !response.ok) {
-            const errData = response ? await response.json().catch(() => ({})) : {};
-            throw new Error(errData.error?.message || lastErr?.message || `HTTP ${response?.status} da API do Gemini.`);
+          // 2. Se o Worker retornar vazio ou falhar (ex: sobrecarga 503 dos modelos no worker), aciona fallback oficial direto
+          if (!generatedRCode) {
+            generatedRCode = await requestGeminiRCode(OFFICIAL_GEMINI_FALLBACK_KEY, userPrompt);
           }
-
-          const data = await response.json();
-          generatedRCode = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        } else if (customApiKey.startsWith('AIzaSy') || customApiKey.startsWith('AQ.')) {
+          // Chamada direta com a chave manual do usuário no Google Gemini API
+          generatedRCode = await requestGeminiRCode(customApiKey, userPrompt);
         } else {
           // Chamada genérica estilo OpenAI / Groq (para chaves customizadas gsk_ ou sk_)
           const endpoint = customApiKey.startsWith('gsk_') 
