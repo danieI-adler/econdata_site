@@ -534,6 +534,35 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
       terminalOutput.textContent = 'Executando script R...\n';
 
       try {
+        // Pré-carregamento de dados externos (SGS Banco Central e URLs HTTP/HTTPS) no sistema de arquivos virtual do WebR:
+        // O WebR executa em Emscripten WebAssembly onde chamadas read.csv('http...') utilizam XMLHttpRequest síncrono.
+        // Se o servidor remoto falhar no preflight ou tiver instabilidade temporária de cabeçalho CORS no XHR, o navegador bloqueia.
+        // Fazendo o download assíncrono via fetch nativo do JS e escrevendo diretamente no FS virtual (/tmp/arquivo.csv),
+        // o WebR lê o arquivo localmente com 100% de confiabilidade, sem depender de conexões síncronas bloqueantes!
+        const urlMatches = Array.from(code.matchAll(/["'](https?:\/\/[^"']+)["']/g));
+        if (urlMatches.length > 0) {
+          for (let i = 0; i < urlMatches.length; i++) {
+            const fullUrl = urlMatches[i][1];
+            if (fullUrl.includes('api.bcb.gov.br') || fullUrl.endsWith('.csv') || fullUrl.includes('formato=csv')) {
+              try {
+                terminalOutput.textContent = `[EconData]: Baixando dados oficiais (${i + 1}/${urlMatches.length})...\n`;
+                const fetchRes = await fetch(fullUrl, { cache: 'no-cache' });
+                if (fetchRes.ok) {
+                  const csvText = await fetchRes.text();
+                  const filename = `bcb_data_${Date.now()}_${i}.csv`;
+                  const virtualPath = `/tmp/${filename}`;
+                  await webRInstance.FS.writeFile(virtualPath, csvText);
+                  // Substitui a URL no código R pelo caminho virtual local
+                  code = code.replaceAll(fullUrl, virtualPath);
+                }
+              } catch (fetchErr) {
+                console.warn('Tentativa de pré-carregamento direto falhou, mantendo URL original:', fetchErr);
+              }
+            }
+          }
+          terminalOutput.textContent = 'Executando script R...\n';
+        }
+
         const shelter = await new webRInstance.Shelter();
         const capture = await shelter.captureR(code, {
           captureGraphics: { width: 580, height: 380 }
