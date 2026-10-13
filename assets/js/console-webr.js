@@ -164,6 +164,8 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
     async function requestGeminiRCode(apiKey, promptText) {
       const candidateModels = [
+        'gemini-3.6-flash',
+        'gemini-3.5-flash',
         'gemini-flash-lite-latest',
         'gemini-3.1-flash-lite',
         'gemini-flash-latest'
@@ -171,9 +173,10 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
       let lastErr = null;
       for (const model of candidateModels) {
+        let timeoutId = null;
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          timeoutId = setTimeout(() => controller.abort(), 20000);
           const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
             method: 'POST',
             signal: controller.signal,
@@ -211,13 +214,14 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
               }]
             })
           });
-          clearTimeout(timeoutId);
+          if (timeoutId) clearTimeout(timeoutId);
           if (response.ok) {
             const data = await response.json();
             const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
             if (text && text.trim()) return text;
           }
         } catch (err) {
+          if (timeoutId) clearTimeout(timeoutId);
           lastErr = err;
         }
       }
