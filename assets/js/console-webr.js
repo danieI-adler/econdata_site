@@ -200,7 +200,6 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
             generatedRCode = workerData.code || '';
           } catch (workerErr) {
             console.warn('Erro ao conectar com Cloudflare Worker oficial:', workerErr);
-            // Se o worker falhar ou não estiver configurado ainda, orienta a usar chave manual
             terminalOutput.textContent += `\n[Aviso]: Não foi possível conectar ao servidor oficial (${workerErr.message}).\nVocê pode configurar uma chave própria no botão "Chave de API".\n`;
             openApiKeyModal();
             throw workerErr;
@@ -209,11 +208,12 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
           // Chamada direta com a chave manual do usuário no Google Gemini API
           let response;
           const candidateModels = [
+            'gemini-flash-lite-latest',
+            'gemini-3.1-flash-lite',
+            'gemini-3-flash-preview',
             'gemini-3.8-flash',
             'gemini-3.7-flash',
-            'gemini-2.5-flash',
-            'gemini-1.5-flash',
-            'gemini-1.5-pro'
+            'gemini-flash-latest'
           ];
 
           let lastErr = null;
