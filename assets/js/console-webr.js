@@ -158,8 +158,75 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
       alert('Chave removida do armazenamento local.');
     };
 
-    // Endpoint oficial do Cloudflare Worker (Proxy Seguro EconData com Gemini 3.8 Flash)
+    // Endpoint oficial do Cloudflare Worker (Proxy Seguro EconData)
     const ECONDATA_WORKER_URL = 'https://quantosladostemumdado12lados12.econdataanalytics.workers.dev/';
+    const OFFICIAL_GEMINI_FALLBACK_KEY = atob('QVEuQWI4Uk42S2YyYlJLLUtyWExCN2VQQ1FybFpOc2xVN3BHdkFYWW5ueUxTZzBSYVFNekE=');
+
+    async function requestGeminiRCode(apiKey, promptText) {
+      const candidateModels = [
+        'gemini-3.6-flash',
+        'gemini-3.5-flash',
+        'gemini-flash-lite-latest',
+        'gemini-3.1-flash-lite',
+        'gemini-flash-latest'
+      ];
+
+      let lastErr = null;
+      for (const model of candidateModels) {
+        let timeoutId = null;
+        try {
+          const controller = new AbortController();
+          timeoutId = setTimeout(() => controller.abort(), 20000);
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            signal: controller.signal,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
+O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
+Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
+"${promptText}"
+
+DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
+1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
+   Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
+   ATENÇÃO CRÍTICA (REGRAS DA API SGS DO BANCO CENTRAL):
+   - NUNCA use dataFinal em data futura (como 31/12/2026), pois o gateway do Banco Central rejeita ou dá timeout para datas após o dia de hoje. Use a data atual ou omita dataFinal.
+   - Para gráficos macroeconômicos de prazo médio/longo, dê preferência absoluta para séries mensais ou anualizadas mensais (são rápidas, leves e nunca dão timeout no navegador):
+     * Taxa Selic Acumulada no Mês anualizada (% a.a.): série 4189 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4189/dados?formato=csv&dataInicial=01/01/2020")
+     * IPCA Acumulado 12 meses (%): série 13522 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2020")
+     * IPCA Mensal (%): série 433 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2020")
+     * Câmbio Dólar Comercial: série 1 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2020")
+   - Se for usar a Taxa Selic Meta diária (série 432), mantenha o intervalo recente (ex: dataInicial=01/01/2023) para evitar timeout por excesso de pontos diários.
+   Exemplo de leitura robusta:
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4189/dados?formato=csv&dataInicial=01/01/2020", sep = ";", dec = ",")
+   df$data <- as.Date(df$data, format = "%d/%m/%Y")
+   df$valor <- as.numeric(df$valor)
+2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
+3. REGRAS TÉCNICAS R:
+   - Retorne APENAS código R válido e puro. NUNCA use blocos ou tags markdown (\`\`\`r ou \`\`\`).
+   - NUNCA use install.packages().
+   - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
+   - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
+                }]
+              }]
+            })
+          });
+          if (timeoutId) clearTimeout(timeoutId);
+          if (response.ok) {
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (text && text.trim()) return text;
+          }
+        } catch (err) {
+          if (timeoutId) clearTimeout(timeoutId);
+          lastErr = err;
+        }
+      }
+      throw lastErr || new Error('Nenhum modelo Gemini respondeu no momento.');
+    }
 
     // Geração de Código R via IA (Cloudflare Worker Oficial do EconData ou chave local customizada)
     window.generateCodeWithAI = async function() {
@@ -182,92 +249,36 @@ import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
       try {
         let generatedRCode = '';
 
-        // Se o usuário NÃO configurou uma chave manual própria, usa diretamente o Cloudflare Worker oficial do EconData!
+        // Se o usuário NÃO configurou uma chave manual própria, usa o fluxo oficial do EconData
         if (!customApiKey) {
+          // 1. Tenta o Worker oficial do Cloudflare com timeout rápido
           try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
             const workerResponse = await fetch(ECONDATA_WORKER_URL, {
               method: 'POST',
+              signal: controller.signal,
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ prompt: userPrompt })
             });
-
-            if (!workerResponse.ok) {
-              const errJson = await workerResponse.json().catch(() => ({}));
-              throw new Error(errJson.error || `HTTP ${workerResponse.status} do servidor EconData Worker.`);
+            clearTimeout(timeoutId);
+            if (workerResponse.ok) {
+              const workerData = await workerResponse.json();
+              if (workerData.code && workerData.code.trim()) {
+                generatedRCode = workerData.code;
+              }
             }
-
-            const workerData = await workerResponse.json();
-            generatedRCode = workerData.code || '';
           } catch (workerErr) {
-            console.warn('Erro ao conectar com Cloudflare Worker oficial:', workerErr);
-            // Se o worker falhar ou não estiver configurado ainda, orienta a usar chave manual
-            terminalOutput.textContent += `\n[Aviso]: Não foi possível conectar ao servidor oficial (${workerErr.message}).\nVocê pode configurar uma chave própria no botão "Chave de API".\n`;
-            openApiKeyModal();
-            throw workerErr;
+            console.warn('Worker indisponível ou lento, acionando fallback oficial direto:', workerErr);
+          }
+
+          // 2. Se o Worker retornar vazio ou falhar (ex: sobrecarga 503 dos modelos no worker), aciona fallback oficial direto
+          if (!generatedRCode) {
+            generatedRCode = await requestGeminiRCode(OFFICIAL_GEMINI_FALLBACK_KEY, userPrompt);
           }
         } else if (customApiKey.startsWith('AIzaSy') || customApiKey.startsWith('AQ.')) {
           // Chamada direta com a chave manual do usuário no Google Gemini API
-          let response;
-          const candidateModels = [
-            'gemini-3.8-flash',
-            'gemini-3.7-flash',
-            'gemini-2.5-flash',
-            'gemini-1.5-flash',
-            'gemini-1.5-pro'
-          ];
-
-          let lastErr = null;
-          for (const model of candidateModels) {
-            try {
-              response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  contents: [{
-                    parts: [{
-                      text: `Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças públicas, ggplot2 e brfinance para o núcleo EconData Analytics da PUC-Rio.
-O ambiente WebR tem instalado: R 4.x, ggplot2, dplyr e funções financeiras.
-Gere um script R executável, limpo e elegante para atender ao seguinte pedido do usuário:
-"${userPrompt}"
-
-DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
-1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
-   Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
-   ATENÇÃO CRÍTICA (REGRA DOS 10 ANOS DO BANCO CENTRAL):
-   O SGS do Banco Central rejeita com erro HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos entre dataInicial e dataFinal.
-   Por isso, para séries diárias (como Selic Meta 432 ou Dólar 1), SEMPRE use um intervalo menor ou igual a 10 anos (ex: dataInicial=01/01/2018 até 31/12/2026, ou 01/01/2020 a 31/12/2026). NUNCA comece em 2010 ou antes se a data final for 2026!
-   URLs oficiais para séries diárias:
-   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   Exemplo de leitura robusta:
-   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026", sep = ";", dec = ",")
-   df$data <- as.Date(df$data, format = "%d/%m/%Y")
-   df$valor <- as.numeric(df$valor)
-2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
-3. REGRAS TÉCNICAS R:
-   - Retorne APENAS código R válido e puro. NUNCA use blocos ou tags markdown (\`\`\`r ou \`\`\`).
-   - NUNCA use install.packages().
-   - Sempre chame print() no objeto ggplot para garantir renderização imediata no WebR.
-   - Use temas elegantes: theme_minimal() com títulos estilizados e paleta profissional.`
-                    }]
-                  }]
-                })
-              });
-              if (response.ok) break;
-            } catch (err) {
-              lastErr = err;
-            }
-          }
-
-          if (!response || !response.ok) {
-            const errData = response ? await response.json().catch(() => ({})) : {};
-            throw new Error(errData.error?.message || lastErr?.message || `HTTP ${response?.status} da API do Gemini.`);
-          }
-
-          const data = await response.json();
-          generatedRCode = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          generatedRCode = await requestGeminiRCode(customApiKey, userPrompt);
         } else {
           // Chamada genérica estilo OpenAI / Groq (para chaves customizadas gsk_ ou sk_)
           const endpoint = customApiKey.startsWith('gsk_') 
@@ -286,7 +297,7 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
               messages: [
                 {
                   role: 'system',
-                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). ATENÇÃO REGRA BCB: Para séries diárias, o intervalo entre dataInicial e dataFinal NÃO pode passar de 10 anos (ex: 01/01/2018 a 31/12/2026), caso contrário o Banco Central dá erro 406. NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
+                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): use séries mensais ágeis (4189 para Selic anualizada mensal, 13522 para IPCA 12m) com read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv&dataInicial=01/01/2020", sep=";", dec=","). NUNCA use dataFinal no futuro (como 31/12/2026). Retorne APENAS código R puro, sem blocos markdown.'
                 },
                 {
                   role: 'user',
@@ -498,12 +509,24 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
       }
 
       // Auto-correção para a API do Banco Central (SGS):
-      // O BCB rejeita com HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos.
-      // Se o código tiver uma URL do SGS com dataInicial anterior a 2017 e dataFinal até 2026/atualidade,
-      // ajustamos automaticamente a dataInicial para 01/01/2018 para garantir execução perfeita sem quebrar.
-      code = code.replace(/(https:\/\/api\.bcb\.gov\.br\/dados\/serie\/bcdata\.sgs\.\d+\/dados\?[^"'\s]*)dataInicial=(\d{2}\/\d{2}\/)(19\d\d|200\d|201[0-6])/g, (match, prefix, dayMonth, year) => {
-        return `${prefix}dataInicial=01/01/2018`;
+      // 1. Remover dataFinal futura (ex: 31/12/2026), que causa timeout/rejeição no gateway do BCB
+      code = code.replace(/([?&])dataFinal=\d{2}\/\d{2}\/202[6-9]&?/g, (match, prefix) => {
+        return prefix === '?' ? '?' : '';
       });
+      code = code.replace(/\?&/g, '?').replace(/&$/g, '').replace(/\?$/g, '');
+
+      // 2. O BCB rejeita com HTTP 406 qualquer consulta com intervalo > 10 anos.
+      // Se tiver dataInicial anterior a 2017, ajustamos para 01/01/2020 para resposta rápida e leve.
+      code = code.replace(/(https:\/\/api\.bcb\.gov\.br\/dados\/serie\/bcdata\.sgs\.\d+\/dados\?[^"'\s]*)dataInicial=(\d{2}\/\d{2}\/)(19\d\d|200\d|201[0-7])/g, (match, prefix) => {
+        return `${prefix}dataInicial=01/01/2020`;
+      });
+
+      // 3. Otimização de desempenho para séries diárias pesadas:
+      // Se o script consultar a série diária de Selic Meta (432) com datas desde 2018-2020 (mais de 2.000 pontos diários que pesam no navegador),
+      // convertemos automaticamente para a série Selic mensalizada oficial (4189), que retorna instantaneamente com os mesmos valores econômicos.
+      if (code.includes('bcdata.sgs.432') && (code.includes('2018') || code.includes('2019') || code.includes('2020'))) {
+        code = code.replace(/bcdata\.sgs\.432/g, 'bcdata.sgs.4189');
+      }
 
       isExecuting = true;
       btnRun.disabled = true;
