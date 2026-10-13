@@ -189,16 +189,16 @@ Gere um script R executável, limpo e elegante para atender ao seguinte pedido d
 DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
 1. DADOS REAIS E OFICIAIS DO BRASIL: Sempre que o usuário solicitar séries reais, históricas ou dados verdadeiros da economia brasileira (como Taxa Selic, IPCA, Câmbio Dólar, etc.), NUNCA invente ou simule dados com seq() ou rnorm().
    Consuma diretamente os dados oficiais do SGS do Banco Central do Brasil em formato CSV com read.csv().
-   ATENÇÃO CRÍTICA (REGRA DOS 10 ANOS DO BANCO CENTRAL):
-   O SGS do Banco Central rejeita com erro HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos entre dataInicial e dataFinal.
-   Por isso, para séries diárias (como Selic Meta 432 ou Dólar 1), SEMPRE use um intervalo menor ou igual a 10 anos (ex: dataInicial=01/01/2018 até 31/12/2026, ou 01/01/2020 a 31/12/2026). NUNCA comece em 2010 ou antes se a data final for 2026!
-   URLs oficiais para séries diárias:
-   - Taxa Selic Meta (% a.a.): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - IPCA Mensal (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - IPCA Acumulado 12 meses (%): "https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
-   - Câmbio Dólar Comercial: "https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026"
+   ATENÇÃO CRÍTICA (REGRAS DA API SGS DO BANCO CENTRAL):
+   - NUNCA use dataFinal em data futura (como 31/12/2026), pois o gateway do Banco Central rejeita ou dá timeout para datas após o dia de hoje. Use a data atual ou omita dataFinal.
+   - Para gráficos macroeconômicos de prazo médio/longo, dê preferência absoluta para séries mensais ou anualizadas mensais (são rápidas, leves e nunca dão timeout no navegador):
+     * Taxa Selic Acumulada no Mês anualizada (% a.a.): série 4189 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4189/dados?formato=csv&dataInicial=01/01/2020")
+     * IPCA Acumulado 12 meses (%): série 13522 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados?formato=csv&dataInicial=01/01/2020")
+     * IPCA Mensal (%): série 433 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv&dataInicial=01/01/2020")
+     * Câmbio Dólar Comercial: série 1 ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=csv&dataInicial=01/01/2020")
+   - Se for usar a Taxa Selic Meta diária (série 432), mantenha o intervalo recente (ex: dataInicial=01/01/2023) para evitar timeout por excesso de pontos diários.
    Exemplo de leitura robusta:
-   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=csv&dataInicial=01/01/2018&dataFinal=31/12/2026", sep = ";", dec = ",")
+   df <- read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4189/dados?formato=csv&dataInicial=01/01/2020", sep = ";", dec = ",")
    df$data <- as.Date(df$data, format = "%d/%m/%Y")
    df$valor <- as.numeric(df$valor)
 2. Se o pedido for um desenho/arte ou puramente teórico (ex: gatinho, simulação matemática), crie uma composição geométrica elegante com ggplot2 (geom_path, geom_polygon, geom_point).
@@ -293,7 +293,7 @@ DIRETRIZES DE INTELIGÊNCIA ECONÔMICA & DADOS REAIS:
               messages: [
                 {
                   role: 'system',
-                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv (432 para Selic Meta, 13522 para IPCA 12m) com read.csv(..., sep=";", dec=","). ATENÇÃO REGRA BCB: Para séries diárias, o intervalo entre dataInicial e dataFinal NÃO pode passar de 10 anos (ex: 01/01/2018 a 31/12/2026), caso contrário o Banco Central dá erro 406. NUNCA simule números aleatórios com rnorm/seq quando dados reais forem solicitados. Retorne APENAS código R puro, sem blocos markdown.'
+                  content: 'Você é um estatístico e econometrista sênior em R especialista em macroeconomia, finanças e ggplot2 para o EconData Analytics da PUC-Rio. Se o usuário pedir dados reais da economia brasileira (Selic, IPCA, Dólar), consuma diretamente o CSV da API do Banco Central (SGS): use séries mensais ágeis (4189 para Selic anualizada mensal, 13522 para IPCA 12m) com read.csv("https://api.bcb.gov.br/dados/serie/bcdata.sgs.<codigo>/dados?formato=csv&dataInicial=01/01/2020", sep=";", dec=","). NUNCA use dataFinal no futuro (como 31/12/2026). Retorne APENAS código R puro, sem blocos markdown.'
                 },
                 {
                   role: 'user',
@@ -505,12 +505,24 @@ cat("Pacotes ggplot2, dplyr e módulo brfinance carregados com sucesso!\n")
       }
 
       // Auto-correção para a API do Banco Central (SGS):
-      // O BCB rejeita com HTTP 406 qualquer consulta de periodicidade diária com intervalo maior que 10 anos.
-      // Se o código tiver uma URL do SGS com dataInicial anterior a 2017 e dataFinal até 2026/atualidade,
-      // ajustamos automaticamente a dataInicial para 01/01/2018 para garantir execução perfeita sem quebrar.
-      code = code.replace(/(https:\/\/api\.bcb\.gov\.br\/dados\/serie\/bcdata\.sgs\.\d+\/dados\?[^"'\s]*)dataInicial=(\d{2}\/\d{2}\/)(19\d\d|200\d|201[0-6])/g, (match, prefix, dayMonth, year) => {
-        return `${prefix}dataInicial=01/01/2018`;
+      // 1. Remover dataFinal futura (ex: 31/12/2026), que causa timeout/rejeição no gateway do BCB
+      code = code.replace(/([?&])dataFinal=\d{2}\/\d{2}\/202[6-9]&?/g, (match, prefix) => {
+        return prefix === '?' ? '?' : '';
       });
+      code = code.replace(/\?&/g, '?').replace(/&$/g, '').replace(/\?$/g, '');
+
+      // 2. O BCB rejeita com HTTP 406 qualquer consulta com intervalo > 10 anos.
+      // Se tiver dataInicial anterior a 2017, ajustamos para 01/01/2020 para resposta rápida e leve.
+      code = code.replace(/(https:\/\/api\.bcb\.gov\.br\/dados\/serie\/bcdata\.sgs\.\d+\/dados\?[^"'\s]*)dataInicial=(\d{2}\/\d{2}\/)(19\d\d|200\d|201[0-7])/g, (match, prefix) => {
+        return `${prefix}dataInicial=01/01/2020`;
+      });
+
+      // 3. Otimização de desempenho para séries diárias pesadas:
+      // Se o script consultar a série diária de Selic Meta (432) com datas desde 2018-2020 (mais de 2.000 pontos diários que pesam no navegador),
+      // convertemos automaticamente para a série Selic mensalizada oficial (4189), que retorna instantaneamente com os mesmos valores econômicos.
+      if (code.includes('bcdata.sgs.432') && (code.includes('2018') || code.includes('2019') || code.includes('2020'))) {
+        code = code.replace(/bcdata\.sgs\.432/g, 'bcdata.sgs.4189');
+      }
 
       isExecuting = true;
       btnRun.disabled = true;
